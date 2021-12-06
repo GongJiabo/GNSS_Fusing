@@ -87,7 +87,7 @@ public class FileLogger implements GnssListener {
     private int gnsstimeclock_e;
     private int gnsstimeclock_f;
     final float TOLERANCE_MHZ = 1e8f;
-    //GLONASS系の補正情報
+    // GLONASS系统的补正信息
     private int[] GLONASSFREQ = {1,-4,5,6,1,-4,5,6,-2,-7,0,-1,-2,-7,0,-1,4,-3,3,2,4,-3,3,2};
     private int leapseconds = 18;
 
@@ -99,7 +99,7 @@ public class FileLogger implements GnssListener {
 
     private double constFullBiasNanos = 0.0;
 
-    //インターバル変数
+    // 区间变量
     private int localintervaltime = 1;
 
     public synchronized UIFragmentComponent getUiComponent() {
@@ -151,7 +151,7 @@ public class FileLogger implements GnssListener {
                 return;
             }
 
-            // サブ観測ファイルへのヘッダ書き出し
+            // 副观测文件的标题开头
             try {
                 currentFileSubWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
                 currentFileSubWriter.newLine();
@@ -225,7 +225,7 @@ public class FileLogger implements GnssListener {
                     logError("Cannot read external storage.");
                     return;
                 }
-// csvファイル書き出し Fileクラスで用意されているgetAbsolutePathは絶対パスによるファイルの位置と名前を取得できる
+                // csv文件开头File类中提供的getAbsolutePath可以通过绝对路径获取文件的位置和名称
                 Date now = new Date();
                 String fileNameAccAzi = String.format(SettingsFragment.FILE_NAME + ".csv", SettingsFragment.FILE_PREFIXSUB);
                 File currentFileAccAzi = new File(baseAccAziDirectory, fileNameAccAzi);
@@ -238,11 +238,11 @@ public class FileLogger implements GnssListener {
                     return;
                 }
 
-                // サブ観測ファイルへのヘッダ書き出し
+                // 副观测文件的标题开头
                 try {
                     if(SettingsFragment.EnableSensorLog) {
-                       // currentFileAccAziWriter.write("Android Acc\nEast,North ");
-                       // currentFileAccAziWriter.newLine();
+                        currentFileAccAziWriter.write("Android Acc\nEast,North ");
+                        currentFileAccAziWriter.newLine();
                     }else {
                         currentFileAccAziWriter.write("PseudorangeRate,PseudorangeRate (Carrier Phase),PseudorangeRate (Doppler) ");
                         currentFileAccAziWriter.newLine();
@@ -252,7 +252,7 @@ public class FileLogger implements GnssListener {
                     logException("Count not initialize subobservation file: " + currentFileAccAziPath, e);
                     return;
                 }
-//csvファイル閉じる
+                // 关闭csv文件
                 if (mFileAccAzWriter != null) {
                     try {
                         mFileAccAzWriter.close();
@@ -323,7 +323,7 @@ public class FileLogger implements GnssListener {
                     currentFileWriter.newLine();
                     currentFileWriter.write("S = SBAS payload  M = Mixed                                 COMMENT             ");
                     currentFileWriter.newLine();
-                    String PGM = String.format("%-20s", "GRitz Logger");
+                    String PGM = String.format("%-20s", "GNSS-Fusing");
                     String RUNBY = String.format("%-20s", Build.MODEL);
                     String DATE = String.format("%-20s", now.getTime());
                     currentFileWriter.write(PGM + RUNBY + DATE + "UTC PGM / RUN BY / DATE");
@@ -397,7 +397,7 @@ public class FileLogger implements GnssListener {
                     currentFileWriter.newLine();
                     //PGM RUNBY DATE
                     String PGM = String.format("%-20s", "AndroidGNSSReceiver");
-                    String RUNBY = String.format("%-20s", "RITSUMEIKAN KUBOLAB");
+                    String RUNBY = String.format("%-20s", "GNSSLAB");
                     String DATE = String.format("%-20s", now.getTime());
                     currentFileWriter.write(PGM + RUNBY + DATE + "PGM / RUN BY / DATE");
                     currentFileWriter.newLine();
@@ -411,8 +411,8 @@ public class FileLogger implements GnssListener {
                     currentFileWriter.newLine();
                     //MARKER NUMBER
                     //OBSERVER AGENCY
-                    String OBSERVER = String.format("%-20s", "GRitzLogger");
-                    String AGENCY = String.format("%-40s", "KUBOLAB");
+                    String OBSERVER = String.format("%-20s", "GNSS-Fusing");
+                    String AGENCY = String.format("%-40s", "GNSS-CENTER");
                     currentFileWriter.write(OBSERVER + AGENCY + "OBSERVER / AGENCY");
                     currentFileWriter.newLine();
                     //REC TYPE VERS
@@ -524,8 +524,8 @@ public class FileLogger implements GnssListener {
                     return;
                 }
 
-                // NMEAファイルへのヘッダ書き出し
-/*
+                // NMEA文件的标题开头
+
                 try {
                     currentFileNmeaWriter.write("NMEA");
                     currentFileNmeaWriter.newLine();
@@ -534,7 +534,7 @@ public class FileLogger implements GnssListener {
                     logException("Count not initialize NMEA file: " + currentFileNmeaPath, e);
                     return;
                 }
-*/
+
                 if (mFileNmeaWriter != null) {
                     try {
                         mFileNmeaWriter.close();
@@ -563,7 +563,7 @@ public class FileLogger implements GnssListener {
                     }
                 }
         }
-        //Nファイル書き出し
+        // N文件开头
         if(SettingsFragment.RINEXNAVLOG) {
             synchronized (mFileNavLock) {
                 File baseNmeaDirectory;
@@ -641,7 +641,7 @@ public class FileLogger implements GnssListener {
             }
         }
 
-    } // 各ファイル編集
+    } // 各文件编辑
 
     /**
      * Send the current log via email or other options selected from a pop menu shown to the user. A
@@ -766,7 +766,7 @@ public class FileLogger implements GnssListener {
         }
         //Log.i("progress","dismiss");
         //mUiComponent.ShowProgressWindow(false);
-    } //各ファイル保存
+    } // 各文件保存
 
     @Override
     public void onProviderEnabled(String provider) {}
@@ -788,7 +788,7 @@ public class FileLogger implements GnssListener {
                                 String.format(
 
                                         Locale.US,
-                                       //KMLの中身
+                                        // KML的内容
                                         "       %15.9f,%15.9f,%15.9f",
                                         location.getLongitude(),
                                         location.getLatitude(),
@@ -818,7 +818,9 @@ public class FileLogger implements GnssListener {
     }
 
     @Override
-    public void onLocationStatusChanged(String provider, int status, Bundle extras) {}
+    public void onLocationStatusChanged(String provider, int status, Bundle extras) {
+
+    }
 
     @Override
     public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
@@ -828,9 +830,7 @@ public class FileLogger implements GnssListener {
             }
             GnssClock gnssClock = event.getClock();
 
-
-
-            //平滑化方式が変更になれば係数を初期化
+            // 如果平滑化方式改变，则初始化系数
             if(SettingsFragment.SMOOTHER_RATE_RESET_FLAG_FILE){
                 Arrays.fill(LAST_DELTARANGE,0.0);
                 Arrays.fill(CURRENT_SMOOTHER_RATE,1.0);
@@ -849,7 +849,7 @@ public class FileLogger implements GnssListener {
                         if (gnssClock.hasBiasNanos()) {
                             tRxNanos = tRxNanos - gnssClock.getBiasNanos();
                         }
-                        //GPS週・週秒から年月日時分秒に変換
+                        // 从GPS周、周秒转换成年月、日期、分秒
                         GPSWStoGPST gpswStoGPST = new GPSWStoGPST();
                         ReturnValue value = gpswStoGPST.method(weekNumber, tRxNanos * 1e-9);
                         if (measurement.getTimeOffsetNanos() != 0) {
@@ -857,7 +857,7 @@ public class FileLogger implements GnssListener {
                         }
                         double tRxSeconds = tRxNanos * 1e-9;
                         double tTxSeconds = measurement.getReceivedSvTimeNanos() * 1e-9;
-                        //GPS週のロールオーバーチェック
+                        // GPS周的重复检查
                         double prSeconds = tRxSeconds - tTxSeconds;
                         boolean iRollover = prSeconds > 604800 / 2;
                         if (iRollover) {
@@ -874,8 +874,8 @@ public class FileLogger implements GnssListener {
                             }
 
                         }
-
-                        double prm = prSeconds * 2.99792458e8;  //コード擬似距離の計算
+                        // 代码伪距离的计算
+                        double prm = prSeconds * 2.99792458e8;
                         if (iRollover == false && prm > 0 && prSeconds < 0.5) {
                             if (SettingsFragment.RINEX303) {
                                 mFileWriter.write(String.format("  %4d    %2d    %2d    %2d    %2d   %10.7f     GPS         TIME OF FIRST OBS   ", value.Y, value.M, value.D, value.h, value.m, value.s));
@@ -897,7 +897,7 @@ public class FileLogger implements GnssListener {
                                 mFileWriter.write(StartTimeOBS + ENDOFHEADER);
                                 mFileWriter.newLine();
                             }
-                            //FullBiasNanosを固定する.
+                            // 固定FullBiasNanos
                             if (gnssClock.hasBiasNanos()) {
                                 constFullBiasNanos = gnssClock.getFullBiasNanos() + gnssClock.getBiasNanos();
                             } else {
@@ -929,7 +929,7 @@ public class FileLogger implements GnssListener {
 
         }
         firstOBSforAcc = true;
-    }  //伝搬時間の計算、oファイルヘッダ下部
+    }  // 计算传播时间，o文件头下部
 
     @Override
     public void onGnssMeasurementsStatusChanged(int status) {}
@@ -970,20 +970,17 @@ public class FileLogger implements GnssListener {
             else{
                 if(listener == "") {
                     try {
-                       // Calendar myCal= Calendar.getInstance();
-                       // DateFormat myFormat = new SimpleDateFormat("MM/dd/hh:mm.ss");
-                       // String myName = myFormat.format(myCal.getTime());
-                        //csv ファイルの中身　歩行者の位置モデルの指揮　altitudeは気圧センサ
-
+                        Calendar myCal= Calendar.getInstance();
+                        DateFormat myFormat = new SimpleDateFormat("MM/dd/hh:mm.ss");
+                        String myName = myFormat.format(myCal.getTime());
+                        //csv文件内容 行人位置模型 altitude是气压传感器
                         String SensorStream =
                                 String.format("%f,%f,%f", (float) (accZ * Math.sin(azimuth)), (float) (accZ * Math.cos(azimuth)), altitude);
                         mFileAccAzWriter.write(SensorStream);
-                       // String day=
-                        //        String.format("%6d,%6d,%6d,%13.7f,\t",gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d,myName);
-                      // mFileAccAzWriter.write(day);
-                    //    String time=
-//                               String.format("%13.7f",myName);
-                      //  mFileAccAzWriter.write(myName);
+                        String day= String.format("%6d,%6d,%6d,%13.7f,\t",gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d,myName);
+                        mFileAccAzWriter.write(day);
+                        String time= String.format("%13.7f",myName);
+                        mFileAccAzWriter.write(myName);
                         mFileAccAzWriter.newLine();
                     } catch (IOException e) {
                         Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
@@ -1767,7 +1764,7 @@ public class FileLogger implements GnssListener {
                 mFileWriter.newLine();
                 mFileWriter.write(Measurements.toString());
                 mFileWriter.newLine();
-                //衛星が１基も観測できていない場合, FullBiasNanos定数をリセットする.
+                // 如果没有观测到一颗卫星，则重置FullBiasNanos常数。
                 if (firstOBS) {
                     constFullBiasNanos = 0.0;
                 }

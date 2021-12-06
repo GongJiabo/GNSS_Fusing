@@ -42,7 +42,7 @@ public class SettingsFragment extends Fragment {
 
 //    private UiLogger mUiLogger;
 //private TextView mSensorSpecView;
-private TextView mAccSpecView;
+    private TextView mAccSpecView;
     private TextView mGyroSpecView;
     private TextView mMagSpecView;
     private TextView mPressSpecView;
@@ -352,10 +352,10 @@ private TextView mAccSpecView;
         });
 
         final Switch ResearchModeSwitch = (Switch) view.findViewById(R.id.ResearchMode);
-        //リリース時
-        //if(BuildConfig.DEBUG == false) {
+        // 运行时
+        // if(BuildConfig.DEBUG == false) {
             //ResearchModeSwitch.setEnabled(false);
-        //}
+        // }
         ResearchModeSwitch.setChecked(false);
         ResearchModeSwitch.setOnCheckedChangeListener(new OnCheckedChangeListener(){
             @Override
@@ -365,28 +365,28 @@ private TextView mAccSpecView;
                     editView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                     new AlertDialog.Builder(getContext())
                             .setTitle("Please Enter a Password")
-                            //setViewにてビューを設定します。
+                            // 在setView中设置视图
                             .setView(editView)
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
-                                    //入力した文字をトースト出力する
-                             //       if(editView.getText().toString().indexOf("aiueo1") != -1){
-                               //         Toast.makeText(getContext(),
-                                 //               "Research mode turned ON",
-                                   //             Toast.LENGTH_LONG).show();
+                                    // 把输入的文字输出到toast上
+                                    if(editView.getText().toString().indexOf("1") != -1){
+                                        Toast.makeText(getContext(),
+                                                "Research mode turned ON",
+                                                Toast.LENGTH_LONG).show();
                                         ResearchMode = true;
-                                        //rbrinex303.setEnabled(true);
-                                        //useGAL.setEnabled(true);
+                                        rbrinex303.setEnabled(true);
+                                        useGAL.setEnabled(true);
                                         outPutSensor.setEnabled(true);
                                         RINEXNAVCheck.setEnabled(true);
-                                        //useBDS.setEnabled(true);
+                                        useBDS.setEnabled(true);
                                         useSBS.setEnabled(true);
-                              //      }else {
-                              //          Toast.makeText(getContext(),
-                               //                 "Password is incorrect",
-                                //                Toast.LENGTH_LONG).show();
-                                //        ResearchModeSwitch.setChecked(false);
-                           //         }
+                                    }else {
+                                        Toast.makeText(getContext(),
+                                                "Password is incorrect",
+                                                Toast.LENGTH_LONG).show();
+                                        ResearchModeSwitch.setChecked(false);
+                                    }
                                 }
                             })
                             .setOnCancelListener(new DialogInterface.OnCancelListener() {
@@ -398,14 +398,14 @@ private TextView mAccSpecView;
                             .show();
                 } else {
                     ResearchMode = false;
-                    //rbrinex303.setEnabled(false);
-                    //rbrinex303.setChecked(false);
-                    //rbrinex211.setChecked(true);
-                    //useGAL.setEnabled(false);
-                    outPutSensor.setEnabled(false);
-                    RINEXNAVCheck.setEnabled(false);
-                    //useBDS.setEnabled(false);
-                    useSBS.setEnabled(false);
+                    rbrinex303.setEnabled(false);
+                    rbrinex303.setChecked(false);
+                    rbrinex211.setChecked(true);
+                    useGAL.setEnabled(false);
+                    outPutSensor.setEnabled(true);
+                    RINEXNAVCheck.setEnabled(true);
+                    useBDS.setEnabled(true);
+                    useSBS.setEnabled(true);
                     //RINEX303 = false;
                     ResearchMode = true;
                 }

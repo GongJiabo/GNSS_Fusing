@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //アクションバーのロゴ設定  动作栏的标志设置
+        // 动作栏的标志设置
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 mSensorContainer.unregisterSensor();
             }
         }
-        //データベースは今のところクリアする.  数据库目前清除
+        // 数据库目前清除
         SQLiteDatabase NavDB;
         SQLiteManager hlpr = new SQLiteManager(getApplicationContext());
         NavDB = hlpr.getWritableDatabase();
@@ -170,7 +170,9 @@ public class MainActivity extends AppCompatActivity {
         mSensorContainer = new SensorContainer(getApplicationContext() ,mUiLogger, mFileLogger);
         mGnssContainer = new GnssContainer(getApplicationContext(), mUiLogger, mFileLogger);
         mGnssNavigationDataBase = new GnssNavigationDataBase(getApplicationContext());
+
         mFragments = new Fragment[NUMBER_OF_FRAGMENTS];
+
         SettingsFragment settingsFragment = new SettingsFragment();
         settingsFragment.setSensorContainer(mSensorContainer);
         settingsFragment.setGpsContainer(mGnssContainer);
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         loggerFragment.setFileLogger(mFileLogger);
         mFragments[FRAGMENT_INDEX_LOGGER] = loggerFragment;
 
+        // skyplot
         Logger2Fragment logger2Fragment = new Logger2Fragment();
         logger2Fragment.setUILogger(mUiLogger);
         logger2Fragment.setFileLogger(mFileLogger);

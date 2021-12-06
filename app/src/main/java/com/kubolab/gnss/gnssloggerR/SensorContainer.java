@@ -69,6 +69,7 @@ public class SensorContainer {
     private double mRollGY = 0;
     /** Z轴的旋转角度(方位角) */
     private double mAzimuthZ;
+
     private final Context mContext;
     private final UiLogger mLogger;
     private final FileLogger mFileLogger;
@@ -216,6 +217,7 @@ public class SensorContainer {
         return (int) Math.floor(angrad >= 0 ? Math.toDegrees(angrad) : 360 + Math.toDegrees(angrad));
     }
 
+    // 成员变量
    SensorEventListener listener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
@@ -291,32 +293,37 @@ public class SensorContainer {
                 float[] inclinationMatrix = new float[MATRIX_SIZE];
                 float[] remapedMatrix = new float[MATRIX_SIZE];
                 float[] orientationValues = new float[DIMENSION];
-                // 从加速度传感器和地磁传感器获取旋转矩阵
+
+                // 从加速度传感器和地磁传感器获取旋转矩阵, 将设备坐标转换为世界坐标
                 SensorManager.getRotationMatrix(rotationMatrix, inclinationMatrix, mAccelerometerValues, mMagneticValues);
+                // 旋转所提供的旋转矩阵, 使其在不同的坐标系中表示
                 SensorManager.remapCoordinateSystem(rotationMatrix, SensorManager.AXIS_MINUS_X, SensorManager.AXIS_Y, remapedMatrix);
+                // 手机自身软甲内部计算得到的旋转角
                 SensorManager.getOrientation(remapedMatrix, orientationValues);
+
                 // 径向滤波器
-                x = (x * 0.9 + RawX * 0.1);
-                y = (y * 0.9 + RawY * 0.1);
-                z = (z * 0.9 + RawZ * 0.1);
-                mx = (mx * 0.9 + MagX * 0.1);
-                my = (my * 0.9 + MagY * 0.1);
-                mz = (mz * 0.9 + MagZ * 0.1);
-                /*x = RawX;
+                // x = (x * 0.9 + RawX * 0.1);
+                // y = (y * 0.9 + RawY * 0.1);
+                // z = (z * 0.9 + RawZ * 0.1);
+                // mx = (mx * 0.9 + MagX * 0.1);
+                // my = (my * 0.9 + MagY * 0.1);
+                // mz = (mz * 0.9 + MagZ * 0.1);
+                x = RawX;
                 y = RawY;
                 z = RawZ;
                 mx = MagX;
                 my = MagY;
-                mz = MagZ;*/
+                mz = MagZ;
+
                 // 获得各自的旋转角度
                 if(!SettingsFragment.ResearchMode) {
-                    //Androidオリジナルシステム
-                    //https://www.nxp.com/docs/en/application-note/AN4248.pdf の軸変換 Gxは-AccY GyはAccX
+                    // 不开启研究模式则使用系统算出来的旋转角(地心坐标系下)
+                    // https://www.nxp.com/docs/en/application-note/AN4248.pdf
                     mAzimuthZ = radianToDegrees(orientationValues[0]);
                     mPitchX = radianToDegrees((orientationValues[1]));
                     mRollY = radianToDegrees(orientationValues[2]);
                 }else {
-                    // 研究用系统
+                    // 研究模式则使用地磁数据和陀螺仪数据计算旋转角
                     double Gx = y;
                     double Gy = x;
                     double Gz = z;
@@ -332,6 +339,7 @@ public class SensorContainer {
                         mPitchGX = mPitchAX;
                         Log.d("Sensor","initialize");
                     }
+
                     mRollGY = mRollGY + ((GyroY * (timeEspNanos * 1e-9)) / 2);
                     mPitchGX = mPitchGX - ((GyroX * (timeEspNanos * 1e-9)) / 2);
 
@@ -351,9 +359,11 @@ public class SensorContainer {
                     if (mPitchX < 0.0) {
                         mPitchX = mPitchX + 2 * Math.PI;
                     }
+
                     /*double tmp = mRollY;
                     mRollY = mPitchX;
                     mPitchX = tmp;*/
+
                     // 地磁传感器偏移
                     double Bx = my;
                     double By = mx;
@@ -386,6 +396,7 @@ public class SensorContainer {
                 currentAccelerationXValues = (float)ax - currentOrientationXValues;
                 currentOrientationYValues = (float)ay * 0.1f + currentOrientationYValues * (1.0f - 0.1f);
                 currentAccelerationYValues = (float)ay - currentOrientationYValues;
+
                 // 计数器z轴加速度为-1.5时计数器z轴加速度为+1
                 if(passcounter == true) {
                     if (currentAccelerationZValues <= -1.5) {
@@ -436,7 +447,7 @@ public class SensorContainer {
                     mLogger.onSensorListener(String.format("Pitch = %5.1f, Roll = %5.1f, Azimuth = %5.1f\nAltitude = %6.1f", mPitchX, mRollY, mAzimuthZ, Altitude), mAzimuthZ, currentAccelerationZValues, LastAltitude - Altitude);
                     //mLogger.onSensorListener(String.format("MagX = %f \n MagY = %f \n MagZ = %f",mMagneticValues[0],mMagneticValues[1],mMagneticValues[2]),mAzimuthZ,currentAccelerationZValues,LastAltitude - Altitude);
                 }
-                //mFileLogger.onSensorListener("",mAzimuthZ,currentAccelerationZValues);//aaaaa
+                //mFileLogger.onSensorListener("",mAzimuthZ,currentAccelerationZValues);
                 LastAltitude = Altitude;
             }
         }

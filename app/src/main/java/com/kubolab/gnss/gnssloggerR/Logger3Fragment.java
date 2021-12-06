@@ -86,6 +86,9 @@ public class Logger3Fragment extends Fragment {
             if (activity == null) {
                 return;
             }
+            // 在Android开发的过程中，主线程主要来完成UI绘制和响应用户的操作，默认情况下，我们大部分的代码都是在主线程中执行的
+            // 因此我们时刻要考虑主线程的情况。我们都知道要开启一个子线程来完成一个耗时操作，以避免阻塞主线程影响用户体验，甚至ANR
+            // 但是子线程执行完要更新UI的时候，我们又必须回到主线程来更新，实现这一功能常用的方法是执行Activity的runOnUiThread()方法
             activity.runOnUiThread(
                     new Runnable() {
                         @Override
