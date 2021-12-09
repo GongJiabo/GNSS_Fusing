@@ -876,6 +876,17 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView59" />
 
+                <View
+                    android:id="@+id/view20"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView63" />
+
                 <TextView
                     android:id="@+id/textView62"
                     android:layout_width="wrap_content"
@@ -889,6 +900,19 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view19" />
 
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Raw LogData"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view20" />
+
                 <CheckBox
                     android:id="@+id/outputSensor"
                     android:layout_width="wrap_content"
@@ -897,7 +921,18 @@
                     android:enabled="false"
                     app:layout_constraintBottom_toBottomOf="@+id/textView62"
                     app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView62" />
+                    app:layout_constraintTop_toTopOf="@+id/textView62"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <CheckBox
+                    android:id="@+id/outputRaw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="false"
+                    android:enabled="false"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
+                    app:layout_constraintTop_toTopOf="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/textView63"
@@ -910,11 +945,21 @@
                     app:layout_constraintTop_toBottomOf="@+id/textView62" />
 
                 <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/RAW/"prefix".txt'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+                <TextView
                     android:id="@+id/textView64"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="80dp"
                     android:text="Research mode"
                     android:textColor="@android:color/holo_blue_dark"
                     android:textStyle="bold"
@@ -955,16 +1000,6 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView65" />
 
-                <Switch
-                    android:id="@+id/FileSend"
-                    android:layout_width="14dp"
-                    android:layout_height="0dp"
-                    android:showText="true"
-                    android:text="Send file by email etc..."
-                    android:visibility="gone"
-                    tools:layout_editor_absoluteX="222dp"
-                    tools:layout_editor_absoluteY="1401dp" />
-
                 <TextView
                     android:id="@+id/textView2"
                     android:layout_width="wrap_content"
@@ -998,8 +1033,6 @@
                     app:layout_constraintBottom_toBottomOf="@+id/textView54"
                     app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
                     app:layout_constraintTop_toTopOf="@+id/textView54" />
-
-
 
 
             </android.support.constraint.ConstraintLayout>

@@ -59,6 +59,7 @@ public class SensorContainer {
     private float RotationX;
     private float RotationY;
     private float RotationZ;
+    private float RotationS;
     /** X轴的旋转角度 */
     private double mPitchX = 0;
     private double mPitchAX = 0;
@@ -279,6 +280,7 @@ public class SensorContainer {
                     RotationX = mRotationValues[0];
                     RotationY = mRotationValues[1];
                     RotationZ = mRotationValues[2];
+                    RotationS = mRotationValues[3];
                     break;
                 case Sensor.TYPE_STEP_DETECTOR:
                     if(!SettingsFragment.ResearchMode){
@@ -322,7 +324,8 @@ public class SensorContainer {
                     mAzimuthZ = radianToDegrees(orientationValues[0]);
                     mPitchX = radianToDegrees((orientationValues[1]));
                     mRollY = radianToDegrees(orientationValues[2]);
-                }else {
+                }
+                else {
                     // 研究模式则使用地磁数据和陀螺仪数据计算旋转角
                     double Gx = y;
                     double Gy = x;
@@ -374,6 +377,7 @@ public class SensorContainer {
                     mAzimuthZ = Math.atan2((((Bz - GzOff) * Math.sin(mRollY)) - ((By - GyOff) * Math.cos(mRollY))), ((Bx - GxOff) * Math.cos(mPitchX) + (By - GyOff) * Math.sin(mPitchX) * Math.sin(mRollY) + (Bz - GzOff) * Math.sin(mPitchX) * Math.cos(mRollY)));
                     //mAzimuthZ = -mAzimuthZ;
                 }
+
                 // 从气压算出高度
                 if(mPressureValues != null){
                     Altitude =(float)(((Math.pow((1013.25/mPressureValues[0]),(1/5.257)) - 1)*(18.0 + 273.15)) / 0.0065);
@@ -397,12 +401,12 @@ public class SensorContainer {
                 currentOrientationYValues = (float)ay * 0.1f + currentOrientationYValues * (1.0f - 0.1f);
                 currentAccelerationYValues = (float)ay - currentOrientationYValues;
 
-                // 计数器z轴加速度为-1.5时计数器z轴加速度为+1
+                // 记步
                 if(passcounter == true) {
                     if (currentAccelerationZValues <= -1.5) {
                         counter++;
                         passcounter = false;
-                        mFileLogger.onSensorListener("", (float) mAzimuthZ,1,Altitude);
+                        // mFileLogger.onSensorListener("", (float) mAzimuthZ,1,Altitude);
                     }
                 }else{
                     // z轴加速度1.0以上时状态为真
@@ -410,6 +414,16 @@ public class SensorContainer {
                         passcounter = true;
                     }
                 }
+
+                // ResearchMode == false -> 输出方位角和z轴及速度、高度
+                // ResearchMode == true  -> 输出原始传感器观测值
+                if(SettingsFragment.useDeviceSensor == false){
+                    mFileLogger.onSensorListener("", (float) mAzimuthZ,1,Altitude);
+                }
+                else{
+                    mFileLogger.onRawSensorListener("", mAccelerometerValues, mGyroValues, mGravityValues, mMagneticValues, mRotationValues, Pressure);
+                }
+
                 // 西浦的硕士论文式(5.13)
                 if(Math.abs(currentAccelerationYValues) >= 0.00000000001 || Math.abs(currentAccelerationXValues) >= 0.0000000000001) {
                     double AccAziRad = Math.atan(currentAccelerationYValues / currentAccelerationXValues);
@@ -442,9 +456,9 @@ public class SensorContainer {
 
                 // sensors的结果输出 LastAltitude - Altitude, counter, AccAzi
                 if(SettingsFragment.ResearchMode) {
-                    mLogger.onSensorListener(String.format("Pitch = %f , Roll = %f , Azimuth = %f \n Altitude = %f \n WalkCounter = %d \n AccAzi = %d", Math.toDegrees(mPitchX), Math.toDegrees(mRollY), Math.toDegrees(mAzimuthZ), LastAltitude - Altitude, counter, AccAzi), Math.toDegrees(mAzimuthZ), currentAccelerationZValues, LastAltitude - Altitude);
+                    mLogger.onSensorListener(String.format(" Pitch = %f\n Roll = %f\n Azimuth = %f\n Altitude = %f\n WalkCounter = %d\n AccAzi = %d", Math.toDegrees(mPitchX), Math.toDegrees(mRollY), Math.toDegrees(mAzimuthZ), LastAltitude - Altitude, counter, AccAzi), Math.toDegrees(mAzimuthZ), currentAccelerationZValues, LastAltitude - Altitude);
                 }else{
-                    mLogger.onSensorListener(String.format("Pitch = %5.1f, Roll = %5.1f, Azimuth = %5.1f\nAltitude = %6.1f", mPitchX, mRollY, mAzimuthZ, Altitude), mAzimuthZ, currentAccelerationZValues, LastAltitude - Altitude);
+                    mLogger.onSensorListener(String.format(" Pitch = %5.1f\n Roll = %5.1f\n Azimuth = %5.1f\n Altitude = %6.1f", mPitchX, mRollY, mAzimuthZ, Altitude), mAzimuthZ, currentAccelerationZValues, LastAltitude - Altitude);
                     //mLogger.onSensorListener(String.format("MagX = %f \n MagY = %f \n MagZ = %f",mMagneticValues[0],mMagneticValues[1],mMagneticValues[2]),mAzimuthZ,currentAccelerationZValues,LastAltitude - Altitude);
                 }
                 //mFileLogger.onSensorListener("",mAzimuthZ,currentAccelerationZValues);

@@ -121,6 +121,8 @@ public class UiLogger implements GnssListener {
         mUISettingComponent = value;
     }
 
+    @Override
+    public void onTTFFReceived(long l) {}
 
     @Override
     public void onProviderEnabled(String provider) {
@@ -323,6 +325,7 @@ public class UiLogger implements GnssListener {
     public void onSensorRawListener(String sensorRaw[]) {
         Logger3Fragment.UIFragment3Component component = getUiFragment3Component();
         if (component != null) {
+            // 在APP界面显示传感器的值
             component.log3SensorRawFragment(sensorRaw);
         }
     }

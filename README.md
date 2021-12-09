@@ -1,4 +1,6 @@
 # GNSSLogger_dual
+forked from: https://github.com/superhang/GNSSLogger
+
 GNSSLoggerR v0.0.1a
 
 对原创的GNSSLogger实施了RINEX输出，传感器输出，各种记录功能追加等的改良的版本。
@@ -40,6 +42,34 @@ ver 1.3更新内容一览
 对应L1频带和L5频带的双频观测
 
 2周波观测的选择可能
+
+
+
+
+
+-------------------
+
+# GNSS_FUSING
+
+Gong added：
+
+1、修复了一些BUG
+
+2、添加了加速度计等Sensors的原始输出
+
+3、修复了kml文件格式的输出
+
+
+
+To Do：
+
+1、rinex输出尚不支持BDS，疑似bug：信号频率的区分
+
+2、SQL数据库入库功能完善
+
+3、加入高德地图API
+
+4、算法融合
 
 
 

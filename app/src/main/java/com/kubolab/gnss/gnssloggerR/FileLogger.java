@@ -58,23 +58,29 @@ public class FileLogger implements GnssListener {
     private final Object mFileAccAzLock = new Object();
     private final Object mFileNmeaLock = new Object();
     private final Object mFileNavLock = new Object();
-    private BufferedWriter mFileWriter;
-    private BufferedWriter mFileSubWriter;
-    private BufferedWriter mFileAccAzWriter;
-    private BufferedWriter mFileNmeaWriter;
-    private BufferedWriter mFileNavWriter;
+    private final Object mFileRawLock = new Object();
+
+    private BufferedWriter mFileWriter;         // .o
+    private BufferedWriter mFileSubWriter;      // .kml
+    private BufferedWriter mFileAccAzWriter;    // .csv
+    private BufferedWriter mFileNmeaWriter;     // .nmea
+    private BufferedWriter mFileNavWriter;      // .nav
+    private BufferedWriter mFileRawWriter;      // Gong added: .txt
+
     private File mFile;
     private File mFileSub;
     private File mFileAccAzi;
     private File mFileNmea;
     private File mFileNav;
+    private File mFileRaw; // Gong added
+
     private boolean firsttime;
     private UIFragmentComponent mUiComponent;
     //private LoggerFragment mloggerFragment;
     private boolean notenoughsat = false;
     private boolean firstOBSforAcc = true;
     private ArrayList<Integer> UsedInFixList = new ArrayList<Integer>() ;
-    private ArrayList<String> arrayList1= new ArrayList<>();
+    private ArrayList<String> utckml= new ArrayList<>();
     private ArrayList<Double>longitudekml=new ArrayList<>();
     private ArrayList<Double>latitudekml=new ArrayList<>();
     private ArrayList<Double>altitudekml=new ArrayList<>();
@@ -124,6 +130,17 @@ public class FileLogger implements GnssListener {
      * Start a new file logging process.
      */
     public void startNewLog() {
+        // Gong added:
+        if(SettingsFragment.ResearchMode==true){
+            if(SettingsFragment.FILE_NAME=="AndroidOBS"){
+                Calendar myCal= Calendar.getInstance();
+                DateFormat myFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
+                String myTime = myFormat.format(myCal.getTime());
+                SettingsFragment.FILE_NAME = myTime;
+            }
+        }
+
+        // .kml文件
         synchronized (mFileSubLock){
             File baseSubDirectory;
             String state = Environment.getExternalStorageState();
@@ -150,32 +167,37 @@ public class FileLogger implements GnssListener {
                 logException("Could not open subobservation file: " + currentFileSubPath, e);
                 return;
             }
-
             // 副观测文件的标题开头
             try {
-                currentFileSubWriter.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                currentFileSubWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("<kml xmlns=\"http://earth.google.com/kml/2.0\">");
+                currentFileSubWriter.write("<kml xmlns=\"http://www.opengis.net/kml/2.2\">");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("<Document>");
+                currentFileSubWriter.write("  <Document>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("<Placemark>");
+                currentFileSubWriter.write("    <name>" + Build.MODEL + ".kml</name>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("  <name>Rover Track</name>");
+                currentFileSubWriter.write("    <Placemark>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("  <Style>");
+                currentFileSubWriter.write("      <Snippet maxLines=\"0\"> </Snippet>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("    <LineStyle>");
+                currentFileSubWriter.write("      <description> </description>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("      <color>aa00FFFF</color>");
+                currentFileSubWriter.write("      <name>Line 1</name>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("    </LineStyle>");
+                currentFileSubWriter.write("      <Style>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("  </Style>");
+                currentFileSubWriter.write("        <LineStyle>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("  <LineString>");
+                currentFileSubWriter.write("          <color>80ffffff</color>");
                 currentFileSubWriter.newLine();
-                currentFileSubWriter.write("    <coordinates>");
+                currentFileSubWriter.write("        </LineStyle>");
+                currentFileSubWriter.newLine();
+                currentFileSubWriter.write("      </Style>");
+                currentFileSubWriter.newLine();
+                currentFileSubWriter.write("    <LineString>");
+                currentFileSubWriter.newLine();
+                currentFileSubWriter.write("      <coordinates>");
                 currentFileSubWriter.newLine();
             } catch (IOException e) {
                 Toast.makeText(mContext, "Count not initialize Sub observation file", Toast.LENGTH_SHORT).show();
@@ -211,6 +233,8 @@ public class FileLogger implements GnssListener {
                 }
             }
         }
+
+        // .csv传感器文件
         synchronized (mFileAccAzLock){
             if(SettingsFragment.ResearchMode) {
                 File baseAccAziDirectory;
@@ -227,7 +251,7 @@ public class FileLogger implements GnssListener {
                 }
                 // csv文件开头File类中提供的getAbsolutePath可以通过绝对路径获取文件的位置和名称
                 Date now = new Date();
-                String fileNameAccAzi = String.format(SettingsFragment.FILE_NAME + ".csv", SettingsFragment.FILE_PREFIXSUB);
+                String fileNameAccAzi = String.format(SettingsFragment.FILE_NAME + ".csv", SettingsFragment.FILE_PREFIXACCAZI);
                 File currentFileAccAzi = new File(baseAccAziDirectory, fileNameAccAzi);
                 String currentFileAccAziPath = currentFileAccAzi.getAbsolutePath();
                 BufferedWriter currentFileAccAziWriter;
@@ -241,12 +265,16 @@ public class FileLogger implements GnssListener {
                 // 副观测文件的标题开头
                 try {
                     if(SettingsFragment.EnableSensorLog) {
-                        currentFileAccAziWriter.write("Android Acc\nEast,North ");
+//                        currentFileAccAziWriter.write("Android Acc\nEast,North ");
+//                        currentFileAccAziWriter.newLine();
+                        currentFileAccAziWriter.write("Year, Month, Day, Hour, Minute, Second, AccX, AccY, AccZ, " +
+                                "GyroX, GyroY, GyroZ, GravX, GravY, GravZ, MagX, MagY, MayZ, RotX, RotY, RotZ, RotS, Pressure");
                         currentFileAccAziWriter.newLine();
                     }else {
-                        currentFileAccAziWriter.write("PseudorangeRate,PseudorangeRate (Carrier Phase),PseudorangeRate (Doppler) ");
-                        currentFileAccAziWriter.newLine();
+                         currentFileAccAziWriter.write("PseudorangeRate,PseudorangeRate (Carrier Phase),PseudorangeRate (Doppler) ");
+                         currentFileAccAziWriter.newLine();
                     }
+
                 } catch (IOException e) {
                     Toast.makeText(mContext, "Count not initialize Sub observation file", Toast.LENGTH_SHORT).show();
                     logException("Count not initialize subobservation file: " + currentFileAccAziPath, e);
@@ -284,6 +312,7 @@ public class FileLogger implements GnssListener {
             }
         }
 
+        // rinex的o文件
         synchronized (mFileLock) {
             File baseDirectory;
             String state = Environment.getExternalStorageState();
@@ -347,6 +376,7 @@ public class FileLogger implements GnssListener {
                     currentFileWriter.newLine();
                         currentFileWriter.write("     0                                                      RCV CLOCK OFFS APPL ");
                     currentFileWriter.newLine();
+                    // Gong: 缺少多普勒信号 "G    8 C1C L1C D1C S1C C5X L5X D5X S5X"
                     if(SettingsFragment.CarrierPhase){
                         currentFileWriter.write("G    6 C1C L1C S1C C5X L5X S5X                              SYS / # / OBS TYPES ");
                         currentFileWriter.newLine();
@@ -372,9 +402,10 @@ public class FileLogger implements GnssListener {
                             currentFileWriter.newLine();
                         }
                     }
+                    // Gong: 缺少多普勒信号 "E    8 C1C L1C D1C S1C C5X L5X D5X S5X "
                     if(SettingsFragment.useGA){
                         if(SettingsFragment.CarrierPhase){
-                            currentFileWriter.write("E    6 C1X L1X S1X C5X L5X S5X                              SYS / # / OBS TYPES ");
+                            currentFileWriter.write("E    6 C1C L1C S1C C5X L5X S5X                              SYS / # / OBS TYPES ");
                             currentFileWriter.newLine();
                         }else {
                             currentFileWriter.write("E    4 C1C S1C C5X S5X                                      SYS / # / OBS TYPES ");
@@ -495,9 +526,11 @@ public class FileLogger implements GnssListener {
                     existingFiles[i].delete();
                 }
             }
+
+            //
         }
 
-        //NMEAファイル
+        //NMEA文件
         synchronized (mFileNmeaLock){
                 File baseNmeaDirectory;
                 String state = Environment.getExternalStorageState();
@@ -563,14 +596,132 @@ public class FileLogger implements GnssListener {
                     }
                 }
         }
+
+        // Gong added: GNSS原始观测文件txt(兼容Google的GNSSlogger)
+        synchronized (mFileRawLock){
+            if(SettingsFragment.ResearchMode) {
+                File baseRawDataDirectory;
+                String state = Environment.getExternalStorageState();
+                if (Environment.MEDIA_MOUNTED.equals(state)) {
+                    baseRawDataDirectory = new File(Environment.getExternalStorageDirectory(), SettingsFragment.FILE_PREFIXRAW);
+                    baseRawDataDirectory.mkdirs();
+                } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+                    logError("Cannot write to external storage.");
+                    return;
+                } else {
+                    logError("Cannot read external storage.");
+                    return;
+                }
+                // csv文件开头File类中提供的getAbsolutePath可以通过绝对路径获取文件的位置和名称
+                Date now = new Date();
+                String fileNameRaw = String.format(SettingsFragment.FILE_NAME + ".txt", SettingsFragment.FILE_PREFIXRAW);
+                File currentFileRaw = new File(baseRawDataDirectory, fileNameRaw);
+                String currentFileRawPath = currentFileRaw.getAbsolutePath();
+                BufferedWriter currentFileRawWriter;
+                try {
+                    currentFileRawWriter = new BufferedWriter(new FileWriter(currentFileRaw));
+                } catch (IOException e) {
+                    logException("Could not open subobservation file: " + currentFileRawPath, e);
+                    return;
+                }
+
+                // 副观测文件的标题开头
+                try {
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.write("Header Description:");
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.write(VERSION_TAG);
+                    String manufacturer = Build.MANUFACTURER;
+                    String model = Build.MODEL;
+                    String fileVersion =
+                            mContext.getString(R.string.app_version)
+                                    + " Platform: "
+                                    + Build.VERSION.RELEASE
+                                    + " "
+                                    + "Manufacturer: "
+                                    + manufacturer
+                                    + " "
+                                    + "Model: "
+                                    + model;
+                    currentFileRawWriter.write(fileVersion);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.write(
+                            "Raw,ElapsedRealtimeMillis,TimeNanos,LeapSecond,TimeUncertaintyNanos,FullBiasNanos,"
+                                    + "BiasNanos,BiasUncertaintyNanos,DriftNanosPerSecond,DriftUncertaintyNanosPerSecond,"
+                                    + "HardwareClockDiscontinuityCount,Svid,TimeOffsetNanos,State,ReceivedSvTimeNanos,"
+                                    + "ReceivedSvTimeUncertaintyNanos,Cn0DbHz,PseudorangeRateMetersPerSecond,"
+                                    + "PseudorangeRateUncertaintyMetersPerSecond,"
+                                    + "AccumulatedDeltaRangeState,AccumulatedDeltaRangeMeters,"
+                                    + "AccumulatedDeltaRangeUncertaintyMeters,CarrierFrequencyHz,CarrierCycles,"
+                                    + "CarrierPhase,CarrierPhaseUncertainty,MultipathIndicator,SnrInDb,"
+                                    + "ConstellationType,AgcDb");
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.write(
+                            "Fix,Provider,Latitude,Longitude,Altitude,Speed,Accuracy,(UTC)TimeInMs");
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.write("Nav,Svid,Type,Status,MessageId,Sub-messageId,Data(Bytes)");
+                    currentFileRawWriter.newLine();
+                    currentFileRawWriter.write(COMMENT_START);
+                    currentFileRawWriter.newLine();
+                } catch (IOException e) {
+                    Toast.makeText(mContext, "Count not initialize Sub observation file", Toast.LENGTH_SHORT).show();
+                    logException("Count not initialize RAWDATA.txt file: " + currentFileRawPath, e);
+                    return;
+                }
+                // 关闭csv文件
+                if (mFileRawWriter != null) {
+                    try {
+                        mFileRawWriter.close();
+                    } catch (IOException e) {
+                        logException("Unable to close RAWDATA.txt file streams.", e);
+                        return;
+                    }
+                }
+
+                mFileRaw = currentFileRaw;
+                mFileRawWriter = currentFileRawWriter;
+                Toast.makeText(mContext, "File opened: " + currentFileRawPath, Toast.LENGTH_SHORT).show();
+
+                // To make sure that files do not fill up the external storage:
+                // - Remove all empty files
+                FileFilter filter = new FileToDeleteFilter(mFileRaw);
+                for (File existingFile : baseRawDataDirectory.listFiles(filter)) {
+                    existingFile.delete();
+                }
+                // - Trim the number of files with data
+                File[] existingFiles = baseRawDataDirectory.listFiles();
+                int filesToDeleteCount = existingFiles.length - MAX_FILES_STORED;
+                if (filesToDeleteCount > 0) {
+                    Arrays.sort(existingFiles);
+                    for (int i = 0; i < filesToDeleteCount; ++i) {
+                        existingFiles[i].delete();
+                    }
+                }
+            }
+        }
+
         // N文件开头
         if(SettingsFragment.RINEXNAVLOG) {
             synchronized (mFileNavLock) {
-                File baseNmeaDirectory;
+                File baseNavDirectory;
                 String state = Environment.getExternalStorageState();
                 if (Environment.MEDIA_MOUNTED.equals(state)) {
-                    baseNmeaDirectory = new File(Environment.getExternalStorageDirectory(), SettingsFragment.FILE_PREFIXNAV);
-                    baseNmeaDirectory.mkdirs();
+                    baseNavDirectory = new File(Environment.getExternalStorageDirectory(), SettingsFragment.FILE_PREFIXNAV);
+                    baseNavDirectory.mkdirs();
                 } else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
                     logError("Cannot write to external storage.");
                     return;
@@ -582,7 +733,7 @@ public class FileLogger implements GnssListener {
                 Date now = new Date();
                 int observation = now.getYear() - 100;
                 String fileNameNav = String.format(SettingsFragment.FILE_NAME + "." + observation + "n", SettingsFragment.FILE_PREFIXNAV);
-                File currentFileNav = new File(baseNmeaDirectory, fileNameNav);
+                File currentFileNav = new File(baseNavDirectory, fileNameNav);
                 String currentFileNavPath = currentFileNav.getAbsolutePath();
                 BufferedWriter currentFileNavWriter;
                 try {
@@ -626,11 +777,11 @@ public class FileLogger implements GnssListener {
                 // To make sure that files do not fill up the external storage:
                 // - Remove all empty files
                 FileFilter filter = new FileToDeleteFilter(mFileNav);
-                for (File existingFile : baseNmeaDirectory.listFiles(filter)) {
+                for (File existingFile : baseNavDirectory.listFiles(filter)) {
                     existingFile.delete();
                 }
                 // - Trim the number of files with data
-                File[] existingFiles = baseNmeaDirectory.listFiles();
+                File[] existingFiles = baseNavDirectory.listFiles();
                 int filesToDeleteCount = existingFiles.length - MAX_FILES_STORED;
                 if (filesToDeleteCount > 0) {
                     Arrays.sort(existingFiles);
@@ -669,22 +820,34 @@ public class FileLogger implements GnssListener {
             //mUiComponent.ShowProgressWindow(false);
             return;
         }
+        if(mFileRaw == null && SettingsFragment.RAWDATALOG){
+            //mUiComponent.ShowProgressWindow(false);
+            return;
+        }
+
         try {
-            mFileSubWriter.write("    </coordinates>\n  </LineString>\n</Placemark>\n<Folder>");
+            mFileSubWriter.write("    </coordinates>\n  </LineString>\n</Placemark>\n");
             // </coordinates></LineString></Placemark><Folder></Document></kml>
             mFileSubWriter.newLine();
-            for (int i=0; i<arrayList1.size(); i++){
+            for (int i=0; i<utckml.size(); i++){
                 mFileSubWriter.write(" <Placemark>\n");
-                mFileSubWriter.write("<name>"+arrayList1.get(i)+"\"</name>\"");
+                mFileSubWriter.write("<name>" + utckml.get(i) + "\"</name>\"");
                 mFileSubWriter.newLine();
-               // mFileSubWriter.write("<TimeStamp><when>"+arrayList1.get(i)+"</when></TimeStamp>");
+                mFileSubWriter.write("    <Snippet maxLines=\"0\"> </Snippet>");
+                mFileSubWriter.newLine();
+                mFileSubWriter.write("    <description>" + i + ", UTC " + utckml.get(i));
+                mFileSubWriter.newLine();
+                mFileSubWriter.write(longitudekml.get(i)+","+latitudekml.get(i)+","+altitudekml.get(i));
+                mFileSubWriter.newLine();
+                mFileSubWriter.write("    </description>");
+                //mFileSubWriter.write("<TimeStamp><when>"+arrayList1.get(i)+"</when></TimeStamp>");
                 //mFileSubWriter.newLine();
-                mFileSubWriter.write("<Style>\n<BalloonStyle><text><![CDATA[$[description]]]></text></BalloonStyle>\n" +
+                mFileSubWriter.write("<Style>\n<BalloonStyle><text></text></BalloonStyle>\n" +
                                 "    <LabelStyle><scale>0</scale></LabelStyle>\n" +
                                 "    <IconStyle>\n" +
-                                "      <scale>0.3</scale>\n" +
-                                "      <color>ffFFFF00</color>\n" +
-                                "      <Icon><href>http://maps.google.com/mapfiles/kml/pal2/icon26.png</href></Icon>\n" +
+                                "      <scale>0.6</scale>\n" +
+                                "      <color>bfed8548</color>\n" +
+                                "      <Icon><href>http://maps.google.com/mapfiles/kml/shapes/shaded_dot.png</href></Icon>\n" +
                                 "    </IconStyle>\n" +
                                 "  </Style>\n" +
                                 "  <Point>" );
@@ -694,7 +857,7 @@ public class FileLogger implements GnssListener {
                 mFileSubWriter.newLine();
                 mFileSubWriter.write("</Placemark>");
             }mFileSubWriter.newLine();
-            mFileSubWriter.write("</Folder>\n  </Document>\n  </kml>");
+            mFileSubWriter.write("\n  </Document>\n  </kml>");
         }catch (IOException e){
             Toast.makeText(mContext, "ERROR_WRITINGFOTTER_FILE", Toast.LENGTH_SHORT).show();
             logException(ERROR_WRITING_FILE, e);
@@ -725,6 +888,7 @@ public class FileLogger implements GnssListener {
                 return;
             }
         }
+
         if(SettingsFragment.ResearchMode) {
             if (mFileAccAzWriter != null) {
                 try {
@@ -739,6 +903,7 @@ public class FileLogger implements GnssListener {
                 }
             }
         }
+
         if(mFileNmeaWriter != null) {
             try {
                 mFileNmeaWriter.close();
@@ -751,6 +916,7 @@ public class FileLogger implements GnssListener {
                 return;
             }
         }
+
         if(SettingsFragment.RINEXNAVLOG){
             try {
                 mFileNavWriter.close();
@@ -760,6 +926,19 @@ public class FileLogger implements GnssListener {
                 RINEX_NAV_ION_OK = false;
             } catch (IOException e) {
                 logException("Unable to close NAV file streams.", e);
+                //mUiComponent.ShowProgressWindow(false);
+                return;
+            }
+        }
+
+        if(SettingsFragment.RAWDATALOG){
+            try {
+                mFileRawWriter.close();
+                Intent mediaScanIntentSub = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mFileRaw));
+                mContext.sendBroadcast(mediaScanIntentSub);
+                mFileRawWriter = null;
+            } catch (IOException e) {
+                logException("Unable to close RAWDATA file streams.", e);
                 //mUiComponent.ShowProgressWindow(false);
                 return;
             }
@@ -775,9 +954,8 @@ public class FileLogger implements GnssListener {
     public void onProviderDisabled(String provider) {}
 
     @Override
-    public void onLocationChanged(Location location ) {
+    public void onLocationChanged(Location location) {
         if (location.getProvider().equals(LocationManager.GPS_PROVIDER)) {
-
             synchronized (mFileSubLock) {
                 if (mFileSubWriter == null) {
                     return;
@@ -793,22 +971,20 @@ public class FileLogger implements GnssListener {
                                         location.getLongitude(),
                                         location.getLatitude(),
                                         location.getAltitude()
-
                                         );
                         longitudekml.add(location.getLongitude());
                         latitudekml.add(location.getLatitude());
                         altitudekml.add(location.getAltitude());
+                        //
                         Calendar myCal= Calendar.getInstance();
-                        DateFormat myFormat = new SimpleDateFormat("yyyy/MM/dd");
-                        String myName = myFormat.format(myCal.getTime());
-                        //mFileSubWriter.write(myName);
-                        //mFileSubWriter.newLine();
-                        String gnsstime=
-                                String.format("%d,%d,%d,%d,%d,%13.7f",gnsstimeclock_f,gnsstimeclock_e,gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d);
-                        arrayList1.add(gnsstime);
-                        mFileSubWriter.write(locationStream);
-                        mFileSubWriter.newLine();
-                    }catch (IOException e){
+                        DateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        String utcTime = myFormat.format(myCal.getTime());
+                        utckml.add(utcTime);
+                        //
+                        String gnsstime= String.format("%d,%d,%d,%d,%d,%13.7f",gnsstimeclock_f,gnsstimeclock_e,gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d);
+                        gpstkml.add(gnsstime);
+                    //}catch (IOException e){
+                    }catch (Exception e){
                         Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
                         logException(ERROR_WRITING_FILE, e);
                     }
@@ -822,12 +998,15 @@ public class FileLogger implements GnssListener {
 
     }
 
+
     @Override
     public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
         synchronized (mFileLock) {
             if (mFileWriter == null) {
                 return;
             }
+
+            // 获取GNSS时钟数据
             GnssClock gnssClock = event.getClock();
 
             // 如果平滑化方式改变，则初始化系数
@@ -838,8 +1017,12 @@ public class FileLogger implements GnssListener {
                 SettingsFragment.SMOOTHER_RATE_RESET_FLAG_FILE = false;
             }
 
+            // 通过参数的 getMeasurements()方法获取观测值对象的集合
+            // 因为接收机只有一部, 而观测卫星众多, 这就是钟对象只有一个, 而观测值对象有多个的原因
+            // 只要有接收到一颗GPS卫星的信号, 就开始记录
             for (GnssMeasurement measurement : event.getMeasurements()) {
                 try {
+                    // 首次观测, 文件头
                     if(firsttime == true && measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS){
                         gnssClock = event.getClock();
 
@@ -879,7 +1062,6 @@ public class FileLogger implements GnssListener {
                         if (iRollover == false && prm > 0 && prSeconds < 0.5) {
                             if (SettingsFragment.RINEX303) {
                                 mFileWriter.write(String.format("  %4d    %2d    %2d    %2d    %2d   %10.7f     GPS         TIME OF FIRST OBS   ", value.Y, value.M, value.D, value.h, value.m, value.s));
-                                //mFileWriter.write(String.format("  %4d    %2d    %2d    %2d    %2d   %10.7f     GPS         TIME OF END OBS     ", value.Y, value.M, value.D, value.h, value.m, value.s));
                                 mFileWriter.newLine();
                                 mFileWriter.write(" 24 R01  1 R02 -4 R03  5 R04  6 R05  1 R06 -4 R07  5 R08  6 GLONASS SLOT / FRQ #");
                                 mFileWriter.newLine();
@@ -897,8 +1079,10 @@ public class FileLogger implements GnssListener {
                                 mFileWriter.write(StartTimeOBS + ENDOFHEADER);
                                 mFileWriter.newLine();
                             }
+
                             // 固定FullBiasNanos
-                            if (gnssClock.hasBiasNanos()) {
+                            if (gnssClock.hasFullBiasNanos() && gnssClock.hasBiasNanos()) {
+                                // 获取本地硬件时钟与GPST的偏差
                                 constFullBiasNanos = gnssClock.getFullBiasNanos() + gnssClock.getBiasNanos();
                             } else {
                                 constFullBiasNanos = gnssClock.getFullBiasNanos();
@@ -908,7 +1092,7 @@ public class FileLogger implements GnssListener {
                          }
                     }
                     else{
-
+                        break;
                     }
                 } catch (IOException e) {
                     Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
@@ -916,7 +1100,13 @@ public class FileLogger implements GnssListener {
                 }
             }
             try {
-                writeGnssMeasurementToFile(gnssClock,event);
+                // 记录原始观测txt文件
+                writeRawGnssMeasurementToFile(gnssClock, event);
+
+                // 记录rienx文件
+                writeGnssMeasurementToFile(gnssClock, event);
+
+                // Gong: Timer for what???
                 if(SettingsFragment.enableTimer){
                     if(true) {
                         SettingsFragment.timer = SettingsFragment.timer - 1;
@@ -961,6 +1151,44 @@ public class FileLogger implements GnssListener {
         }
     }
 
+    public void onRawSensorListener(String listener,float rawAcc[], float rawGyro[], float rawGrav[], float rawMag[],
+                                 float rawRot[], float rawPre) {
+        synchronized (mFileAccAzLock) {
+            if (mFileAccAzWriter == null || SettingsFragment.ResearchMode == false || !SettingsFragment.EnableSensorLog) {
+                return;
+            }
+            else{
+                if(listener == "") {
+                    try {
+                        // Log.e("Write","Writing Sensors Data");
+                        Calendar myCal= Calendar.getInstance();
+                        DateFormat myFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss.SSSSSS");
+                        String myTime = myFormat.format(myCal.getTime());
+                        //csv文件内容 行人位置模型 altitude是气压传感器
+                        String SensorStream =
+                                String.format("%s, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
+                                        myTime,
+                                        rawAcc[0], rawAcc[1], rawAcc[2], rawGyro[0], rawGyro[1], rawGyro[2],
+                                        rawGrav[0], rawGrav[1], rawGrav[2], rawMag[0], rawMag[1], rawMag[2],
+                                        rawRot[0], rawRot[1], rawRot[2], rawRot[3], rawPre);
+
+                        //Log.e("Sensors", SensorStream);
+                        mFileAccAzWriter.write(SensorStream);
+
+//                        String day= String.format("%6d,%6d,%6d,%13.7f,\t",gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d,myName);
+//                        mFileAccAzWriter.write(day);
+//                        String time= String.format("%13.7f",myName);
+//                        mFileAccAzWriter.write(myName);
+//                        mFileAccAzWriter.newLine();
+
+                    } catch (IOException e) {
+                        Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
+                        logException(ERROR_WRITING_FILE, e);
+                    }
+                }
+            }
+        }
+    }
 
     public void onSensorListener(String listener,float azimuth,float accZ,float altitude){
         synchronized (mFileAccAzLock) {
@@ -970,17 +1198,17 @@ public class FileLogger implements GnssListener {
             else{
                 if(listener == "") {
                     try {
-                        Calendar myCal= Calendar.getInstance();
-                        DateFormat myFormat = new SimpleDateFormat("MM/dd/hh:mm.ss");
-                        String myName = myFormat.format(myCal.getTime());
+                        //Calendar myCal= Calendar.getInstance();
+                        //DateFormat myFormat = new SimpleDateFormat("MM/dd/hh:mm.ss");
+                        //String myName = myFormat.format(myCal.getTime());
                         //csv文件内容 行人位置模型 altitude是气压传感器
                         String SensorStream =
                                 String.format("%f,%f,%f", (float) (accZ * Math.sin(azimuth)), (float) (accZ * Math.cos(azimuth)), altitude);
                         mFileAccAzWriter.write(SensorStream);
-                        String day= String.format("%6d,%6d,%6d,%13.7f,\t",gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d,myName);
-                        mFileAccAzWriter.write(day);
-                        String time= String.format("%13.7f",myName);
-                        mFileAccAzWriter.write(myName);
+                        //String day= String.format("%6d,%6d,%6d,%13.7f,\t",gnsstimeclock_a,gnsstimeclock_b,gnsstimeclock_c,gnsstimeclock_d,myName);
+                        //mFileAccAzWriter.write(day);
+                        //String time= String.format("%13.7f",myName);
+                        //mFileAccAzWriter.write(myName);
                         mFileAccAzWriter.newLine();
                     } catch (IOException e) {
                         Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
@@ -990,6 +1218,7 @@ public class FileLogger implements GnssListener {
             }
         }
     }
+
     @Override
     public void onGnssNavigationMessageStatusChanged(int status) {
     }
@@ -1011,9 +1240,9 @@ public class FileLogger implements GnssListener {
             }
             else{
                 try {
-                    String NmeaStream = String.format("%s", s);
+                    String NmeaStream = String.format(Locale.US, "NMEA,%s,%d", s.trim(), timestamp);
                     mFileNmeaWriter.write(NmeaStream);
-//                    mFileNmeaWriter.newLine();
+                    mFileNmeaWriter.newLine();
                 }catch (IOException e){
                     Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
                     logException(ERROR_WRITING_FILE, e);
@@ -1023,7 +1252,9 @@ public class FileLogger implements GnssListener {
     }
 
     @Override
-    public void onListenerRegistration(String listener, boolean result) {}
+    public void onListenerRegistration(String listener, boolean result) {
+
+    }
 
     private void writeUseInFixArray(GnssStatus gnssStatus) throws IOException{
         for (int i = 0; i < gnssStatus.getSatelliteCount(); i++) {
@@ -1044,6 +1275,62 @@ public class FileLogger implements GnssListener {
         return UsedInFixList.indexOf(Svid) != -1;
     }
 
+    private void writeRawGnssMeasurementToFile(GnssClock clock, GnssMeasurementsEvent event) throws IOException {
+        try {
+            for (GnssMeasurement measurement : event.getMeasurements())
+            {
+                String clockStream =
+                        String.format(
+                                "Raw,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                                SystemClock.elapsedRealtime(),
+                                clock.getTimeNanos(),
+                                clock.hasLeapSecond() ? clock.getLeapSecond() : "",
+                                clock.hasTimeUncertaintyNanos() ? clock.getTimeUncertaintyNanos() : "",
+                                clock.getFullBiasNanos(),
+                                clock.hasBiasNanos() ? clock.getBiasNanos() : "",
+                                clock.hasBiasUncertaintyNanos() ? clock.getBiasUncertaintyNanos() : "",
+                                clock.hasDriftNanosPerSecond() ? clock.getDriftNanosPerSecond() : "",
+                                clock.hasDriftUncertaintyNanosPerSecond()
+                                        ? clock.getDriftUncertaintyNanosPerSecond()
+                                        : "",
+                                clock.getHardwareClockDiscontinuityCount() + ",");
+                mFileRawWriter.write(clockStream);
+
+                String measurementStream =
+                        String.format(
+                                "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s",
+                                measurement.getSvid(),
+                                measurement.getTimeOffsetNanos(),
+                                measurement.getState(),
+                                measurement.getReceivedSvTimeNanos(),
+                                measurement.getReceivedSvTimeUncertaintyNanos(),
+                                measurement.getCn0DbHz(),
+                                measurement.getPseudorangeRateMetersPerSecond(),
+                                measurement.getPseudorangeRateUncertaintyMetersPerSecond(),
+                                measurement.getAccumulatedDeltaRangeState(),
+                                measurement.getAccumulatedDeltaRangeMeters(),
+                                measurement.getAccumulatedDeltaRangeUncertaintyMeters(),
+                                measurement.hasCarrierFrequencyHz() ? measurement.getCarrierFrequencyHz() : "",
+                                measurement.hasCarrierCycles() ? measurement.getCarrierCycles() : "",
+                                measurement.hasCarrierPhase() ? measurement.getCarrierPhase() : "",
+                                measurement.hasCarrierPhaseUncertainty()
+                                        ? measurement.getCarrierPhaseUncertainty()
+                                        : "",
+                                measurement.getMultipathIndicator(),
+                                measurement.hasSnrInDb() ? measurement.getSnrInDb() : "",
+                                measurement.getConstellationType(),
+                                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
+                                        && measurement.hasAutomaticGainControlLevelDb()
+                                        ? measurement.getAutomaticGainControlLevelDb()
+                                        : "");
+                mFileRawWriter.write(measurementStream);
+                mFileRawWriter.newLine();
+            }
+        } catch(IOException e){
+            logException(ERROR_WRITING_FILE, e);
+        }
+    }
+
     private void writeGnssMeasurementToFile(GnssClock clock, GnssMeasurementsEvent event) throws IOException {
         if (localintervaltime < SettingsFragment.interval) {
             localintervaltime++;
@@ -1060,13 +1347,11 @@ public class FileLogger implements GnssListener {
         int satnumber = 0;
 
 
-        //2周波観測
+        // 双频观测
         if (SettingsFragment.useDualFreq) {
-
-            //RINEX303
+            // RINEX303
             if (SettingsFragment.RINEX303) {
-
-                //GPS衛星
+                //GPS
                 String L5carrier_1 = "";
                 String L5code_1 = "";
                 String S5C_1 = "";
@@ -1104,7 +1389,7 @@ public class FileLogger implements GnssListener {
                 String L5code_32 = "";
                 String S5C_32 = "";
 
-                // QZSS衛星
+                // QZSS
                 String QZSS_L1_1 = "";
                 String QZSS_C1_1 = "";
                 String QZS1_1 = "";
@@ -1118,7 +1403,7 @@ public class FileLogger implements GnssListener {
                 String QZSS_C1_4 = "";
                 String QZS1_4 = "";
 
-                // Galileo衛星
+                // Galileo
                 String Galileo_L1_1 = "";
                 String Galileo_C1_1 = "";
                 String GalileoS1_1 = "";
@@ -1208,53 +1493,70 @@ public class FileLogger implements GnssListener {
                 GnssClock gnssClock = event.getClock();
                 double weekNumber = Math.floor(-(gnssClock.getFullBiasNanos() * 1e-9 / 604800));
                 double weekNumberNanos = weekNumber * 604800 * 1e9;
-                //FullBiasNanosがリセットされたら再計算
+                // FullBiasNanos重置后重新计算
                 if (constFullBiasNanos == 0.0) {
-                    if (gnssClock.hasBiasNanos()) {
+                    if ( gnssClock.hasFullBiasNanos() && gnssClock.hasBiasNanos()) {
                         constFullBiasNanos = gnssClock.getFullBiasNanos() + gnssClock.getBiasNanos();
                     } else {
                         constFullBiasNanos = gnssClock.getFullBiasNanos();
                     }
                 }
-                //Log.d("ConstBias",String.valueOf(constFullBiasNanos%1e5));
-                //Log.d("InstBias",String.valueOf((gnssClock.getFullBiasNanos()%1e5)));
-                //Log.d("TimeNanosBias",String.valueOf(((gnssClock.getFullBiasNanos()%1e5) - (constFullBiasNanos%1e5))));
+                Log.d("ConstBias",String.valueOf(constFullBiasNanos%1e5));
+                Log.d("InstBias",String.valueOf((gnssClock.getFullBiasNanos()%1e5)));
+                Log.d("TimeNanosBias",String.valueOf(((gnssClock.getFullBiasNanos()%1e5) - (constFullBiasNanos%1e5))));
+
+                // 定义在完整GNSS时间中测得的时间tRX_GNSS
+                // local estimate of GPS time = TimeNanos - (FullBiasNanos + BiasNanos)
                 double tRxNanos = gnssClock.getTimeNanos() - constFullBiasNanos - weekNumberNanos;
-                //GPS週・週秒から年月日時分秒に変換
+
+                // 从GPS周、周秒转换成年月、日期、分秒
                 GPSWStoGPST gpswStoGPST = new GPSWStoGPST();
                 ReturnValue value = gpswStoGPST.method(weekNumber, tRxNanos * 1e-9);
+
+                // 循环接收到每一个卫星的信号
                 for (GnssMeasurement measurement : event.getMeasurements()) {
-                    if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS || (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS && SettingsFragment.useGL) || (measurement.getConstellationType() == GnssStatus.CONSTELLATION_QZSS && SettingsFragment.useQZ) || ((measurement.getConstellationType() == GnssStatus.CONSTELLATION_GALILEO) && (SettingsFragment.useGA)) || (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU && SettingsFragment.useBD)) {
-                        double tRxSeconds = (tRxNanos - measurement.getTimeOffsetNanos()) * 1e-9;
-                        double tTxSeconds = measurement.getReceivedSvTimeNanos() * 1e-9;
-                        //GLONASS時刻への変換
+                    if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS ||
+                            (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS && SettingsFragment.useGL) ||
+                            (measurement.getConstellationType() == GnssStatus.CONSTELLATION_QZSS && SettingsFragment.useQZ) ||
+                            ((measurement.getConstellationType() == GnssStatus.CONSTELLATION_GALILEO) && (SettingsFragment.useGA)) ||
+                            (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU && SettingsFragment.useBD)) {
+
+                        // p = (tRx - tTx) * c
+                        // getTimeOffsetNanos(): Gets the time offset at which the measurement was taken in nanoseconds.
+                        double tRxSeconds = (tRxNanos + measurement.getTimeOffsetNanos()) * 1e-9;   // 信号接收时间
+                        double tTxSeconds = measurement.getReceivedSvTimeNanos() * 1e-9;            // 信号发射时间
+
+                        // GLONASS时间变换
                         if ((measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS)) {
                             double tRxSeconds_GLO = tRxSeconds % 86400;
                             double tTxSeconds_GLO = tTxSeconds - 10800 + leapseconds;
+
                             if (tTxSeconds_GLO < 0) {
                                 tTxSeconds_GLO = tTxSeconds_GLO + 86400;
                             }
                             tRxSeconds = tRxSeconds_GLO;
                             tTxSeconds = tTxSeconds_GLO;
                         }
-                        //Beidou時刻への変換
+                        //Beidou时间变换
                         if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU) {
                             double tRxSeconds_BDS = tRxSeconds;
                             double tTxSeconds_BDS = tTxSeconds + leapseconds - 4;
+
                             if (tTxSeconds_BDS > 604800) {
                                 tTxSeconds_BDS = tTxSeconds_BDS - 604800;
                             }
-                    /*Log.i("PRN", String.format("%s%2d", getConstellationName(measurement.getConstellationType()), measurement.getSvid()));
-                    Log.i("tRxSeconds", String.valueOf(tRxSeconds_BDS));
-                    Log.i("tTxSeconds", String.valueOf(tTxSeconds_BDS));//53333*/
                             tRxSeconds = tRxSeconds_BDS;
                             tTxSeconds = tTxSeconds_BDS;
                         }
-                        //GPS週のロールオーバーチェック
+
+                        // Gong: ???
+                        // GPS一周的重复检查
                         double prSeconds = tRxSeconds - tTxSeconds;
                         boolean iRollover = prSeconds > 604800 / 2;
                         if (iRollover) {
+                            Log.d("ISRollover", "prSeconds > 604800 / 2");
                             double delS = Math.round(prSeconds / 604800) * 604800;
+                            // prS为距离这周开始或者这周结束的最小秒数
                             double prS = prSeconds - delS;
                             double maxBiasSeconds = 10;
                             if (prS > maxBiasSeconds) {
@@ -1267,22 +1569,23 @@ public class FileLogger implements GnssListener {
                             }
                         }
 
-                        /*急場の変更！！*/
+                        /* 紧急变更 */
                         String DeviceName = Build.DEVICE;
-                        //Log.d("DEVICE",DeviceName);
-                        /*急場の変更！！*/
+                        Log.d("DEVICE",DeviceName);
+                        /* 紧急变更 */
+
                         double prm = prSeconds * 2.99792458e8;
-                        //コード擬似距離の計算
+                        // 伪距计算, SensorStream为了和传感器中的数据时间对齐(标记)
                         if (iRollover == false && prm > 0 && prSeconds < 0.5) {
                             if (firstOBS == true) {
                                 OBSTime = String.format("> %4d %2d %2d %2d %2d%11.7f  0", value.Y, value.M, value.D, value.h, value.m, value.s);
                                 SensorStream =
                                         String.format("%6d,%6d,%6d,%6d,%6d,%13.7f", value.Y, value.M, value.D, value.h, value.m, value.s);
                                 //firstOBS = false;
-
                             }
-                            //GPSのPRN番号と時刻用String
+                            // GPS的PRN号和时间用String
                             String prn = "";
+                            // L5频率 1176.45MHz
                             if (Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 115.0 * 10.23e6, TOLERANCE_MHZ)) {
                                 if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS) {
                                     prn = String.format("G%02d", measurement.getSvid());
@@ -1295,7 +1598,7 @@ public class FileLogger implements GnssListener {
                                 } else if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU) {
                                     prn = String.format("C%02d", measurement.getSvid());
                                 }
-                                // Prn.append(prn);
+                                //Prn.append(prn);
                                 satnumber = satnumber + 1;
                             }
                             //Measurements.append(prn);
@@ -1303,39 +1606,65 @@ public class FileLogger implements GnssListener {
                             String C1C = String.format("%14.3f%s%s", prm, " ", " ");
                             String L1C = String.format("%14.3f%s%s", 0.0, " ", " ");
 
-                            //搬送波の謎バイアスを補正したい
+                            // Gets the accumulated delta range since the last channel reset, in meters.
                             double ADR = measurement.getAccumulatedDeltaRangeMeters();
-                            if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS || measurement.getConstellationType() == GnssStatus.CONSTELLATION_GALILEO || measurement.getConstellationType() == GnssStatus.CONSTELLATION_QZSS) {
-                                if (SettingsFragment.CarrierPhase == true) {
-                                    if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP) {
-                                        if (Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 154.0 * 10.23e6, TOLERANCE_MHZ)) {
+                            if (SettingsFragment.CarrierPhase == true)
+                            {
+                                //GPS GALILEO QZSS
+                                if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS ||
+                                        measurement.getConstellationType() == GnssStatus.CONSTELLATION_GALILEO ||
+                                        measurement.getConstellationType() == GnssStatus.CONSTELLATION_QZSS)
+                                {
+                                    // 如果检测到周跳则在观测值后面加一个1作为标记
+                                    if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP)
+                                    {
+                                        if (Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 154.0 * 10.23e6, TOLERANCE_MHZ))
+                                        {
                                             L1C = String.format("%14.3f%s%s", ADR / GPS_L1_WAVELENGTH, "1", " ");
-                                        } else {
+                                        }
+                                        else if ((Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 115.0 * 10.23e6, TOLERANCE_MHZ)))
+                                        {
                                             L1C = String.format("%14.3f%s%s", ADR / GPS_L5_WAVELENGTH, "1", " ");
                                         }
                                     } else {
-                                        if (Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 154.0 * 10.23e6, TOLERANCE_MHZ)) {
+                                        if (Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 154.0 * 10.23e6, TOLERANCE_MHZ))
+                                        {
                                             L1C = String.format("%14.3f%s%s", ADR / GPS_L1_WAVELENGTH, " ", " ");
-                                        } else {
+                                        }
+                                        else if ((Mathutil.fuzzyEquals(measurement.getCarrierFrequencyHz(), 115.0 * 10.23e6, TOLERANCE_MHZ)))
+                                        {
                                             L1C = String.format("%14.3f%s%s", ADR / GPS_L5_WAVELENGTH, " ", " ");
                                         }
                                     }
+
                                 }
-                            } else if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS) {
-                                if (measurement.getSvid() <= 24) {
-                                    if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP) {
-                                        L1C = String.format("%14.3f%s%s", ADR / GLONASSG1WAVELENGTH(measurement.getSvid()), "1", " ");
-                                    } else {
-                                        L1C = String.format("%14.3f%s%s", ADR / GLONASSG1WAVELENGTH(measurement.getSvid()), " ", " ");
+                                // GLONASS
+                                else if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS)
+                                {
+                                    if (measurement.getSvid() <= 24)
+                                    {
+                                        if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP)
+                                        {
+                                            L1C = String.format("%14.3f%s%s", ADR / GLONASSG1WAVELENGTH(measurement.getSvid()), "1", " ");
+                                        } else
+                                        {
+                                            L1C = String.format("%14.3f%s%s", ADR / GLONASSG1WAVELENGTH(measurement.getSvid()), " ", " ");
+                                        }
                                     }
                                 }
-                            } else if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU) {
-                                if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP) {
-                                    L1C = String.format("%14.3f%s%s", ADR / BEIDOUWAVELENGTH(measurement.getSvid()), "1", " ");
-                                } else {
-                                    L1C = String.format("%14.3f%s%s", ADR / BEIDOUWAVELENGTH(measurement.getSvid()), " ", " ");
+                                // BDS
+                                else if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU)
+                                {
+                                    if (measurement.getAccumulatedDeltaRangeState() == GnssMeasurement.ADR_STATE_CYCLE_SLIP)
+                                    {
+                                        L1C = String.format("%14.3f%s%s", ADR / BEIDOUWAVELENGTH(measurement.getSvid()), "1", " ");
+                                    } else
+                                    {
+                                        L1C = String.format("%14.3f%s%s", ADR / BEIDOUWAVELENGTH(measurement.getSvid()), " ", " ");
+                                    }
                                 }
                             }
+
                             int index = measurement.getSvid();
                             if (measurement.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS) {
                                 index = index + 64;
@@ -1349,6 +1678,7 @@ public class FileLogger implements GnssListener {
                             if (!SettingsFragment.usePseudorangeRate && measurement.getAccumulatedDeltaRangeState() != GnssMeasurement.ADR_STATE_VALID) {
                                 CURRENT_SMOOTHER_RATE[index] = 1.0;
                             }
+
                             //Pseudorange Smoother
                             if (SettingsFragment.usePseudorangeSmoother && prm != 0.0) {
                                 if (index < 300) {
@@ -1368,6 +1698,7 @@ public class FileLogger implements GnssListener {
                                     }
                                 }
                             }
+
                             String D1C = String.format("%14.3f%s%s", -measurement.getPseudorangeRateMetersPerSecond() / GPS_L1_WAVELENGTH, " ", " ");
 
                             String S1C = String.format("%14.3f%s%s", measurement.getCn0DbHz(), " ", " ");
@@ -1773,7 +2104,9 @@ public class FileLogger implements GnssListener {
                     mFileAccAzWriter.newLine();
                 }
             }
-            else {                                                                                         // RINEX 2.11
+
+            // RINEX 2.11
+            else {
                 String L1carrier_3 = "";
                 String L1code_3 = "";
                 String S5_3 = "";
@@ -2047,14 +2380,15 @@ public class FileLogger implements GnssListener {
             }
 
         }
-        else{    //2周波観測終了
+        // 单频观测
+        else{
 
             if(SettingsFragment.RINEX303){
                 String OBSTime = "";
                 GnssClock gnssClock = event.getClock();
                 double weekNumber = Math.floor(-(gnssClock.getFullBiasNanos() * 1e-9 / 604800));
                 double weekNumberNanos = weekNumber * 604800 * 1e9;
-                //FullBiasNanosがリセットされたら再計算
+                // FullBiasNanos重置后重新计算
                 if(constFullBiasNanos == 0.0){
                     if(gnssClock.hasBiasNanos()) {
                         constFullBiasNanos = gnssClock.getFullBiasNanos() + gnssClock.getBiasNanos();
@@ -2066,7 +2400,7 @@ public class FileLogger implements GnssListener {
                 //Log.d("InstBias",String.valueOf((gnssClock.getFullBiasNanos()%1e5)));
                 //Log.d("TimeNanosBias",String.valueOf(((gnssClock.getFullBiasNanos()%1e5) - (constFullBiasNanos%1e5))));
                 double tRxNanos = gnssClock.getTimeNanos() - constFullBiasNanos - weekNumberNanos;
-                //GPS週・週秒から年月日時分秒に変換
+                // 从GPS周、周秒转换成年月、日期、分秒
                 GPSWStoGPST gpswStoGPST = new GPSWStoGPST();
                 ReturnValue value = gpswStoGPST.method(weekNumber, tRxNanos * 1e-9);
                 for (GnssMeasurement measurement : event.getMeasurements()) {
@@ -2083,7 +2417,7 @@ public class FileLogger implements GnssListener {
                             tRxSeconds = tRxSeconds_GLO;
                             tTxSeconds = tTxSeconds_GLO;
                         }
-                        //Beidou時刻への変換
+                        //Beidou
                         if(measurement.getConstellationType() == GnssStatus.CONSTELLATION_BEIDOU){
                             double tRxSeconds_BDS = tRxSeconds;
                             double tTxSeconds_BDS = tTxSeconds + leapseconds - 4;
@@ -2096,7 +2430,7 @@ public class FileLogger implements GnssListener {
                             tRxSeconds = tRxSeconds_BDS;
                             tTxSeconds = tTxSeconds_BDS;
                         }
-                        //GPS週のロールオーバーチェック
+                        //GPS
                         double prSeconds = tRxSeconds - tTxSeconds;
                         boolean iRollover = prSeconds > 604800 / 2;
                         if (iRollover) {
@@ -2390,6 +2724,7 @@ public class FileLogger implements GnssListener {
             }
         }
     }
+
     private void logException(String errorMessage, Exception e) {
         Log.e(GnssContainer.TAG + TAG, errorMessage, e);
         Toast.makeText(mContext, errorMessage, Toast.LENGTH_LONG).show();
@@ -2431,12 +2766,16 @@ public class FileLogger implements GnssListener {
     private double GLONASSG1WAVELENGTH(int svid){
         return SPEED_OF_LIGHT/((1602 + GLONASSFREQ[svid - 1] * 0.5625) * 10e5);
     }
+    private double GLONASSG2WAVELENGTH(int svid){
+        return SPEED_OF_LIGHT/((1246 + GLONASSFREQ[svid - 1] * 0.4375) * 10e5);
+    }
 
+    // 北斗B1信号
     private double BEIDOUWAVELENGTH(int svid){
         return SPEED_OF_LIGHT/(1561.098 * 10e5);
     }
 
-    //GPS週秒からGPS時への変換
+    // 从GPS周秒到GPS时的转换
     public static class ReturnValue {
         public int Y;
         public int M;
@@ -2449,10 +2788,10 @@ public class FileLogger implements GnssListener {
     public static class GPSWStoGPST {
         public ReturnValue method(double GPSW , double GPSWS) {
             ReturnValue value = new ReturnValue();
-            //MJDおよびMDの計算
+            // MJD和MD的计算
             double MD = (int)(GPSWS/86400);
             double MJD = 44244+GPSW*7+MD;
-            //ユリウス日から年月日
+            // 简化儒略日至年月日
             double JD = MJD + 2400000.5;
             double N = JD + 0.5;
             int Z = (int)N;
@@ -2488,7 +2827,7 @@ public class FileLogger implements GnssListener {
             value.M = M;
             value.D = (int)D;
 
-            //GPS週秒からGPS時刻へ
+            //GPS周秒至GPS时分秒
             double DS = GPSWS-MD*86400;
             int h = (int)(DS/3600);
             double hm = DS-h*3600;
@@ -2505,4 +2844,6 @@ public class FileLogger implements GnssListener {
 
     }
 
+    @Override
+    public void onTTFFReceived(long l) {}
 }

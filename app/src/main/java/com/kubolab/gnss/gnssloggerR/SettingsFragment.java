@@ -40,7 +40,7 @@ import static android.location.GnssMeasurementsEvent.Callback.STATUS_READY;
  */
 public class SettingsFragment extends Fragment {
 
-//    private UiLogger mUiLogger;
+
 //private TextView mSensorSpecView;
     private TextView mAccSpecView;
     private TextView mGyroSpecView;
@@ -53,12 +53,13 @@ public class SettingsFragment extends Fragment {
     private TextView mPressAvView;
 
     public static final String TAG = ":SettingsFragment";
-    public static String SAVE_LOCATION = "G_RitZ_Logger";
+    public static String SAVE_LOCATION = "GNSS_FUSING";
     public static String FILE_PREFIX = "/" + SAVE_LOCATION + "/RINEXOBS";
     public static String FILE_PREFIXSUB = "/" + SAVE_LOCATION + "/KML";
     public static String FILE_PREFIXACCAZI = "/" + SAVE_LOCATION + "/CSV";
     public static String FILE_PREFIXNMEA = "/" + SAVE_LOCATION + "/NMEA";
     public static String FILE_PREFIXNAV = "/" + SAVE_LOCATION + "/RINEXNAV";
+    public static String FILE_PREFIXRAW = "/" + SAVE_LOCATION +"/RAWDATA";
     public static String FILE_NAME = "AndroidOBS";
 
     public static boolean useDualFreq = false;
@@ -95,16 +96,18 @@ public class SettingsFragment extends Fragment {
     public static boolean PermissionOK = false;
     public static boolean registerGNSS = false;
     public static boolean FileLoggingOK = false;
+    // for debug
     public static boolean EnableLogging = false;
 
-    public static boolean EnableSensorLog = false;
-
     public static boolean RINEXNAVLOG = false;
+    public static boolean EnableSensorLog = false;
+    public static boolean RAWDATALOG = false;
 
-    //RINEX記述モード
+
+    // RINEX版本描述
     public static boolean RINEX303 = false;
 
-    //計測時間
+    // 观测时间
     public static int timer = 0;
     public static boolean enableTimer = false;
     public static int interval = 1;
@@ -319,6 +322,14 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        final CheckBox outPutRaw = (CheckBox) view.findViewById(R.id.outputRaw);
+        outPutRaw.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                RAWDATALOG = outPutRaw.isChecked();
+            }
+        });
+
         Date now = new Date();
         int observation = now.getYear() - 100;
         final TextView FileExtension = (TextView) view.findViewById(R.id.FileExtension);
@@ -370,16 +381,17 @@ public class SettingsFragment extends Fragment {
                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     // 把输入的文字输出到toast上
-                                    if(editView.getText().toString().indexOf("1") != -1){
+                                    if(editView.getText().toString().indexOf("") != -1){
                                         Toast.makeText(getContext(),
                                                 "Research mode turned ON",
                                                 Toast.LENGTH_LONG).show();
                                         ResearchMode = true;
-                                        rbrinex303.setEnabled(true);
-                                        useGAL.setEnabled(true);
+                                        //rbrinex303.setEnabled(true);
+                                        //useGAL.setEnabled(true);
                                         outPutSensor.setEnabled(true);
                                         RINEXNAVCheck.setEnabled(true);
-                                        useBDS.setEnabled(true);
+                                        outPutRaw.setEnabled(true);
+                                        //useBDS.setEnabled(true);
                                         useSBS.setEnabled(true);
                                     }else {
                                         Toast.makeText(getContext(),
@@ -398,14 +410,15 @@ public class SettingsFragment extends Fragment {
                             .show();
                 } else {
                     ResearchMode = false;
-                    rbrinex303.setEnabled(false);
-                    rbrinex303.setChecked(false);
-                    rbrinex211.setChecked(true);
-                    useGAL.setEnabled(false);
-                    outPutSensor.setEnabled(true);
-                    RINEXNAVCheck.setEnabled(true);
-                    useBDS.setEnabled(true);
-                    useSBS.setEnabled(true);
+                    //rbrinex303.setEnabled(false);
+                    //rbrinex303.setChecked(false);
+                    //rbrinex211.setChecked(true);
+                    //useGAL.setEnabled(false);
+                    outPutSensor.setEnabled(false);
+                    RINEXNAVCheck.setEnabled(false);
+                    outPutRaw.setEnabled(false);
+                    //useBDS.setEnabled(false);
+                    useSBS.setEnabled(false);
                     //RINEX303 = false;
                     ResearchMode = true;
                 }

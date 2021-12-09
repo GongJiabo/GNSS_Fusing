@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId 'com.kubolab.gnss.gnssloggerR'
-        minSdkVersion 24
-        targetSdkVersion 24
+        minSdkVersion 26
+        targetSdkVersion 26
         versionName '1.5.2'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         versionCode 17

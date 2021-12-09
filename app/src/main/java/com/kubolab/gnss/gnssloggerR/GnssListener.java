@@ -39,6 +39,7 @@ public interface GnssListener {
     void onListenerRegistration(String listener, boolean result);
     /** @see OnNmeaMessageListener#onNmeaMessage(String, long) */
     void onNmeaReceived(long l, String s);
+    void onTTFFReceived(long l);
 
     //void onSensorListener(String listener,float Azimuth,float accZ);
 }

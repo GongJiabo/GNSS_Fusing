@@ -47,7 +47,7 @@ public class LoggerFragment extends Fragment {
     private TextView gnssNavigationDebugView;
     private TextView gnssNavigationDebugTitle;
     ExpandableRelativeLayout expandableLayoutNav;
-    //航法メッセージ用ビュー定義
+    // 导航消息视图定义
     private TextView IONTitle,IONCORR,TimeCorr,TimeTitle,leapseconds,leapsecondstitle;
 
     private ScrollView mScrollView;
@@ -59,7 +59,7 @@ public class LoggerFragment extends Fragment {
     private boolean FileLogging;
     private Spinner interval_spinner;
 
-    //セーブ中ダイアログの表示
+    // 保存中对话框的显示
     private View MainView;
     private PopupWindow Progress_Popup;
 
@@ -272,8 +272,10 @@ public class LoggerFragment extends Fragment {
         startLog = (Button) view.findViewById(R.id.start_logs);
 
         startLog.setText("ClockSync...");
-        startLog.setEnabled(false);
-//        startLog.setEnabled(true);
+
+        // for debug
+//        startLog.setEnabled(false);
+        startLog.setEnabled(true);
 
         mGNSSClockView = (TextView) view.findViewById(R.id.GNSSClockView);
 
