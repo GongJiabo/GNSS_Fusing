@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/spp_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="28dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spptitle"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp"
+            android:text="@string/spp_title"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="60sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/spptitle"
+            android:text="@string/setting"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="58sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sppsetting_btnRestore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spp_title"
+        android:layout_centerHorizontal="true"
+        android:alpha=".8"
+        android:fontFamily="@font/xiugaifront"
+        android:text="@string/restore_defaults"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="16sp" />
+
+    <ScrollView
+        android:id="@+id/setting_groupSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/sppsetting_btnRestore"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:fadingEdgeLength="30dp"
+        android:overScrollMode="never"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/sppmodle"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_SppModel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="25dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/sppmodle_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnSppModel"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/system_gnss"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_GnssSystem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/system_gnss_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnGnssSystem"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:id="@+id/setting_observerName"
+                    android:layout_width="55dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="0dp"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/ntripsetting"
+                    android:textColor="@color/colorGray"
+                    android:textSize="25sp" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="0dp"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/host"
+                    android:textColor="@color/colorGray"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_NtripHost"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/host_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnNtripHost"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/port"
+                    android:textColor="@color/colorGray"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_NtripPort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/port_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnNtripPort"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/username"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_NtripUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/username_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnNtripUserName"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="40dp"
+                    android:layout_height="25dp"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/password"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_NtripPassWord"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="28dp"
+                    android:background="@drawable/bg_setting_list"
+                    android:text="@string/password_default"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/sppsetting_btnNtripPassWord"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</RelativeLayout>

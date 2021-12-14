@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.kubolab.gnss.gnssloggerR">
+    package="com.whu.gnss.gnsslogger">
 
     <uses-sdk android:targetSdkVersion="24" />
 
@@ -34,13 +34,11 @@
              sign the APK for publishing.
              You can define the keys for the debug and release targets in src/debug/ and src/release/. 
         -->
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
 
-        <activity
-            android:name=".MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+        <activity android:name=".RinexSettingsActivity"></activity>
+        <activity android:name=".CalSettingsActivity"></activity>
+
+
     </application>
 
 </manifest>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+
+    <LinearLayout
+        android:id="@+id/setting_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="28dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/settingtitle"
+            android:paddingEnd="10dp"
+            android:paddingStart="0dp"
+            android:text="@string/rinex"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="60sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/settingtitle"
+            android:text="@string/setting"
+            android:textColor="@color/colorDarkGray"
+            android:textSize="58sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/setting_btnRestore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/setting_groupSetting"
+        android:layout_centerHorizontal="true"
+        android:alpha=".8"
+        android:fontFamily="@font/xiugaifront"
+        android:text="@string/restore_defaults"
+        android:textColor="@color/colorDarkGray"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/setting_groupVersion"
+        android:layout_width="237dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/setting_btnRestore"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="20dp"
+            android:fontFamily="@font/xiugaifront"
+            android:text="@string/version"
+            android:textColor="@color/colorGray"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/RINEXMODE211"
+            android:layout_width="wrap_content"
+            android:layout_height="42dp"
+            android:layout_marginTop="5dp"
+            android:checked="true"
+            android:text="2.11"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/RINEXMODE303"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="3.03"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:id="@+id/setting_groupSetting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setting_title"
+        android:layout_marginTop="70dp"
+        android:fadingEdgeLength="30dp"
+        android:overScrollMode="never"
+        android:requiresFadingEdge="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/mark_name"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_markName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/mark_name"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnMarkName"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/mark_type"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_markType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/mark_type"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnMarkType"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/observer_name"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_observerName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/observer_name"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnObserverName"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/observer_agency_name"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_observerAgencyName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/observer_agency_name"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnObserverAgencyName"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/receiver_number"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_receiverNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/receiver_number"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnReceiverNumber"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/receiver_type"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_receiverType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/receiver_type"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnReceiverType"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/receiver_version"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_receiverVersion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/receiver_version"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnReceiverVersion"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/antenna_number"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_antennaNumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/antenna_number"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnAntennaNumber"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/antenna_type"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_antennaType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/antenna_type"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnAntennaType"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/antenna_eccentricity_east"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_antennaEccentricityEast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/antenna_eccentricity_east"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnAntennaEccentricityEast"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/antenna_eccentricity_north"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_antennaEccentricityNorth"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/antenna_eccentricity_north"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnAntennaEccentricityNorth"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_setting_list"
+                android:paddingTop="5dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/thaisansneue_semibold"
+                    android:text="@string/antenna_height"
+                    android:textColor="@color/colorGray"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/setting_antennaHeight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:text="@string/antenna_height"
+                    android:textColor="@color/colorDarkGray"
+                    android:textSize="30sp" />
+
+                <TextView
+                    android:id="@+id/setting_btnAntennaHeight"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/bg_btn_edit"
+                    android:fontFamily="@font/thaisansneue_light"
+                    android:gravity="center"
+                    android:text="@string/edit"
+                    android:textColor="@color/colorGray"
+                    android:textSize="15sp"  />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

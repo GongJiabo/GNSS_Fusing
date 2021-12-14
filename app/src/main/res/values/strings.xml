@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">GNSS-Fusion</string>
-    <string name="app_version">v1.5</string>
+    <string name="app_version">v1.0</string>
 
     <string name="title_settings">Settings</string>
     <string name="title_log">Log</string>
@@ -15,6 +15,119 @@
     <string name="nmea_label">Nmea</string>
     <string name="help">HELP</string>
     <string name="exit">Exit</string>
+
+
+
+
+    <string name="position">Position</string>
+    <string name="list">List</string>
+    <string name="record">Record</string>
+    <string name="satellite">Satellite</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="e_mail">E-Mail</string>
+    <string name="please_login">Please login</string>
+    <string name="please_fill">Please fill in your information</string>
+    <string name="re_password">Re-Password</string>
+    <string name="name">Name</string>
+    <string name="earth_night" translatable="false">Earth night</string>
+    <string name="start">开 始</string>
+    <string name="welcome">欢 迎 使 用</string>
+    <string name="stop">停 止</string>
+    <string name="auto_scrollbar">Auto scrollbar</string>
+    <string name="un_auto_scrollbar">详情页面</string>
+    <string name="logout">Logout</string>
+    <string name="please_email">Please enter your email</string>
+    <string name="please_password">Please enter your password</string>
+    <string name="please_re_password">Please enter your re-password</string>
+    <string name="login_failed">Login failed</string>
+    <string name="please_name">Please enter your name</string>
+    <string name="password_match">Passwords do not match</string>
+    <string name="email_invalid">Email is invalid</string>
+    <string name="password_6">Password should be at least 6 characters</string>
+    <string name="please_internet">Please connect to the internet</string>
+    <string name="ok">是</string>
+    <string name="sv_id" translatable="false">SvId</string>
+    <string name="zero" translatable="false">0</string>
+    <string name="unknown">Unknown</string>
+    <string name="hyphen" translatable="false">-</string>
+    <string name="file">文件</string>
+    <string name="rinex" translatable="false">RINEX</string>
+    <string name="spp_title" translatable="false">POS</string>
+    <string name="setting">设置</string>
+    <string name="open">打开</string>
+    <string name="share">分享</string>
+    <string name="delete">删除</string>
+    <string name="edit">修改</string>
+    <string name="mark_name" translatable="false">Mark name</string>
+    <string name="mark_type" translatable="false">Mark type</string>
+    <string name="observer_name" translatable="false">Observer name</string>
+    <string name="observer_agency_name" translatable="false">Observer agency name</string>
+    <string name="receiver_number" translatable="false">Receiver number</string>
+    <string name="receiver_type" translatable="false">Receiver type</string>
+    <string name="receiver_version" translatable="false">Receiver version</string>
+    <string name="antenna_number" translatable="false">Antenna number</string>
+    <string name="antenna_type" translatable="false">Antenna type</string>
+    <string name="antenna_eccentricity_east" translatable="false">Antenna eccentricity east</string>
+    <string name="antenna_eccentricity_north" translatable="false">Antenna eccentricity north</string>
+    <string name="antenna_height" translatable="false">Antenna height</string>
+    <string name="restore_defaults">恢复默认设置</string>
+    <string name="cancel">否</string>
+    <string name="please_confirm">请确认</string>
+    <string name="upload">上传至服务器</string>
+    <string name="successfully">successfully</string>
+    <string name="failed">failed</string>
+    <string name="empty_file">未搜索到文件！</string>
+    <string name="already_exists">already exists !</string>
+    <string name="searching">正在搜索中…</string>
+    <string name="wait_location">Wait for raw measurement data</string>
+    <string name="latitude">Latitude :</string>
+    <string name="longitude">Longitude :</string>
+    <string name="altitude">Altitude :</string>
+    <string name="gps_time">GPS Time >></string>
+    <string name="spp">定位</string>
+    <string name="zero_5_digit" translatable="false">00.00000</string>
+    <string name="zero_time" translatable="false">00:00:00</string>
+    <string name="zero_date" translatable="false">00/00/00</string>spp
+    <string name="set">Set</string>
+    <string name="hour">Hour</string>
+    <string name="min">Min</string>
+    <string name="sec">Sec</string>
+    <string name="version">版本</string>
+    <string name="nav">是否输出导航文件</string>
+    <string name="confirm">Confirm</string>
+    <string name="title_position_1">Satellite</string>
+    <string name="title_position_2">Position</string>
+    <string name="title_list_1">Satellite</string>
+    <string name="title_list_2">List</string>
+    <string name="title_record_1">GNSS</string>
+    <string name="title_record_2">记录</string>
+    <string name="close">Close</string>
+    <string name="Gps" translatable="false">Gps</string>
+    <string name="Sbas" translatable="false">Sbas</string>
+    <string name="Glonass" translatable="false">Glonass</string>
+    <string name="Qzss" translatable="false">Qzss</string>
+    <string name="Beidou" translatable="false">Beidou</string>
+    <string name="Galileo" translatable="false">Galileo</string>
+    <string name="arrow" translatable="false">------></string>
+    <string name="description">Description</string>
+
+
+    <string name="sppmodle">定位模式</string>
+    <string name="sppmodle_default">伪距单点定位/伪距差分定位</string>
+    <string name="system_gnss">卫星系统选择</string>
+    <string name="system_gnss_default">GPS/GLO/GAL/BDS/QZSS</string>
+    <string name="ntripsetting">NTRIP</string>
+    <string name="host">host</string>
+    <string name="host_default">ntrip.gnsslab.cn</string>
+    <string name="port">port</string>
+    <string name="port_default">2101</string>
+    <string name="username">账号</string>
+    <string name="username_default">tfbai</string>
+    <string name="password">密码</string>
+    <string name="password_default">tfbai@2020</string>
+    <string name="spp_file">是否输出定位文件</string>
+
 
     <string-array name="list">
         <item>1 epochs</item>

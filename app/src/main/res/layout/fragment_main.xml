@@ -8,6 +8,7 @@
     tools:layout_editor_absoluteY="81dp"
     tools:layout_editor_absoluteX="0dp">
 
+
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="0dp"
@@ -19,7 +20,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/textView12"
+                    android:id="@+id/textViewSupport"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/textView17"
+                    android:id="@+id/textViewCanLoc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -53,7 +53,7 @@
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSupport" />
 
                 <TextView
                     android:id="@+id/locationIsOk"
@@ -63,21 +63,9 @@
                     android:gravity="center_vertical"
                     android:text="Available"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView17"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewCanLoc"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView17" />
-
-                <TextView
-                    android:id="@+id/textView21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Raw Data"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                    app:layout_constraintTop_toTopOf="@+id/textViewCanLoc" />
 
                 <TextView
                     android:id="@+id/rawDataIsOk"
@@ -86,186 +74,413 @@
                     android:layout_marginEnd="16dp"
                     android:text="Available"
                     android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView21"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewCanRaw"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView21" />
+                    app:layout_constraintTop_toTopOf="@+id/textViewCanRaw" />
 
                 <TextView
-                    android:id="@+id/ObType"
+                    android:id="@+id/textViewCanRaw"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="Observation Type"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginTop="8dp"
+                    android:text="Raw Data"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView21" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCanLoc" />
+                <View
+                    android:id="@+id/view0"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewCanRaw" />
+
 
                 <TextView
-                    android:id="@+id/DualFreq"
+                    android:id="@+id/textViewOuputFiles"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Dual Frequency Observation"
+                    android:text="Output Files"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textStyle="bold"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view0" />
+
+                <TextView
+                    android:id="@+id/textViewFilePre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="File name prefix"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ObType" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewOuputFiles" />
+
+                <TextView
+                    android:id="@+id/textViewFilePreTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="0dp"
+                    android:text='Default: current time in UTC \n "yyyy_mm_dd_hh_mm"'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewFilePre" />
+
+
+                <EditText
+                    android:id="@+id/editSaveLocation"
+                    android:layout_width="102dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="48dp"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Name"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textViewFilePre" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewFilePreTxt" />
+
+                <TextView
+                    android:id="@+id/textViewRinex"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="RINEX Observation"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view1" />
+
+                <TextView
+                    android:id="@+id/textViewRinexTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/RINEX/"prefix".xxo'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRinex" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRinexTxt" />
+
+<!--                for out postion -->
+                <TextView
+                    android:id="@+id/textViewRes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Result Position"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view2" />
 
                 <CheckBox
-                    android:id="@+id/DualButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="15dp"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/DualFreq"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/DualFreq" />
+                    android:id="@+id/outputRes"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="false"
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/viewp"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view2"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <Button
+                    android:id="@+id/buttonResSetting"
+                    android:layout_width="85dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:text="SETTINGS"
+                    app:layout_constraintBottom_toBottomOf="@+id/outputRes"
+                    app:layout_constraintStart_toEndOf="@+id/outputRINEX"
+                    app:layout_constraintTop_toTopOf="@+id/outputRes"
+                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/ObTypeDescription"
+                    android:id="@+id/textViewResTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="Using L1 and L5 band"
+                    android:text='$log/RES/"prefix".xxpos'
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/DualFreq" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRes" />
 
-
-                <TextView
-                    android:id="@+id/textView32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="RINEX setting"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
+                <View
+                    android:id="@+id/viewp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/DualFreq" />
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewResTxt" />
+
 
                 <TextView
-                    android:id="@+id/textView31"
+                    android:id="@+id/textViewNav"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="RINEX version"
+                    android:layout_marginTop="8dp"
+                    android:text="RINEX Navigation"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView32" />
-
-                <RadioButton
-                    android:id="@+id/RINEXMODE211"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="15dp"
-                    android:checked="true"
-                    android:text="2.11"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView31" />
-
-                <RadioButton
-                    android:id="@+id/RINEXMODE303"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:text="3.03"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/RINEXMODE211" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/viewp" />
 
                 <TextView
-                    android:id="@+id/RINEXDescription"
+                    android:id="@+id/textViewNaviTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
-                    android:text="RINEX2.11 mode can log only GPS"
+                    android:text='$log/RINEX/"prefix".xxn'
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNav" />
+
+                <CheckBox
+                    android:id="@+id/outputRINEX"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="true"
+                    android:enabled="false"
+                    app:layout_constraintBottom_toTopOf="@+id/view2"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view1"
+                    app:layout_constraintVertical_bias="0.0" />
+
+
+                <CheckBox
+                    android:id="@+id/outputNAVI"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="false"
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/view3"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/viewp"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNaviTxt" />
+
+                <TextView
+                    android:id="@+id/textViewKML"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="KML"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view3" />
+
+                <TextView
+                    android:id="@+id/textViewKMLTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/KML/"prefix".kml'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewKML" />
+
+                <CheckBox
+                    android:id="@+id/outputKML"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="false"
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/view4"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view3"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewKMLTxt" />
+
+                <TextView
+                    android:id="@+id/textViewNMEA"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="NMEA"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view4" />
+
+                <TextView
+                    android:id="@+id/textViewNMEATxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/NMEA/"prefix".kml'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNMEA" />
+
+                <CheckBox
+                    android:id="@+id/outputNmea"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="false"
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/view5"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view4"
+                    app:layout_constraintVertical_bias="0.0" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="fill_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@android:color/darker_gray"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewNMEATxt" />
+
+                <TextView
+                    android:id="@+id/textViewSensors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="8dp"
+                    android:text="Sensors Data"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/view5" />
+
+                <TextView
+                    android:id="@+id/textViewSensorsTxt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/CSV/"prefix".kml'
+                    android:textSize="12sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSensors" />
+
+                <CheckBox
+                    android:id="@+id/outputSensors"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:checked="false"
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/view6"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view5"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <View
                     android:id="@+id/view6"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginTop="8dp"
                     android:background="@android:color/darker_gray"
-                    app:layout_constraintTop_toBottomOf="@+id/RINEXMODE303" />
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewSensorsTxt" />
+
 
                 <TextView
-                    android:id="@+id/textView35"
+                    android:id="@+id/textViewRawLog"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Pseudorange"
+                    android:text="Raw Log Data"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view6" />
 
-                <CheckBox
-                    android:id="@+id/checkBoxPseudorange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView35"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView35" />
-
                 <TextView
-                    android:id="@+id/textView36"
+                    android:id="@+id/textViewRawLogTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Recording pseudorange measurement"
+                    android:layout_marginLeft="16dp"
+                    android:text='$log/CSV/"prefix".kml'
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView35" />
-
-                <TextView
-                    android:id="@+id/usesmoother"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Pseudorange Smoother"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView36" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRawLog" />
 
                 <CheckBox
-                    android:id="@+id/checkBoxPseSmoother"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="46dp"
+                    android:id="@+id/outputRaw"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:checked="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/usesmoother"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/usesmoother" />
-
-                <TextView
-                    android:id="@+id/SmootherDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:text="Smoothed pseudorange with carrier phase measurements"
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/usesmoother" />
+                    android:enabled="true"
+                    app:layout_constraintBottom_toTopOf="@+id/view7"
+                    app:layout_constraintStart_toStartOf="@+id/editSaveLocation"
+                    app:layout_constraintTop_toTopOf="@+id/view6"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <View
                     android:id="@+id/view7"
@@ -276,39 +491,53 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/SmootherDescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewRawLogTxt" />
 
                 <TextView
-                    android:id="@+id/textView37"
+                    android:id="@+id/textSensors"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Carrier Phase"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
+                    android:layout_marginTop="16dp"
+                    android:text="Sensors Status"
+                    android:textColor="@android:color/holo_blue_dark"
+                    android:textStyle="bold"
                     app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/view7" />
 
-                <CheckBox
-                    android:id="@+id/checkBox"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView37"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView37"
-                    app:layout_constraintVertical_bias="1.0" />
 
                 <TextView
-                    android:id="@+id/textView38"
+                    android:id="@+id/textViewUseSensors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Use device sensors"
+                    android:textColor="@android:color/black"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="@+id/textViewRawLog"
+                    app:layout_constraintTop_toBottomOf="@+id/textSensors" />
+
+                <TextView
+                    android:id="@+id/textViewUseSensorsTxt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="Recording carrier phase measurement"
+                    android:text="Activating device sensors"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView37" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewUseSensors" />
+
+                <Switch
+                    android:id="@+id/register_sensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toTopOf="@+id/textViewUseSensorsTxt"
+                    app:layout_constraintStart_toStartOf="@+id/outputRaw"
+                    app:layout_constraintTop_toTopOf="@+id/textViewUseSensors"
+                    app:layout_constraintVertical_bias="0.702" />
 
                 <View
                     android:id="@+id/view8"
@@ -319,163 +548,10 @@
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView38" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewUseSensorsTxt" />
 
                 <TextView
-                    android:id="@+id/textView39"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Satellite systems"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view8" />
-
-                <CheckBox
-                    android:id="@+id/useGPS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:checked="true"
-                    android:enabled="false"
-                    android:layoutDirection="ltr"
-                    android:text="GPS"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView39"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView39" />
-
-                <CheckBox
-                    android:id="@+id/useQZS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layoutDirection="ltr"
-                    android:text="QZS"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView39" />
-
-                <CheckBox
-                    android:id="@+id/useGLO"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="GLO"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/useQZS" />
-
-                <CheckBox
-                    android:id="@+id/useGAL"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="GAL"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/useGLO" />
-
-                <CheckBox
-                    android:id="@+id/useBDS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="BDS"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/useGAL" />
-
-                <CheckBox
-                    android:id="@+id/useSBS"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:text="SBS"
-                    android:textSize="16sp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/useBDS" />
-
-                <TextView
-                    android:id="@+id/textView18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text="Satellite systems to be logged"
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView39" />
-
-                <TextView
-                    android:id="@+id/textView40"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Sensors"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/useSBS" />
-
-                <TextView
-                    android:id="@+id/textView41"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Use device sensors"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView40" />
-
-                <Switch
-                    android:id="@+id/register_sensor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_weight="1"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView41"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView41" />
-
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Activating device sensors"
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView41" />
-
-                <View
-                    android:id="@+id/view11"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="1.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-                <TextView
-                    android:id="@+id/textView42"
+                    android:id="@+id/textViewAcc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -485,20 +561,7 @@
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view11" />
-
-                <TextView
-                    android:id="@+id/accAvView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="Unavailable"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView42"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView42" />
+                    app:layout_constraintTop_toBottomOf="@+id/view8" />
 
                 <TextView
                     android:id="@+id/accSpecView"
@@ -508,10 +571,24 @@
                     android:text="Unavailable"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView42" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewAcc" />
+
+                <TextView
+                    android:id="@+id/accAvView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="68dp"
+                    android:gravity="center_vertical"
+                    android:text="Unavailable"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewAcc"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textViewAcc"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <View
-                    android:id="@+id/view12"
+                    android:id="@+id/view9"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
@@ -522,30 +599,17 @@
                     app:layout_constraintTop_toBottomOf="@+id/accSpecView" />
 
                 <TextView
-                    android:id="@+id/textView45"
+                    android:id="@+id/textViewGyro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Gyroscope"
+                    android:text="GyroScope"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view12" />
-
-                <TextView
-                    android:id="@+id/gyroAvView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="Unavailable"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView45"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView45" />
+                    app:layout_constraintTop_toBottomOf="@+id/view9" />
 
                 <TextView
                     android:id="@+id/gyroSpecView"
@@ -555,10 +619,23 @@
                     android:text="Unavailable"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView45" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewGyro" />
+
+                <TextView
+                    android:id="@+id/gyroAvView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="68dp"
+                    android:gravity="center_vertical"
+                    android:text="Unavailable"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewGyro"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textViewGyro" />
 
                 <View
-                    android:id="@+id/view13"
+                    android:id="@+id/view10"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
@@ -569,7 +646,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/gyroSpecView" />
 
                 <TextView
-                    android:id="@+id/textView47"
+                    android:id="@+id/textViewMag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -579,20 +656,7 @@
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view13" />
-
-                <TextView
-                    android:id="@+id/magAvView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="Unavailable"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView47"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView47" />
+                    app:layout_constraintTop_toBottomOf="@+id/view10" />
 
                 <TextView
                     android:id="@+id/magSpecView"
@@ -602,10 +666,23 @@
                     android:text="Unavailable"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView47" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewMag" />
+
+                <TextView
+                    android:id="@+id/magAvView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="68dp"
+                    android:gravity="center_vertical"
+                    android:text="Unavailable"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewMag"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/textViewMag" />
 
                 <View
-                    android:id="@+id/view14"
+                    android:id="@+id/view11"
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="8dp"
@@ -616,7 +693,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/magSpecView" />
 
                 <TextView
-                    android:id="@+id/textView49"
+                    android:id="@+id/textViewPre"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
@@ -626,20 +703,7 @@
                     android:textSize="18sp"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view14" />
-
-                <TextView
-                    android:id="@+id/pressAvView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:gravity="center_vertical"
-                    android:text="Unavailable"
-                    android:textSize="16sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView49"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView49" />
+                    app:layout_constraintTop_toBottomOf="@+id/view11" />
 
                 <TextView
                     android:id="@+id/pressSpecView"
@@ -649,359 +713,25 @@
                     android:text="Unavailable"
                     android:textSize="12sp"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView49" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPre" />
+
+
 
                 <TextView
-                    android:id="@+id/textView51"
+                    android:id="@+id/pressAvView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="32dp"
-                    android:text="Output files"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/pressSpecView" />
-
-                <TextView
-                    android:id="@+id/textView52"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="File name prefix"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView51" />
-
-                <EditText
-                    android:id="@+id/EditSaveLocation"
-                    android:layout_width="102dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:layout_weight="1"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:textSize="12sp"
+                    android:layout_marginEnd="68dp"
+                    android:gravity="center_vertical"
+                    android:text="Unavailable"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textViewPre"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView52" />
-
-                <TextView
-                    android:id="@+id/textView53"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='Default: current time in UTC \n "yyyy_mm_dd_hh_mm"'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView52" />
-
-                <View
-                    android:id="@+id/view16"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView53" />
+                    app:layout_constraintTop_toTopOf="@+id/textViewPre" />
 
                 <TextView
-                    android:id="@+id/textView54"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="RINEX Observation"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view16" />
-
-                <TextView
-                    android:id="@+id/FileExtension"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='$log/RINEX/"prefix".xxo'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView54" />
-
-                <View
-                    android:id="@+id/view17"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/FileExtension" />
-
-                <TextView
-                    android:id="@+id/textView26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="RINEX Navigation"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view17" />
-
-                <TextView
-                    android:id="@+id/fileExtensionNav"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='$log/RINEX/"prefix".xxn'
-                    android:textSize="12sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView26" />
-
-                <CheckBox
-                    android:id="@+id/outputRINESNAV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:checked="false"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView26"
-                    app:layout_constraintStart_toStartOf="@+id/outputRINEX"
-                    app:layout_constraintTop_toTopOf="@+id/textView26"
-                    app:layout_constraintVertical_bias="0.625" />
-
-                <View
-                    android:id="@+id/view9"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintTop_toBottomOf="@+id/fileExtensionNav"
-                    tools:layout_editor_absoluteX="0dp" />
-
-                <TextView
-                    android:id="@+id/textView56"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="KML"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view9" />
-
-                <CheckBox
-                    android:id="@+id/outputKML"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView56"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView56" />
-
-                <TextView
-                    android:id="@+id/textView57"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='$log/KML/"prefix".kml'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView56" />
-
-                <View
-                    android:id="@+id/view18"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView57" />
-
-                <TextView
-                    android:id="@+id/textView58"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="NMEA"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view18" />
-
-                <CheckBox
-                    android:id="@+id/outputNmea"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView58"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView58" />
-
-                <TextView
-                    android:id="@+id/textView59"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='$log/NMEA/"prefix".nmea'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView58" />
-
-                <View
-                    android:id="@+id/view19"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView59" />
-
-                <View
-                    android:id="@+id/view20"
-                    android:layout_width="fill_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="8dp"
-                    android:background="@android:color/darker_gray"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView63" />
-
-                <TextView
-                    android:id="@+id/textView62"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Sensor data"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view19" />
-
-                <TextView
-                    android:id="@+id/textView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:text="Raw LogData"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/view20" />
-
-                <CheckBox
-                    android:id="@+id/outputSensor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView62"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView62"
-                    app:layout_constraintVertical_bias="0.0" />
-
-                <CheckBox
-                    android:id="@+id/outputRaw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="false"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView7"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView7" />
-
-                <TextView
-                    android:id="@+id/textView63"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text='$log/CSV/"prefix".csv'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView62" />
-
-                <TextView
-                    android:id="@+id/textView8"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="16dp"
-                    android:text='$log/RAW/"prefix".txt'
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView7" />
-
-                <TextView
-                    android:id="@+id/textView64"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="80dp"
-                    android:text="Research mode"
-                    android:textColor="@android:color/holo_blue_dark"
-                    android:textStyle="bold"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView63" />
-
-                <TextView
-                    android:id="@+id/textView65"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="Research mode"
-                    android:textColor="@android:color/black"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView64" />
-
-                <Switch
-                    android:id="@+id/ResearchMode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_weight="1"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView65"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView65" />
-
-                <TextView
-                    android:id="@+id/textView66"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="Private mode for lab members"
-                    android:textSize="12sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView65" />
-
-                <TextView
-                    android:id="@+id/textView2"
+                    android:id="@+id/textViewVersion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
@@ -1012,32 +742,21 @@
                     android:textStyle="italic|bold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView66" />
+                    app:layout_constraintTop_toBottomOf="@+id/pressAvView" />
 
-                <TextView
-                    android:id="@+id/sw_info"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
+                <Button
+                    android:id="@+id/buttonRinexSetting"
+                    android:layout_width="85dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    android:gravity="bottom"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
-
-                <CheckBox
-                    android:id="@+id/outputRINEX"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:enabled="false"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView54"
-                    app:layout_constraintStart_toStartOf="@+id/RINEXMODE303"
-                    app:layout_constraintTop_toTopOf="@+id/textView54" />
-
+                    android:text="SETTINGS"
+                    app:layout_constraintBottom_toBottomOf="@+id/outputRINEX"
+                    app:layout_constraintStart_toEndOf="@+id/outputRINEX"
+                    app:layout_constraintTop_toTopOf="@+id/outputRINEX"
+                    app:layout_constraintVertical_bias="1.0" />
 
             </android.support.constraint.ConstraintLayout>
         </ScrollView>
     </LinearLayout>
-
 
 </android.support.constraint.ConstraintLayout>

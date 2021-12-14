@@ -6,5 +6,12 @@
     <color name="colorRits">#b30036</color>
     <color name="colorRitsDark">#a10000</color>
     <color name="colorTabBack">#e7e8e2</color>
-
+    <color name="colorBlack">#000000</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray">#8e8d8d</color>
+    <color name="colorDarkGray">#454444</color>
+    <color name="colorDanger">#970c0c</color>
+    <color name="colorGreen">#10A31B</color>
+    <color name="colorOrange">#ff9900</color>
+    <color name="colorLightBlack">#71706F</color>
 </resources>
