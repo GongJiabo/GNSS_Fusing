@@ -88,12 +88,6 @@ public class FileLogger implements GnssListener {
     private ArrayList<Double>altitudekml=new ArrayList<>();
     private ArrayList<String> gpstkml=new ArrayList<String>();
     private boolean RINEX_NAV_ION_OK = false;
-    private int gnsstimeclock_a;
-    private int gnsstimeclock_b;
-    private int gnsstimeclock_c;
-    private double gnsstimeclock_d;
-    private int gnsstimeclock_e;
-    private int gnsstimeclock_f;
     final float TOLERANCE_MHZ = 1e8f;
     // GLONASS系统的补正信息
     private int[] GLONASSFREQ = {1,-4,5,6,1,-4,5,6,-2,-7,0,-1,-2,-7,0,-1,4,-3,3,2,4,-3,3,2};
@@ -117,6 +111,7 @@ public class FileLogger implements GnssListener {
     public synchronized void setUiComponent(UIFragmentComponent value) {
         mUiComponent = value;
     }
+
     public FileLogger(Context context) {
         this.mContext = context;
         if(initialize == false){
@@ -1015,6 +1010,7 @@ public class FileLogger implements GnssListener {
             }
         }
     }
+
 
     public void onRawSensorListener(String listener,float rawAcc[], float rawGyro[], float rawGrav[], float rawMag[],
                                  float rawRot[], float rawPre) {

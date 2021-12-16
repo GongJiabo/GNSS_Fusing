@@ -27,7 +27,6 @@ public class ConstantSystem {
 
 
     //在写程序的过程中发现  ftp获取的gps广播星历中的sqrt(A)与ntrip获取的gps广播星历中的sqrt(A)相减为一个定值8192
-
     public static final double UNKNOWN=8192.0;
 
 

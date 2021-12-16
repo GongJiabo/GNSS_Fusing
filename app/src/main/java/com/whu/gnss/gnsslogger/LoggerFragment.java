@@ -38,26 +38,21 @@ import java.util.zip.CheckedOutputStream;
 /**  The UI fragment that hosts a logging view. */
 public class LoggerFragment extends Fragment {
 
-    private TextView mLogView;
     private TextView mGNSSClockView;
-    private TextView mLocationProvider;
-    private TextView mLocationLatitude;
-    private TextView mLocationLongitude;
-    private TextView mLocationAltitude;
-    private TextView gnssNavigationDebugView;
     private TextView gnssNavigationDebugTitle;
     ExpandableRelativeLayout expandableLayoutNav;
+
     // 导航消息视图定义
     private TextView IONTitle,IONCORR,TimeCorr,TimeTitle,leapseconds,leapsecondstitle;
 
     private ScrollView mScrollView;
+    private ViewGroup mTable;
     private FileLogger mFileLogger;
     private UiLogger mUiLogger;
-    private ViewGroup mTable;
     private Button startLog;
-    private Button sendFile;
-    private boolean FileLogging;
     private Spinner interval_spinner;
+    // 是否正在记录文件
+    private boolean FileLogging;
 
     // 保存中对话框的显示
     private View MainView;
@@ -106,14 +101,12 @@ public class LoggerFragment extends Fragment {
     }
 
     public void onViewCreated(final View view, Bundle savedInstanceState){
-        //mLogView = (TextView) newView.findViewById(R.id.lo);
-        /*mLocationProvider = (TextView) view.findViewById(R.id.location_prov);
-        mLocationLatitude = (TextView) view.findViewById(R.id.location_lat);
-        mLocationLongitude = (TextView) view.findViewById(R.id.location_lon);
-        mLocationAltitude = (TextView) view.findViewById(R.id.location_alt);*/
-        //gnssNavigationDebugView = (TextView) view.findViewById(R.id.gnssNavigationDebugView);
+
+        FileLogging = false;
+        mGNSSClockView = (TextView) view.findViewById(R.id.GNSSClockView);
         gnssNavigationDebugTitle = (TextView) view.findViewById(R.id.gnssNavigationDebugTitle);
         expandableLayoutNav = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayoutNav);
+
         MainView = view;
 
         IONCORR = (TextView) view.findViewById(R.id.IONCORR);
@@ -123,9 +116,9 @@ public class LoggerFragment extends Fragment {
         leapseconds = (TextView) view.findViewById(R.id.leapseconds);
         leapsecondstitle = (TextView) view.findViewById(R.id.leapsecondstitle);
         interval_spinner = (Spinner) view.findViewById(R.id.interval_spinner);
+
         PopupWindow mPopupWindow = new PopupWindow(getActivity());
-        //mPopupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.));
-        //View popupView = getLayoutInflater().inflate(R.layout.popup_layout, null);
+
         final PopupWindow ION_popupWindow;
         ION_popupWindow = new PopupWindow(getActivity());
         View layout = (View)getActivity().getLayoutInflater().inflate(R.layout.popup_background, null);
@@ -175,8 +168,11 @@ public class LoggerFragment extends Fragment {
                 //Log.i("Touch",String.valueOf(ION_popupWindow.isShowing()));
             }
         });
-        //mScrollView = (ScrollView) newView.findViewById(R.id.log_scroll);
+
+        // unuse
+        mScrollView = (ScrollView) view.findViewById(R.id.scrollView3);
         mTable = (ViewGroup) view.findViewById(R.id.TableLayout);
+
         //表の初期化
         for(int i = 0;i < MaxSatelliteIndex;i++){
             for(int j = 0;j < 5;j++){
@@ -226,7 +222,6 @@ public class LoggerFragment extends Fragment {
         });
 
         interval_spinner.setSelection(0);
-
         interval_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -253,7 +248,6 @@ public class LoggerFragment extends Fragment {
                             break;
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -270,16 +264,12 @@ public class LoggerFragment extends Fragment {
         }
 
         startLog = (Button) view.findViewById(R.id.start_logs);
-
         startLog.setText("ClockSync...");
 
         // for debug
-//        startLog.setEnabled(false);
+        // startLog.setEnabled(false);
         startLog.setEnabled(true);
 
-        mGNSSClockView = (TextView) view.findViewById(R.id.GNSSClockView);
-
-        FileLogging = false;
 
         gnssNavigationDebugTitle.setOnClickListener(new OnClickListener() {
             @Override
@@ -310,14 +300,16 @@ public class LoggerFragment extends Fragment {
                 new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if(SettingsFragment.EnableLogging == false) {
-                            //startLog.setEnabled(false);
-                            //sendFile.setEnabled(true);
+
+                        // can log rinex OBS
+                        if(SettingsFragment.EnableLogging == false && SettingsFragment.ENABLE_RINEXOBSLOG) {
+                            // startLog.setEnabled(false);
+                            // sendFile.setEnabled(true);
+
                             Toast.makeText(getContext(), "Starting log...", Toast.LENGTH_LONG).show();
 
                             // start log
                             mFileLogger.startNewLog();
-
 
                             FileLogging = true;
                             SettingsFragment.EnableLogging = true;
@@ -330,6 +322,7 @@ public class LoggerFragment extends Fragment {
                         }else {
                             //startLog.setEnabled(true);
                             //sendFile.setEnabled(false);
+
                             if(SettingsFragment.enableTimer){
                                 Toast.makeText(getContext(), "Timer stopped by user", Toast.LENGTH_LONG).show();
                                 SettingsFragment.enableTimer = false;

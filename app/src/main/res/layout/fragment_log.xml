@@ -1226,7 +1226,10 @@
         android:layout_height="1dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/expandableLayoutNav"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <Button
         android:id="@+id/start_logs"
@@ -1274,7 +1277,10 @@
         android:layout_marginTop="8dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintTop_toBottomOf="@+id/textView10"
-        tools:layout_editor_absoluteX="16dp" />
+        tools:layout_editor_absoluteX="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView10"
@@ -1426,7 +1432,10 @@
         android:layout_marginBottom="8dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@+id/textView24"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
 
     <TextView
         android:id="@+id/textView"

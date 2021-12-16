@@ -90,8 +90,8 @@ public class RinexSettingsActivity extends AppCompatActivity {
 
         reloadSettingText();
 
-        radioBtnRINEX211.setChecked(true);
-        radioBtnRINEX303.setChecked(false);
+        radioBtnRINEX211.setChecked(false);
+        radioBtnRINEX303.setChecked(true);
         radioBtnRINEX211.setOnClickListener(v -> {
             radioBtnRINEX211.setChecked(true);
             radioBtnRINEX303.setChecked(false);

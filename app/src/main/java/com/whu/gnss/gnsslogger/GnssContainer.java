@@ -213,6 +213,9 @@ public class GnssContainer {
         return mLogNmeas;
     }
 
+
+    // register
+
     public void registerLocation() {
         boolean isGpsProviderEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (isGpsProviderEnabled) {
@@ -251,6 +254,7 @@ public class GnssContainer {
     }
 
     public void registerNavigation() {
+
         logRegistration(
                 "GpsNavigationMessage",
                 mLocationManager.registerGnssNavigationMessageCallback(gnssNavigationMessageListener));

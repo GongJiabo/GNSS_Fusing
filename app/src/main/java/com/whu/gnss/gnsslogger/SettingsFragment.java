@@ -27,7 +27,6 @@ import android.widget.Toast;
 import android.widget.RadioButton;
 import android.util.Log;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,13 +37,15 @@ import static android.location.GnssMeasurementsEvent.Callback.STATUS_LOCATION_DI
 import static android.location.GnssMeasurementsEvent.Callback.STATUS_NOT_SUPPORTED;
 import static android.location.GnssMeasurementsEvent.Callback.STATUS_READY;
 
-
 import com.whu.gnss.gnsslogger.rinexFileLogger.Rinex;
+
+import org.w3c.dom.Text;
 
 /**
  * The UI fragment showing a set of configurable settings for the client to request GPS data.
  */
 public class SettingsFragment extends Fragment {
+
     // is support GNSS RawMeasurement
     private TextView mRawDataIsOk;
     private TextView mLocationIsOk;
@@ -53,12 +54,13 @@ public class SettingsFragment extends Fragment {
     private Button BtnRineXSettings;
     private Button BtnResSettings;
 
-//private TextView mSensorSpecView;
+    // Label under Sensors' TextView("Unavailable/available" on left&bottom side)
     private TextView mAccSpecView;
     private TextView mGyroSpecView;
     private TextView mMagSpecView;
     private TextView mPressSpecView;
 
+    // Label offside Sensors' TextView("Unavailable/available" on right side)
     private TextView mAccAvView;
     private TextView mGyroAvView;
     private TextView mMagAvView;
@@ -87,13 +89,16 @@ public class SettingsFragment extends Fragment {
     public static boolean SendMode = false;
     public static int GNSSMeasurementReadyMode = 10;
 
-    private GnssContainer mGpsContainer;
+
     private SensorContainer mSensorContainer;
     private FileLogger mFileLogger;
     private UiLogger mUiLogger;
+    private GnssContainer mGpsContainer;
     private GnssContainer mGnssContainer;
+
     private TextView EditSaveLocation;
     private TextView FTPDirectory;
+
     public static boolean FIRST_CHECK = false;
     public static String FTP_SERVER_DIRECTORY = "";
 
@@ -104,14 +109,14 @@ public class SettingsFragment extends Fragment {
     // for debug
     public static boolean EnableLogging = false;
 
-    // 记录checkbox选徐昂
+    // 记录checkbox
     public static boolean ENABLE_RINEXOBSLOG = true;
+    public static boolean ENABLE_RESLOG = false;
     public static boolean ENABLE_RINEXNAVLOG = false;
     public static boolean ENABLE_KMLLOG = false;
     public static boolean ENABLE_NMEALOG = false;
     public static boolean ENABLE_SENSORSLOG = false;
     public static boolean ENABLE_RAWDATALOG =false;
-
 
     // RINEX版本描述
     public static boolean RINEX303 = false;
@@ -122,14 +127,11 @@ public class SettingsFragment extends Fragment {
     public static boolean enableTimer = false;
     public static int interval = 1;
 
-
     private final SettingsFragment.UIFragmentSettingComponent mUiSettingComponent = new SettingsFragment.UIFragmentSettingComponent();
 
-    public void setGpsContainer(GnssContainer value) {
-        mGpsContainer = value;
+    public void setSensorContainer(SensorContainer value){
+        mSensorContainer = value;
     }
-
-    public void setSensorContainer(SensorContainer value){ mSensorContainer = value; }
 
     public void setUILogger(UiLogger value) {
         mUiLogger = value;
@@ -137,6 +139,10 @@ public class SettingsFragment extends Fragment {
 
     public void setFileLogger(FileLogger value) {
         mFileLogger = value;
+    }
+
+    public void setGpsContainer(GnssContainer value) {
+        mGpsContainer = value;
     }
 
     public void setGnssContainer(GnssContainer value){
@@ -149,9 +155,13 @@ public class SettingsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_main, container, false /* attachToRoot */);
     }
 
-    public  void onViewCreated(View view, Bundle savedInstanceState){
+    public void onViewCreated(View view, Bundle savedInstanceState){
 
-        // button
+        // can device support
+        mRawDataIsOk = (TextView) view.findViewById(R.id.rawDataIsOk);
+        mLocationIsOk = (TextView) view.findViewById(R.id.locationIsOk);
+
+        // button for RinexObs/ResPos setting
         BtnRineXSettings = (Button) view.findViewById(R.id.buttonRinexSetting);
         BtnResSettings = (Button) view.findViewById(R.id.buttonResSetting);
 
@@ -174,12 +184,13 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        // Label under Sensors' TextView
+        // Label under Sensors' TextView("Unavailable/available" on left&bottom side)
         mAccSpecView = (TextView) view.findViewById(R.id.accSpecView);
         mGyroSpecView = (TextView) view.findViewById(R.id.gyroSpecView);
         mMagSpecView = (TextView) view.findViewById(R.id.magSpecView);
         mPressSpecView = (TextView) view.findViewById(R.id.pressSpecView);
 
+        // Label offside Sensors' TextView("Unavailable/available" on right side)
         mAccAvView = (TextView) view.findViewById(R.id.accAvView);
         mGyroAvView = (TextView) view.findViewById(R.id.gyroAvView);
         mMagAvView = (TextView) view.findViewById(R.id.magAvView);
@@ -212,10 +223,15 @@ public class SettingsFragment extends Fragment {
         // output files(get year eg: 21.o/n)
         Date now = new Date();
         int observation = now.getYear() - 100;
+
         final TextView FileExtension = (TextView) view.findViewById(R.id.textViewRinexTxt);
         FileExtension.setText("$log/RINEX/\"prefix\"." + observation + "o");
+
         final TextView FileExtensionNav = (TextView) view.findViewById(R.id.textViewNaviTxt);
         FileExtensionNav.setText("$log/RINEX/\"prefix\"." + observation + "n");
+
+        final TextView FileExtensionPos = (TextView) view.findViewById(R.id.textViewResTxt);
+        FileExtensionPos.setText("$log/RES/\"prefix\"." + observation + "pos");
 
         final Switch registerSensor = (Switch) view.findViewById(R.id.register_sensor);
         registerSensor.setChecked(false);
@@ -230,12 +246,21 @@ public class SettingsFragment extends Fragment {
                         } else {
                             mSensorContainer.unregisterSensor();
                             useDeviceSensor = false;
+                            // ???
                             Logger2Fragment.deviceAzimuth = 0;
                         }
                     }
                 });
 
         // Get outfile types
+        final  CheckBox resCheckBox = (CheckBox)  view.findViewById(R.id.outputRes);
+        resCheckBox.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ENABLE_RESLOG = resCheckBox.isChecked();
+            }
+        });
+
         final CheckBox naviCheckBox = (CheckBox) view.findViewById(R.id.outputNAVI);
         naviCheckBox.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -327,6 +352,7 @@ public class SettingsFragment extends Fragment {
     }
 
 
+    //UI界面设置
     public class UIFragmentSettingComponent {
 
         //private static final int MAX_LENGTH = 12000;
