@@ -1517,5 +1517,24 @@
         app:layout_constraintTop_toTopOf="@+id/editTimer"
         app:layout_constraintVertical_bias="1.0" />
 
+    <CheckBox
+        android:id="@+id/checkBoxL1"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:text="L1"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+    <CheckBox
+        android:id="@+id/checkBoxL5"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:text="L5"
+        android:layout_marginStart="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxL1"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
 
 </android.support.constraint.ConstraintLayout>

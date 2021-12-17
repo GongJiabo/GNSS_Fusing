@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ScrollView;
@@ -41,6 +42,12 @@ public class LoggerFragment extends Fragment {
     private TextView mGNSSClockView;
     private TextView gnssNavigationDebugTitle;
     ExpandableRelativeLayout expandableLayoutNav;
+
+    // Monitor显示L1 L5频率的观测值(from CheckBox)
+    private CheckBox checkBoxL1;
+    private CheckBox checkBoxL5;
+    public static boolean SHOW_L1_OBS = true;
+    public static boolean SHOW_L5_OBS = false;
 
     // 导航消息视图定义
     private TextView IONTitle,IONCORR,TimeCorr,TimeTitle,leapseconds,leapsecondstitle;
@@ -103,9 +110,26 @@ public class LoggerFragment extends Fragment {
     public void onViewCreated(final View view, Bundle savedInstanceState){
 
         FileLogging = false;
+
         mGNSSClockView = (TextView) view.findViewById(R.id.GNSSClockView);
         gnssNavigationDebugTitle = (TextView) view.findViewById(R.id.gnssNavigationDebugTitle);
         expandableLayoutNav = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayoutNav);
+
+        checkBoxL1 = (CheckBox) view.findViewById(R.id.checkBoxL1);
+        checkBoxL5 = (CheckBox) view.findViewById(R.id.checkBoxL5);
+        checkBoxL1.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                SHOW_L1_OBS = checkBoxL1.isChecked();
+            }
+        });
+        checkBoxL5.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v)
+            {
+                SHOW_L5_OBS = checkBoxL5.isChecked();
+            }
+        });
 
         MainView = view;
 
