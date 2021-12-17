@@ -2,6 +2,7 @@ package com.whu.gnss.gnsslogger;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.GnssClock;
 import android.location.GnssMeasurement;
 import android.location.GnssMeasurementsEvent;
@@ -14,11 +15,29 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 import android.os.SystemClock;
+
+import com.whu.gnss.gnsslogger.constellations.GnssConstellation;
+import com.whu.gnss.gnsslogger.constellations.GpsTime;
+import com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement;
+import com.whu.gnss.gnsslogger.constellations.satellites.GalileoSatellite;
+import com.whu.gnss.gnsslogger.constellations.satellites.GpsSatellite;
+import com.whu.gnss.gnsslogger.constellations.satellites.QzssSatellite;
+import com.whu.gnss.gnsslogger.nav.GpsNavigationConv;
+import com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip;
+import com.whu.gnss.gnsslogger.ntrip.RTCM3Client;
+import com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener;
+import com.whu.gnss.gnsslogger.rinexFileLogger.Rinex;
+import com.whu.gnss.gnsslogger.rinexFileLogger.RinexHeader;
+import com.whu.gnss.gnsslogger.rinexFileLogger.RinexNav;
+import com.whu.gnss.gnsslogger.adjust.SPP_Result;
+import com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares;
+import com.whu.gnss.gnsslogger.coordinates.Coordinates;
 import com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent;
+
+
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileFilter;
@@ -39,14 +58,7 @@ public class FileLogger implements GnssListener {
     private static final String TAG = "FileLogger";
     private static final String ERROR_WRITING_FILE = "Problem writing to file.";
     private static final String COMMENT_START = "# ";
-    private static final char RECORD_DELIMITER = ',';
     private static final String VERSION_TAG = "Version: ";
-    private static final String FILE_VERSION = "1.4.0.0, Platform: N";
-    private static final double GPS_L1_FREQ = 154.0 * 10.23e6;  //1575.42MHz
-    private static final double GPS_L5_FREQ=115.0 * 10.23e6; //1176.45MHz
-    private static final double SPEED_OF_LIGHT = 299792458.0; //[m/s]
-    private static final double GPS_L1_WAVELENGTH = SPEED_OF_LIGHT/GPS_L1_FREQ;
-    private static final double GPS_L5_WAVELENGTH = SPEED_OF_LIGHT/GPS_L5_FREQ;
 
     private static final int MAX_FILES_STORED = 100;
     private static final int MINIMUM_USABLE_FILE_SIZE_BYTES = 1000;
@@ -82,16 +94,23 @@ public class FileLogger implements GnssListener {
     private boolean firstOBSforAcc = true;
 
     private ArrayList<Integer> UsedInFixList = new ArrayList<Integer>() ;
-    private ArrayList<String> utckml= new ArrayList<>();
-    private ArrayList<Double>longitudekml=new ArrayList<>();
-    private ArrayList<Double>latitudekml=new ArrayList<>();
-    private ArrayList<Double>altitudekml=new ArrayList<>();
+    private ArrayList<String> utckml= new ArrayList<String>();
     private ArrayList<String> gpstkml=new ArrayList<String>();
+    private ArrayList<Double>longitudekml=new ArrayList<Double>();
+    private ArrayList<Double>latitudekml=new ArrayList<Double>();
+    private ArrayList<Double>altitudekml=new ArrayList<Double>();
+
+    private int gnsstimeclock_a;
+    private int gnsstimeclock_b;
+    private int gnsstimeclock_c;
+    private double gnsstimeclock_d;
+    private int gnsstimeclock_e;
+    private int gnsstimeclock_f;
+
     private boolean RINEX_NAV_ION_OK = false;
-    final float TOLERANCE_MHZ = 1e8f;
-    // GLONASS系统的补正信息
-    private int[] GLONASSFREQ = {1,-4,5,6,1,-4,5,6,-2,-7,0,-1,-2,-7,0,-1,4,-3,3,2,4,-3,3,2};
-    private int leapseconds = 18;
+//    final float TOLERANCE_MHZ = 1e8f;
+//    // GLONASS系统的补正信息
+//    private int[] GLONASSFREQ = {1,-4,5,6,1,-4,5,6,-2,-7,0,-1,-2,-7,0,-1,4,-3,3,2,4,-3,3,2};
 
     private double[] CURRENT_SMOOTHER_RATE = new double[300];
     private double[] LAST_DELTARANGE = new double[300];
@@ -100,9 +119,41 @@ public class FileLogger implements GnssListener {
     private boolean initialize = false;
 
     private double constFullBiasNanos = 0.0;
+    private double approximateX = 0.0;
+    private double approximateY = 0.0;
+    private double approximateZ = 0.0;
 
     // 区间变量
     private int localintervaltime = 1;
+
+
+    // Gong added:
+
+    private LocationManager mLocationManager;
+    private Location mLocation;
+
+    //观测值数据类
+    private GnssConstellation sumConstellation;
+    //导航电文类
+    private GpsNavigationConv gpsNavigationConv;
+    //rinex观测值问件的获取
+    private Rinex rinex;
+    //主要用来获取setting的信息，或者没有加载setting之后，获取之前初始化的信息，在constants里面有定义
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences_spp;
+    //GPS时间
+    private GpsTime gpsTime;
+    // 接收机位置的初始化
+    private boolean poseinitialized = false;
+    //参与运算的广播星历系统
+    private GNSSEphemericsNtrip mGNSSEphemericsNtrip;
+    // 计算接收机位置
+    private Coordinates pose;
+    //平差
+    private WeightedLeastSquares mWeightedLeastSquares;
+    //平差结果输出
+    private SPP_Result mSPP_result;
+
 
     public synchronized UIFragmentComponent getUiComponent() {
         return mUiComponent;
@@ -113,6 +164,11 @@ public class FileLogger implements GnssListener {
     }
 
     public FileLogger(Context context) {
+        //这个是获取头文件信息(context为主活动的上下文)
+        sharedPreferences = context.getSharedPreferences(Constants.RINEX_SETTING, 0);
+        //这个是获取SPP设置的信息
+        sharedPreferences_spp=context.getSharedPreferences(Constants.SPP_SETTING,0);
+
         this.mContext = context;
         if(initialize == false){
             Arrays.fill(LAST_DELTARANGE,0.0);
@@ -128,7 +184,8 @@ public class FileLogger implements GnssListener {
      */
     public void startNewLog() {
         // Gong added:
-        if(SettingsFragment.FILE_NAME=="AndroidOBS"){
+        if(SettingsFragment.FILE_NAME=="AndroidOBS")
+        {
             Calendar myCal= Calendar.getInstance();
             DateFormat myFormat = new SimpleDateFormat("yyyy_MM_dd_HH_mm");
             String myTime = myFormat.format(myCal.getTime());
@@ -329,23 +386,25 @@ public class FileLogger implements GnssListener {
             File currentFile = new File(baseDirectory, fileName);
             String currentFilePath = currentFile.getAbsolutePath();
             BufferedWriter currentFileWriter;
+            FileWriter fileWriter;
             try {
                 currentFileWriter = new BufferedWriter(new FileWriter(currentFile));
+                fileWriter=new FileWriter(currentFilePath);
             } catch (IOException e) {
                 logException("Could not open observation file: " + currentFilePath, e);
                 return;
             }
 
+            // 设置rinex文件的写文件指针
+            rinex.setFileWriter(fileWriter);
+
             // initialize the contents of the file
             try {
+                // 开始记录rinex观测文件
+                startRecordRinex();
+                // 初始化观测数据类
+                sumConstellation=new GnssConstellation(sharedPreferences_spp.getInt(Constants.KEY_GPS_SYSTEM,Constants.DEF_GPS_SYSTEM),sharedPreferences_spp.getInt(Constants.KEY_GAL_SYSTEM ,Constants.DEF_GAL_SYSTEM),sharedPreferences_spp.getInt(Constants.KEY_GLO_SYSTEM,Constants.DEF_GLO_SYSTEM),sharedPreferences_spp.getInt(Constants.KEY_BDS_SYSTEM,Constants.DEF_BDS_SYSTEM),sharedPreferences_spp.getInt(Constants.KEY_QZSS_SYSTEM,Constants.DEF_QZSS_SYSTEM));
 
-                //RINEX ver3.03
-                if(SettingsFragment.RINEX303){
-
-                }//RINEX ver2.11
-                else {
-
-                }
                 firsttime = true;
                 localintervaltime = SettingsFragment.interval;
             } catch (Exception e) {
@@ -681,6 +740,8 @@ public class FileLogger implements GnssListener {
             return;
         }
 
+        // finish data
+        // KML
         try {
             mFileSubWriter.write("    </coordinates>\n  </LineString>\n</Placemark>\n");
             // </coordinates></LineString></Placemark><Folder></Document></kml>
@@ -718,23 +779,6 @@ public class FileLogger implements GnssListener {
             Toast.makeText(mContext, "ERROR_WRITINGFOTTER_FILE", Toast.LENGTH_SHORT).show();
             logException(ERROR_WRITING_FILE, e);
         }
-
-        // finish data
-        // rinex OBS
-        if (SettingsFragment.ENABLE_RINEXOBSLOG && mFileWriter != null) {
-            try {
-                mFileWriter.close();
-                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mFile));
-                mContext.sendBroadcast(mediaScanIntent);
-                mFileWriter = null;
-            } catch (IOException e) {
-                logException("Unable to close all file streams.", e);
-                //mUiComponent.ShowProgressWindow(false);
-                return;
-            }
-        }
-
-        // kml
         if( SettingsFragment.ENABLE_KMLLOG && mFileSubWriter != null) {
             try {
                 mFileSubWriter.close();
@@ -748,8 +792,23 @@ public class FileLogger implements GnssListener {
             }
         }
 
+        // RINEX OBS
+        if (SettingsFragment.ENABLE_RINEXOBSLOG && mFileWriter != null) {
+            try {
+                stopRecordRinex();
+                //
+                mFileWriter.close();
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mFile));
+                mContext.sendBroadcast(mediaScanIntent);
+                mFileWriter = null;
+            } catch (IOException e) {
+                logException("Unable to close all file streams.", e);
+                //mUiComponent.ShowProgressWindow(false);
+                return;
+            }
+        }
 
-
+        // SENSORS Data
         if ( SettingsFragment.ENABLE_SENSORSLOG && mFileAccAzWriter != null) {
             try {
                 mFileAccAzWriter.close();
@@ -757,14 +816,14 @@ public class FileLogger implements GnssListener {
                 mContext.sendBroadcast(mediaScanIntentSensor);
                 mFileAccAzWriter = null;
             } catch (IOException e) {
-                logException("Unable to close sensorlog file streams.", e);
+                logException("Unable to close SENSORS file streams.", e);
                 //mUiComponent.ShowProgressWindow(false);
                 return;
             }
         }
 
-
-        if(mFileNmeaWriter != null) {
+        // NMEA Logs
+        if( SettingsFragment.ENABLE_NMEALOG && mFileNmeaWriter != null) {
             try {
                 mFileNmeaWriter.close();
                 Intent mediaScanIntentSub = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mFileNmea));
@@ -777,6 +836,7 @@ public class FileLogger implements GnssListener {
             }
         }
 
+        // RINEX NAV
         if(SettingsFragment.ENABLE_RINEXNAVLOG && mFileNavWriter != null){
             try {
                 mFileNavWriter.close();
@@ -791,7 +851,8 @@ public class FileLogger implements GnssListener {
             }
         }
 
-        if(SettingsFragment.ENABLE_RAWDATALOG){
+        // RAW Data
+        if(SettingsFragment.ENABLE_RAWDATALOG && mFileRawWriter != null){
             try {
                 mFileRawWriter.close();
                 Intent mediaScanIntentSub = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE,Uri.fromFile(mFileRaw));
@@ -822,16 +883,6 @@ public class FileLogger implements GnssListener {
                 }
                 else{
                     try {
-                        String locationStream =
-                                String.format(
-
-                                        Locale.US,
-                                        // KML的内容
-                                        "       %15.9f,%15.9f,%15.9f",
-                                        location.getLongitude(),
-                                        location.getLatitude(),
-                                        location.getAltitude()
-                                        );
                         longitudekml.add(location.getLongitude());
                         latitudekml.add(location.getLatitude());
                         altitudekml.add(location.getAltitude());
@@ -851,6 +902,27 @@ public class FileLogger implements GnssListener {
                 }
             }
         }
+
+        if (location != null&&!poseinitialized) {
+            mLocation=location;
+            try {
+                //用于平差计算的接收机近似位置
+                pose = Coordinates.globalGeodInstance(mLocation.getLatitude(), mLocation.getLongitude(), mLocation.getAltitude());
+
+                //坐标转换
+                double[] xyz = CoodinateConv.WGS84LLAtoXYZ(location.getLatitude(), location.getLongitude(), location.getAltitude());
+
+                approximateX = xyz[0];
+                approximateY = xyz[1];
+                approximateZ = xyz[2];
+                Log.d(TAG, "approximateXYZ: " + approximateX + ',' + approximateY + ',' + approximateZ);
+            } catch (Exception e) {
+                Log.d(TAG, "避免出现Location不为空值，但纬度经度为空值的情况");
+            }
+
+            //接收机位置是否初始化
+            //poseinitialized=true;
+        }
     }
 
     @Override
@@ -861,124 +933,22 @@ public class FileLogger implements GnssListener {
 
     @Override
     public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
-        synchronized (mFileLock) {
-            if (mFileWriter == null) {
-                return;
+        synchronized (mFileLock)
+        {
+            GnssClock clock = event.getClock();
+
+            gpsTime =new GpsTime(clock);
+
+            sumConstellation.updateMeasurements(event);
+
+            EpochMeasurement epochMeasurement = sumConstellation.getEpochMeasurement();
+
+            //如果表明正在记录文件，则需要执行更新文件
+            if(SettingsFragment.EnableLogging)
+            {
+                rinex.writeBody(epochMeasurement);
             }
-
-            // 获取GNSS时钟数据
-            GnssClock gnssClock = event.getClock();
-
-            // 如果平滑化方式改变，则初始化系数
-            if(SettingsFragment.SMOOTHER_RATE_RESET_FLAG_FILE){
-                Arrays.fill(LAST_DELTARANGE,0.0);
-                Arrays.fill(CURRENT_SMOOTHER_RATE,1.0);
-                Arrays.fill(LAST_SMOOTHED_PSEUDORANGE,0.0);
-                SettingsFragment.SMOOTHER_RATE_RESET_FLAG_FILE = false;
-            }
-
-            // 通过参数的 getMeasurements()方法获取观测值对象的集合
-            // 因为接收机只有一部, 而观测卫星众多, 这就是钟对象只有一个, 而观测值对象有多个的原因
-            // 只要有接收到一颗GPS卫星的信号, 就开始记录
-            for (GnssMeasurement measurement : event.getMeasurements()) {
-                try {
-                    // 首次观测, 文件头
-                    if(firsttime == true && measurement.getConstellationType() == GnssStatus.CONSTELLATION_GPS){
-                        gnssClock = event.getClock();
-
-                        double weekNumber = Math.floor(-(gnssClock.getFullBiasNanos() * 1e-9 / 604800));
-                        double weekNumberNanos = weekNumber * 604800 * 1e9;
-                        double tRxNanos = gnssClock.getTimeNanos() - gnssClock.getFullBiasNanos() - weekNumberNanos;
-                        if (gnssClock.hasBiasNanos()) {
-                            tRxNanos = tRxNanos - gnssClock.getBiasNanos();
-                        }
-                        // 从GPS周、周秒转换成年月、日期、分秒
-                        GPSWStoGPST gpswStoGPST = new GPSWStoGPST();
-                        ReturnValue value = gpswStoGPST.method(weekNumber, tRxNanos * 1e-9);
-                        if (measurement.getTimeOffsetNanos() != 0) {
-                            tRxNanos = tRxNanos - measurement.getTimeOffsetNanos();
-                        }
-                        double tRxSeconds = tRxNanos * 1e-9;
-                        double tTxSeconds = measurement.getReceivedSvTimeNanos() * 1e-9;
-                        // GPS周的重复检查
-                        double prSeconds = tRxSeconds - tTxSeconds;
-                        boolean iRollover = prSeconds > 604800 / 2;
-                        if (iRollover) {
-                            double delS = Math.round(prSeconds / 604800) * 604800;
-                            double prS = prSeconds - delS;
-                            double maxBiasSeconds = 10;
-                            if (prS > maxBiasSeconds) {
-                                Log.e("RollOver", "Rollover Error");
-                                iRollover = true;
-                            } else {
-                                tRxSeconds = tRxSeconds - delS;
-                                prSeconds = tRxSeconds - tTxSeconds;
-                                iRollover = false;
-                            }
-
-                        }
-                        // 代码伪距离的计算
-                        double prm = prSeconds * 2.99792458e8;
-                        if (iRollover == false && prm > 0 && prSeconds < 0.5) {
-                            if (SettingsFragment.RINEX303) {
-                                mFileWriter.write(String.format("  %4d    %2d    %2d    %2d    %2d   %10.7f     GPS         TIME OF FIRST OBS   ", value.Y, value.M, value.D, value.h, value.m, value.s));
-                                mFileWriter.newLine();
-                                mFileWriter.write(" 24 R01  1 R02 -4 R03  5 R04  6 R05  1 R06 -4 R07  5 R08  6 GLONASS SLOT / FRQ #");
-                                mFileWriter.newLine();
-                                mFileWriter.write("    R09 -2 R10 -7 R11  0 R12 -1 R13 -2 R14 -7 R15  0 R16 -1 GLONASS SLOT / FRQ #");
-                                mFileWriter.newLine();
-                                mFileWriter.write("    R17  4 R18 -3 R19  3 R20  2 R21  4 R22 -3 R23  3 R24  2 GLONASS SLOT / FRQ #");
-                                mFileWriter.newLine();
-                                mFileWriter.write("                                                            END OF HEADER       ");
-                                mFileWriter.newLine();
-
-                            } else {
-                                String StartTimeOBS = String.format("%6d%6d%6d%6d%6d%13.7f     %3s         TIME OF FIRST OBS\n", value.Y, value.M, value.D, value.h, value.m, value.s, "GPS");
-                                //END OF HEADER
-                                String ENDOFHEADER = String.format("%73s", "END OF HEADER");
-                                mFileWriter.write(StartTimeOBS + ENDOFHEADER);
-                                mFileWriter.newLine();
-                            }
-
-                            // 固定FullBiasNanos
-                            if (gnssClock.hasFullBiasNanos() && gnssClock.hasBiasNanos()) {
-                                // 获取本地硬件时钟与GPST的偏差
-                                constFullBiasNanos = gnssClock.getFullBiasNanos() + gnssClock.getBiasNanos();
-                            } else {
-                                constFullBiasNanos = gnssClock.getFullBiasNanos();
-                            }
-                            firsttime = false;
-
-                         }
-                    }
-                    else{
-                        break;
-                    }
-                } catch (IOException e) {
-                    Toast.makeText(mContext, "ERROR_WRITING_FILE", Toast.LENGTH_SHORT).show();
-                    logException(ERROR_WRITING_FILE, e);
-                }
-            }
-            try {
-                // 记录原始观测txt文件
-                writeRawGnssMeasurementToFile(gnssClock, event);
-
-                // 记录rienx文件
-                writeGnssMeasurementToFile(gnssClock, event);
-
-                // Gong: Timer for what???
-                if(SettingsFragment.enableTimer){
-                    if(true) {
-                        SettingsFragment.timer = SettingsFragment.timer - 1;
-                        getUiComponent().RefreshTimer();
-                    }
-                }
-            } catch (IOException e){
-                logException(ERROR_WRITING_FILE, e);
-            }
-
         }
-        firstOBSforAcc = true;
     }  // 计算传播时间，o文件头下部
 
     @Override
@@ -1085,7 +1055,7 @@ public class FileLogger implements GnssListener {
     }
 
     @Override
-    public void  onGnssStatusChanged(GnssStatus gnssStatus) {
+    public void onGnssStatusChanged(GnssStatus gnssStatus) {
         try {
             writeUseInFixArray(gnssStatus);
         }catch (IOException e){
@@ -1234,17 +1204,8 @@ public class FileLogger implements GnssListener {
         }
     }
 
-    private double GLONASSG1WAVELENGTH(int svid){
-        return SPEED_OF_LIGHT/((1602 + GLONASSFREQ[svid - 1] * 0.5625) * 10e5);
-    }
-    private double GLONASSG2WAVELENGTH(int svid){
-        return SPEED_OF_LIGHT/((1246 + GLONASSFREQ[svid - 1] * 0.4375) * 10e5);
-    }
 
-    // 北斗B1信号
-    private double BEIDOUWAVELENGTH(int svid){
-        return SPEED_OF_LIGHT/(1561.098 * 10e5);
-    }
+
 
     // 从GPS周秒到GPS时的转换
     public static class ReturnValue {
@@ -1317,4 +1278,28 @@ public class FileLogger implements GnssListener {
 
     @Override
     public void onTTFFReceived(long l) {}
+
+    // Gong added:
+    private void startRecordRinex() {
+        rinex = new Rinex(mContext, sharedPreferences.getInt(Constants.KEY_RINEX_VER, Constants.DEF_RINEX_VER));
+        rinex.writeHeader(new RinexHeader(
+                sharedPreferences.getString(Constants.KEY_MARK_NAME, Constants.DEF_MARK_NAME),
+                sharedPreferences.getString(Constants.KEY_MARK_TYPE, Constants.DEF_MARK_TYPE),
+                sharedPreferences.getString(Constants.KEY_OBSERVER_NAME, Constants.DEF_OBSERVER_NAME),
+                sharedPreferences.getString(Constants.KEY_OBSERVER_AGENCY_NAME, Constants.DEF_OBSERVER_AGENCY_NAME),
+                sharedPreferences.getString(Constants.KEY_RECEIVER_NUMBER, Constants.DEF_RECEIVER_NUMBER),
+                sharedPreferences.getString(Constants.KEY_RECEIVER_TYPE, Constants.DEF_RECEIVER_TYPE),
+                sharedPreferences.getString(Constants.KEY_RECEIVER_VERSION, Constants.DEF_RECEIVER_VERSION),
+                sharedPreferences.getString(Constants.KEY_ANTENNA_NUMBER, Constants.DEF_ANTENNA_NUMBER),
+                sharedPreferences.getString(Constants.KEY_ANTENNA_TYPE, Constants.DEF_ANTENNA_TYPE),
+                Double.parseDouble(sharedPreferences.getString(Constants.KEY_ANTENNA_ECCENTRICITY_EAST, Constants.DEF_ANTENNA_ECCENTRICITY_EAST)),
+                Double.parseDouble(sharedPreferences.getString(Constants.KEY_ANTENNA_ECCENTRICITY_NORTH, Constants.DEF_ANTENNA_ECCENTRICITY_NORTH)),
+                Double.parseDouble(sharedPreferences.getString(Constants.KEY_ANTENNA_HEIGHT, Constants.DEF_ANTENNA_HEIGHT)),
+                String.valueOf(approximateX), String.valueOf(approximateY), String.valueOf(approximateZ), gpsTime
+        ));
+    }
+
+    private void stopRecordRinex() {
+        rinex.closeFile();
+    }
 }

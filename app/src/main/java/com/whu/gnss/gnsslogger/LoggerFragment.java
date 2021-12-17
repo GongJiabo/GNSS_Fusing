@@ -300,7 +300,6 @@ public class LoggerFragment extends Fragment {
                 new OnClickListener() {
                     @Override
                     public void onClick(View view) {
-
                         // can log rinex OBS
                         if(SettingsFragment.EnableLogging == false && SettingsFragment.ENABLE_RINEXOBSLOG) {
                             // startLog.setEnabled(false);
@@ -329,8 +328,10 @@ public class LoggerFragment extends Fragment {
                                 SettingsFragment.timer = 0;
                                 EditTimer.setText("0");
                             }
-                            Toast.makeText(getContext(), "Sending file...", Toast.LENGTH_LONG).show();
+                            // 再次点击结束观测 关闭文件
+                            Toast.makeText(getContext(), "Closing file...", Toast.LENGTH_LONG).show();
                             mFileLogger.send();
+
                             FileLogging = false;
                             SettingsFragment.EnableLogging = false;
                             EditTimer.setEnabled(true);
@@ -346,8 +347,8 @@ public class LoggerFragment extends Fragment {
      */
     public class UIFragmentComponent {
 
-        //private static final int MAX_LENGTH = 12000;
-        //private static final int LOWER_THRESHOLD = (int) (MAX_LENGTH * 0.5);
+        private static final int MAX_LENGTH = 12000;
+        private static final int LOWER_THRESHOLD = (int) (MAX_LENGTH * 0.5);
 
         public synchronized void logTextFragment(final String tag, final String text, final String[][] array) {
             Activity activity = getActivity();
@@ -358,7 +359,8 @@ public class LoggerFragment extends Fragment {
                     new Runnable() {
                         @Override
                         public void run() {
-                            if(FileLogging == false) {
+                            if(FileLogging == false)
+                            {
                                 if (SettingsFragment.GNSSClockSync == true) {
                                     startLog.setEnabled(true);
                                     startLog.setText("Start Log");
@@ -453,22 +455,22 @@ public class LoggerFragment extends Fragment {
                     });
         }
 
-        /*public synchronized void LocationTextFragment(final String provider, final String latitude, final String longitude,final String altitude,int color) {
-            Activity activity = getActivity();
-            if (activity == null) {
-                return;
-            }
-            activity.runOnUiThread(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            mLocationProvider.setText(provider);
-                            mLocationLatitude.setText(latitude);
-                            mLocationLongitude.setText(longitude);
-                            mLocationAltitude.setText(altitude);
-                        }
-                    });
-        }*/
+//        public synchronized void LocationTextFragment(final String provider, final String latitude, final String longitude,final String altitude,int color) {
+//            Activity activity = getActivity();
+//            if (activity == null) {
+//                return;
+//            }
+//            activity.runOnUiThread(
+//                    new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            mLocationProvider.setText(provider);
+//                            mLocationLatitude.setText(latitude);
+//                            mLocationLongitude.setText(longitude);
+//                            mLocationAltitude.setText(altitude);
+//                        }
+//                    });
+//        }
 
         public synchronized void RefreshTimer(){
             Activity activity = getActivity();

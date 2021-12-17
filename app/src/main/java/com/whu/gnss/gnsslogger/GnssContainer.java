@@ -101,8 +101,6 @@ public class GnssContainer {
 
                 @Override
                 public void onStatusChanged(int status) {
-                    //UIFragmentSettingComponent component = getUISettingComponent();
-                    //component.SettingErrorFragment(status);
                     if (mLogMeasurements) {
                         for (GnssListener logger : mLoggers) {
                             logger.onGnssMeasurementsStatusChanged(status);

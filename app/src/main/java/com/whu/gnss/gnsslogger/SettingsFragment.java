@@ -106,7 +106,7 @@ public class SettingsFragment extends Fragment {
     public static boolean registerGNSS = false;
     public static boolean FileLoggingOK = false;
 
-    // for debug
+    // 是否正在记录
     public static boolean EnableLogging = false;
 
     // 记录checkbox

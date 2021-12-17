@@ -3,12 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/activity_main.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/calculate_pos.xml" value="0.33" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/fragment_log.xml" value="0.33" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/fragment_log2.xml" value="0.2703125" />
+        <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/fragment_log3.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/fragment_main.xml" value="0.33" />
+        <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/help.xml" value="0.19166666666666668" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/main_tab1.xml" value="0.2703125" />
         <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/main_tab2.xml" value="0.2703125" />
+        <entry key="..\:/Users/GONG/Desktop/GNSS_Fusing/app/src/main/res/layout/popup_background.xml" value="0.25364583333333335" />
       </map>
     </option>
   </component>

@@ -187,9 +187,9 @@ public class GnssConstellation extends Constellation {
         synchronized (this) {
             observedSatellites = new ArrayList<>();
             gpsConstellation.updateMeasurements(event);
+            gpsL5Constellation.updateMeasurements(event);
             galileoConstellation.updateMeasurements(event);
             galileoE5aConstellation.updateMeasurements(event);
-            gpsL5Constellation.updateMeasurements(event);
             bdsConstellation.updateMeasurements(event);
             glonassR1Constellation.updateMeasurements(event);
             qzssConstellation.updateMeasurements(event);

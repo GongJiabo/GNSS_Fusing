@@ -34,7 +34,6 @@ import java.util.List;
  */
 public class UiLogger implements GnssListener {
 
-    private static final long EARTH_RADIUS_METERS = 6371000;
     private static final double GPS_L1_FREQ = 154.0 * 10.23e6;  //1575.42MHz
     private static final double GPS_L5_FREQ=115.0 * 10.23e6; //1176.45MHz
     private static final double SPEED_OF_LIGHT = 299792458.0; //[m/s]
@@ -48,9 +47,7 @@ public class UiLogger implements GnssListener {
     private int leapseconds = 18;
     private final Context mContext;
     final float TOLERANCE_MHZ = 1e8f;
-    //private double LAST_CARRIER_PHASE = 0;
-    //private double DIFF_CARRIER_PHASE = 0;
-    //private double SMOOTHED_PSEUDORANGE = 0.0;
+
     private double SMOOTHER_RATE = 0.01;
     private double[] CURRENT_SMOOTHER_RATE = new double[300];
     private double[] LAST_DELTARANGE = new double[300];
@@ -65,10 +62,6 @@ public class UiLogger implements GnssListener {
 
     public static boolean RINEXIONOK = false;
 
-    //Navigation Message用
-    //private int[][] NavSatelliteSvid = new int[5][300];
-    List<String> NavSatelliteSvid = new ArrayList<>();
-
 
     public UiLogger(Context context) {
         this.mContext = context;
@@ -81,45 +74,42 @@ public class UiLogger implements GnssListener {
         }
     }
 
-    private LoggerFragment.UIFragmentComponent mUiFragmentComponent;
+    // Settings(Page1 - fragment_main)
+    private SettingsFragment.UIFragmentSettingComponent mUISettingComponent;
+    public synchronized SettingsFragment.UIFragmentSettingComponent getUISettingComponent() {
+        return mUISettingComponent;
+    }
+    public synchronized void setUISettingComponent(SettingsFragment.UIFragmentSettingComponent value) {
+        mUISettingComponent = value;
+    }
 
+    // GNSS Data(Page2 - fragment_log)
+    private LoggerFragment.UIFragmentComponent mUiFragmentComponent;
     public synchronized LoggerFragment.UIFragmentComponent getUiFragmentComponent() {
         return mUiFragmentComponent;
     }
-
     public synchronized void setUiFragmentComponent(LoggerFragment.UIFragmentComponent value) {
         mUiFragmentComponent = value;
     }
 
+    // SkyPlot(Page3 - fragment_log2)
     private Logger2Fragment.UIFragment2Component mUiFragment2Component;
-
     public synchronized Logger2Fragment.UIFragment2Component getUiFragment2Component() {
         return mUiFragment2Component;
     }
-
     public synchronized void setUiFragment2Component(Logger2Fragment.UIFragment2Component value) {
         mUiFragment2Component = value;
     }
 
+    // SenSors(Page4 - fragment_log3)
     private Logger3Fragment.UIFragment3Component mUiFragment3Component;
-
     public synchronized Logger3Fragment.UIFragment3Component getUiFragment3Component() {
         return mUiFragment3Component;
     }
-
     public synchronized void setUiFragment3Component(Logger3Fragment.UIFragment3Component value) {
         mUiFragment3Component = value;
     }
 
-    private SettingsFragment.UIFragmentSettingComponent mUISettingComponent;
-
-    public synchronized SettingsFragment.UIFragmentSettingComponent getUISettingComponent() {
-        return mUISettingComponent;
-    }
-
-    public synchronized void setUISettingComponent(SettingsFragment.UIFragmentSettingComponent value) {
-        mUISettingComponent = value;
-    }
 
     @Override
     public void onTTFFReceived(long l) {}
@@ -137,7 +127,7 @@ public class UiLogger implements GnssListener {
     @Override
     public void onLocationChanged(Location location) {
         trueAzimuth = location.getBearing();
-        //磁気偏角を計算
+        // 地磁偏角计算
         double Longitude = location.getLongitude();
         double Latitude = location.getLatitude();
         double deltaPhi = Latitude - 37;
@@ -157,11 +147,11 @@ public class UiLogger implements GnssListener {
 
     @Override
     public void onLocationStatusChanged(String provider, int status, Bundle extras) {
-        /*String message =
+        String message =
                 String.format(
                         "onStatusChanged: provider=%s, status=%s, extras=%s",
                         provider, locationStatusToString(status), extras);
-        logLocationEvent(message);*/
+        logLocationEvent(message);
     }
 
     @Override
@@ -346,15 +336,14 @@ public class UiLogger implements GnssListener {
     }
 
     private void logText(String tag, String text, int color) {
+        // 显示在LOG界面
         LoggerFragment.UIFragmentComponent component = getUiFragmentComponent();
-        if (component != null) {
-            if(tag == "Sensor"){
-                //component.SensorlogTextFragment(text,color);
-            }
-            else{
-                //component.logTextFragment(tag, text, color);
-            }
+        if (component != null)
+        {
+
         }
+        /// TO DO...
+        //  将LOG信息保存在文件中
     }
 
     private void SublogText(String tag, String text, int color) {

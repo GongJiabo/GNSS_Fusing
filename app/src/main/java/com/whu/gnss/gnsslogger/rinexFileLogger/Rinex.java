@@ -42,6 +42,10 @@ public class Rinex {
         createFile();
     }
 
+    public void setFileWriter(FileWriter f){
+        out = f;
+    }
+
     public void closeFile() {
         Log.i(TAG, "CloseFile");
         try {
