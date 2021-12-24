@@ -90,15 +90,20 @@ public class RinexSettingsActivity extends AppCompatActivity {
 
         reloadSettingText();
 
+        // 默认使用RINEX_3.03
         radioBtnRINEX211.setChecked(false);
         radioBtnRINEX303.setChecked(true);
+        sharedPreferences.edit().putInt(Constants.KEY_RINEX_VER, Constants.VER_3_03).apply();
+
         radioBtnRINEX211.setOnClickListener(v -> {
             radioBtnRINEX211.setChecked(true);
             radioBtnRINEX303.setChecked(false);
+            sharedPreferences.edit().putInt(Constants.KEY_RINEX_VER, Constants.VER_2_11).apply();
         });
         radioBtnRINEX303.setOnClickListener(v -> {
             radioBtnRINEX211.setChecked(false);
             radioBtnRINEX303.setChecked(true);
+            sharedPreferences.edit().putInt(Constants.KEY_RINEX_VER, Constants.VER_3_03).apply();
         });
 
         textViewBtnMarkName.setOnClickListener(v -> {

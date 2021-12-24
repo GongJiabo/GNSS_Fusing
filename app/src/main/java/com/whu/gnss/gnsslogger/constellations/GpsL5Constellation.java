@@ -156,7 +156,6 @@ public class GpsL5Constellation extends Constellation {
 
                     satelliteParameters.setUniqueSatId("G" + satelliteParameters.getSatId() + "_L5");
 
-
                     satelliteParameters.setSignalStrength(measurement.getCn0DbHz());
 
                     satelliteParameters.setConstellationType(measurement.getConstellationType());

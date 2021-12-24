@@ -116,7 +116,10 @@ public class LoggerFragment extends Fragment {
         expandableLayoutNav = (ExpandableRelativeLayout) view.findViewById(R.id.expandableLayoutNav);
 
         checkBoxL1 = (CheckBox) view.findViewById(R.id.checkBoxL1);
+        checkBoxL1.setChecked(true);
         checkBoxL5 = (CheckBox) view.findViewById(R.id.checkBoxL5);
+        checkBoxL5.setChecked(false);
+
         checkBoxL1.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -291,8 +294,8 @@ public class LoggerFragment extends Fragment {
         startLog.setText("ClockSync...");
 
         // for debug
-        // startLog.setEnabled(false);
-        startLog.setEnabled(true);
+        startLog.setEnabled(false);
+        //startLog.setEnabled(true);
 
 
         gnssNavigationDebugTitle.setOnClickListener(new OnClickListener() {
@@ -334,11 +337,16 @@ public class LoggerFragment extends Fragment {
                             // start log
                             mFileLogger.startNewLog();
 
+                            // 标记正在记录
                             FileLogging = true;
                             SettingsFragment.EnableLogging = true;
+
+                            // 不允许设置观测时长与采样频率
                             EditTimer.setEnabled(false);
                             interval_spinner.setEnabled(false);
+
                             startLog.setText("End Log");
+
                             if(SettingsFragment.timer > 0){
                                 SettingsFragment.enableTimer = true;
                             }
@@ -354,12 +362,17 @@ public class LoggerFragment extends Fragment {
                             }
                             // 再次点击结束观测 关闭文件
                             Toast.makeText(getContext(), "Closing file...", Toast.LENGTH_LONG).show();
-                            mFileLogger.send();
 
+                            // end log
+                            mFileLogger.endLog();
+
+                            // 标记已停止记录
                             FileLogging = false;
                             SettingsFragment.EnableLogging = false;
+
                             EditTimer.setEnabled(true);
                             interval_spinner.setEnabled(true);
+
                             startLog.setText("Start Log");
                         }
                     }
@@ -385,6 +398,7 @@ public class LoggerFragment extends Fragment {
                         public void run() {
                             if(FileLogging == false)
                             {
+                                // SettingsFragment.GNSSClockSync在UI线程中设置
                                 if (SettingsFragment.GNSSClockSync == true) {
                                     startLog.setEnabled(true);
                                     startLog.setText("Start Log");
@@ -507,7 +521,7 @@ public class LoggerFragment extends Fragment {
                         public void run() {
                             if(SettingsFragment.timer == 0){
                                 Toast.makeText(getContext(), "Sending file...", Toast.LENGTH_LONG).show();
-                                mFileLogger.send();
+                                mFileLogger.endLog();
                                 FileLogging = false;
                                 SettingsFragment.EnableLogging = false;
                                 EditTimer.setEnabled(true);

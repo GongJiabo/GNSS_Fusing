@@ -248,6 +248,7 @@ public class GnssConstellation extends Constellation {
              * 存放历元下的gps卫星--原始数据
              */
             List<SatelliteParameters> epochgps_observedSatellites = new ArrayList<>();
+
             /**
              * 存放历元下的qzss卫星--原始数据
              */
@@ -273,7 +274,8 @@ public class GnssConstellation extends Constellation {
             for (SatelliteParameters satelliteParameters : observedSatellites) {
 
 
-                if (satelliteParameters.getGpsTime().getGpsTimeString().equals(initalgps.getGpsTimeString())) {
+                if (satelliteParameters.getGpsTime().getGpsTimeString().equals(initalgps.getGpsTimeString()))
+                {
 
                     if (satelliteParameters.getConstellationType() == GnssStatus.CONSTELLATION_GPS) {
                         epochgps_observedSatellites.add(satelliteParameters);
@@ -290,13 +292,10 @@ public class GnssConstellation extends Constellation {
                     if (satelliteParameters.getConstellationType() == GnssStatus.CONSTELLATION_GLONASS) {
                         epochglonass_observedSatellites.add(satelliteParameters);
                     }
-
-
                 }
             }
             {
                 //initalgps = satelliteParameters.getGpsTime();
-
 
                 /**
                  * 存放历元下的gps卫星数据---处理后的
@@ -338,8 +337,6 @@ public class GnssConstellation extends Constellation {
                         gpsSatellite.setD1(epochgps_observedSatellites.get(i).getDoppler());
                         epoch_gpsSatelliteList.add(gpsSatellite);
                         //  Log.d("gps", "svid" + gpsSatellite.getPrn() + "  L1:" + gpsSatellite.getL1() + "  C1:" + gpsSatellite.getC1() + "  D1:" + gpsSatellite.getD1() + "  S1:" + gpsSatellite.getS1() + "  L5:" + gpsSatellite.getL5() + "  C5:" + gpsSatellite.getC5() + "  D5:" + gpsSatellite.getD5() + "  S5:" + gpsSatellite.getS5());
-
-
                     }
                     if (approximateEqual(epochgps_observedSatellites.get(i).getCarrierFrequency(), L5_FREQUENCY, FREQUENCY_MATCH_RANGE)) {
 

@@ -111,16 +111,13 @@ public class SettingsFragment extends Fragment {
 
     // 记录checkbox
     public static boolean ENABLE_RINEXOBSLOG = true;
-    public static boolean ENABLE_RESLOG = false;
+    public static boolean ENABLE_RESLOG      = false;
     public static boolean ENABLE_RINEXNAVLOG = false;
-    public static boolean ENABLE_KMLLOG = false;
-    public static boolean ENABLE_NMEALOG = false;
-    public static boolean ENABLE_SENSORSLOG = false;
-    public static boolean ENABLE_RAWDATALOG =false;
+    public static boolean ENABLE_KMLLOG      = false;
+    public static boolean ENABLE_NMEALOG     = false;
+    public static boolean ENABLE_SENSORSLOG  = false;
+    public static boolean ENABLE_RAWDATALOG  = false;
 
-    // RINEX版本描述
-    public static boolean RINEX303 = false;
-    public static boolean RINEX211 = true;
 
     // 观测时间
     public static int timer = 0;

@@ -103,7 +103,8 @@ public class Rinex {
         //RINEX VERSION / TYPE
         resetLine();
         String version = "2.11";
-        if (ver == Constants.VER_3_03) version = "3.03";
+        if (ver == Constants.VER_3_03)
+            version = "3.03";
         String type = "OBSERVATION DATA";
         String source = "M: Mixed";
         for (int i = 0; i < version.length(); i++)
