@@ -40,8 +40,9 @@ public class RinexNav {
         this.context=context;
         this.ver=ver;
 
-        createFile();
+        // createFile();
     }
+
     private void createFile() {
         Date date = new Date();
 
@@ -338,5 +339,8 @@ public class RinexNav {
         }
     }
 
+    public void setFileWriter(FileWriter f){
+        outNav = f;
+    }
 
 }

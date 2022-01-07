@@ -191,13 +191,16 @@ public class UiLogger implements GnssListener
             Arrays.fill(LAST_SMOOTHED_PSEUDORANGE, 0.0);
             SettingsFragment.SMOOTHER_RATE_RESET_FLAG_UI = false;
         }
+
         // 观测数据状态
         array = gnssMessageToString(event, event.getClock());
-        component.logTextFragment("", "", array);
+        component.logTextFragment(array);
+
         // GPS时间
         String GNSSStr = gnssClockToString(event.getClock());
         component.GNSSClockLog(GNSSStr);
         //logMeasurementEvent("onGnsssMeasurementsReceived: " + measurements);
+
     }
 
     @Override
@@ -501,7 +504,8 @@ public class UiLogger implements GnssListener
         if (gnssClock.getHardwareClockDiscontinuityCount() == -1)
         {
             ClockStr = "WARING!! HARDWARE Clock may broken";
-        } else
+        }
+        else
         {
             double tRxSeconds;
             double TimeNanos = gnssClock.getTimeNanos();
@@ -935,10 +939,10 @@ public class UiLogger implements GnssListener
 
         if (CheckClockSync)
         {
-            SettingsFragment.GNSSClockSync = true;
+            SettingsFragment.GNSSClockSync_UI = true;
         } else
         {
-            SettingsFragment.GNSSClockSync = false;
+            SettingsFragment.GNSSClockSync_UI = false;
         }
         return array;
     }

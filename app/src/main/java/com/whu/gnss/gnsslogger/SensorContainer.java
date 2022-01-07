@@ -502,7 +502,7 @@ public class SensorContainer
                     mFileLogger.onSensorListener("", (float) mAzimuthZ, (float) mPitchX, (float) mRollY, Altitude);
                 } else
                 {
-                    mFileLogger.onRawSensorListener("", event.timestamp, mAccelerometerValues, mGyroValues, mGravityValues, mMagneticValues, mRotationValues, Pressure);
+                    mFileLogger.onRawSensorListener("", event.timestamp, mAccelerometerValues, mGyroValues, mGravityValues, mMagneticValues, mRotationValues, orientationValues, Pressure);
                 }
 
                 // 西浦的硕士论文式(5.13)

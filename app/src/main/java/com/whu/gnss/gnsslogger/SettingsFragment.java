@@ -81,7 +81,8 @@ public class SettingsFragment extends Fragment {
     public static boolean usePseudorangeRate = false;
     public static boolean useDeviceSensor = false;
 
-    public static boolean GNSSClockSync = false;
+    public static boolean GNSSClockSync_UI = false;
+    public static boolean GNSSClockSync_FILE = false;
 
     public static boolean SMOOTHER_RATE_RESET_FLAG_FILE = false;
     public static boolean SMOOTHER_RATE_RESET_FLAG_UI = false;
@@ -117,7 +118,6 @@ public class SettingsFragment extends Fragment {
     public static boolean ENABLE_NMEALOG     = false;
     public static boolean ENABLE_SENSORSLOG  = false;
     public static boolean ENABLE_RAWDATALOG  = false;
-
 
     // 观测时间
     public static int timer = 0;
@@ -167,8 +167,8 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view)
             {
                 Log.i(TAG, "Click -> Setting (RinexSettings)");
-                startActivity(
-                        new Intent(getActivity(), RinexSettingsActivity.class));
+                // Intent RinexSettingsIntent = new Intent(getActivity(), RinexSettingsActivity.class);
+                startActivity(new Intent(getActivity(), RinexSettingsActivity.class));
             }
             });
         BtnResSettings.setOnClickListener(new View.OnClickListener() {
@@ -176,8 +176,8 @@ public class SettingsFragment extends Fragment {
             public void onClick(View view)
             {
                 Log.i(TAG, "Click -> Setting (ResSettings)");
-                startActivity(
-                        new Intent(getActivity(), CalSettingsActivity.class));
+                // Intent CalSettingsIntent = new Intent(getActivity(), CalSettingsActivity.class);
+                startActivity(new Intent(getActivity(), CalSettingsActivity.class));
             }
         });
 
@@ -211,7 +211,7 @@ public class SettingsFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 if(s.toString() == ""){
                     EditSaveLocation.setText("(Current Time)");
-                }else{
+                } else{
                     FILE_NAME = s.toString();
                 }
             }

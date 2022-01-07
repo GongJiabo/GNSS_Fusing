@@ -31,7 +31,7 @@ final public class Constants {
     public static final String KEY_ANTENNA_ECCENTRICITY_NORTH = "antennaEccentricityNorth";
     public static final String KEY_ANTENNA_HEIGHT = "antennaHeight";
 
-    public static final int DEF_RINEX_VER = Constants.VER_2_11;
+    public static final int DEF_RINEX_VER = Constants.VER_3_03;
     public static final String DEF_MARK_NAME = "GnssRecord";
     public static final String DEF_MARK_TYPE = "Geodetic";
     public static final String DEF_OBSERVER_NAME = "RINEX Logger user";

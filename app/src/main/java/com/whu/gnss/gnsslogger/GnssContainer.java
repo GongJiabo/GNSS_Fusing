@@ -17,12 +17,14 @@ import android.util.Log;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+
 import com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent;
 
 /**
  * A container for GPS related API calls, it binds the {@link LocationManager} with {@link UiLogger}
  */
-public class GnssContainer {
+public class GnssContainer
+{
 
     public static final String TAG = "GnssLogger";
 
@@ -38,40 +40,54 @@ public class GnssContainer {
     private final List<GnssListener> mLoggers;
     private UIFragmentSettingComponent mUISettingComponent;
 
-    public synchronized UIFragmentSettingComponent getUISettingComponent() {
+    public synchronized UIFragmentSettingComponent getUISettingComponent()
+    {
         return mUISettingComponent;
     }
 
-    public synchronized void setUISettingComponent(UIFragmentSettingComponent value) {
+    public synchronized void setUISettingComponent(UIFragmentSettingComponent value)
+    {
         mUISettingComponent = value;
     }
+
     private final LocationManager mLocationManager;
     private final LocationListener mLocationListener =
-            new LocationListener() {
+            new LocationListener()
+            {
 
                 @Override
-                public void onProviderEnabled(String provider) {
-                    if (mLogLocations) {
-                        for (GnssListener logger : mLoggers) {
+                public void onProviderEnabled(String provider)
+                {
+                    if (mLogLocations)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onProviderEnabled(provider);
                         }
                     }
                 }
 
                 @Override
-                public void onProviderDisabled(String provider) {
-                    if (mLogLocations) {
-                        for (GnssListener logger : mLoggers) {
+                public void onProviderDisabled(String provider)
+                {
+                    if (mLogLocations)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onProviderDisabled(provider);
                         }
                     }
                 }
 
                 @Override
-                public void onLocationChanged(Location location) {
-                    if (mLogLocations) {
-                        for (GnssListener logger : mLoggers) {
-                            if(location != null) {
+                public void onLocationChanged(Location location)
+                {
+                    if (mLogLocations)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
+                            if (location != null)
+                            {
                                 logger.onLocationChanged(location);
                             }
                         }
@@ -79,9 +95,12 @@ public class GnssContainer {
                 }
 
                 @Override
-                public void onStatusChanged(String provider, int status, Bundle extras) {
-                    if (mLogLocations) {
-                        for (GnssListener logger : mLoggers) {
+                public void onStatusChanged(String provider, int status, Bundle extras)
+                {
+                    if (mLogLocations)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onLocationStatusChanged(provider, status, extras);
                         }
                     }
@@ -89,20 +108,27 @@ public class GnssContainer {
             };
 
     private final GnssMeasurementsEvent.Callback gnssMeasurementsEventListener =
-            new GnssMeasurementsEvent.Callback() {
+            new GnssMeasurementsEvent.Callback()
+            {
                 @Override
-                public void onGnssMeasurementsReceived(GnssMeasurementsEvent event) {
-                    if (mLogMeasurements) {
-                        for (GnssListener logger : mLoggers) {
+                public void onGnssMeasurementsReceived(GnssMeasurementsEvent event)
+                {
+                    if (mLogMeasurements)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onGnssMeasurementsReceived(event);
                         }
                     }
                 }
 
                 @Override
-                public void onStatusChanged(int status) {
-                    if (mLogMeasurements) {
-                        for (GnssListener logger : mLoggers) {
+                public void onStatusChanged(int status)
+                {
+                    if (mLogMeasurements)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onGnssMeasurementsStatusChanged(status);
                         }
                     }
@@ -110,20 +136,27 @@ public class GnssContainer {
             };
 
     private final GnssNavigationMessage.Callback gnssNavigationMessageListener =
-            new GnssNavigationMessage.Callback() {
+            new GnssNavigationMessage.Callback()
+            {
                 @Override
-                public void onGnssNavigationMessageReceived(GnssNavigationMessage event) {
-                    if (mLogNavigationMessages) {
-                        for (GnssListener logger : mLoggers) {
+                public void onGnssNavigationMessageReceived(GnssNavigationMessage event)
+                {
+                    if (mLogNavigationMessages)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onGnssNavigationMessageReceived(event);
                         }
                     }
                 }
 
                 @Override
-                public void onStatusChanged(int status) {
-                    if (mLogNavigationMessages) {
-                        for (GnssListener logger : mLoggers) {
+                public void onStatusChanged(int status)
+                {
+                    if (mLogNavigationMessages)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onGnssNavigationMessageStatusChanged(status);
                         }
                     }
@@ -131,19 +164,25 @@ public class GnssContainer {
             };
 
     private final GnssStatus.Callback gnssStatusListener =
-            new GnssStatus.Callback() {
+            new GnssStatus.Callback()
+            {
                 @Override
-                public void onStarted() {
+                public void onStarted()
+                {
                 }
 
                 @Override
-                public void onStopped() {
+                public void onStopped()
+                {
                 }
 
                 @Override
-                public void onSatelliteStatusChanged(GnssStatus status) {
-                    for (GnssListener logger : mLoggers) {
-                        if(status != null) {
+                public void onSatelliteStatusChanged(GnssStatus status)
+                {
+                    for (GnssListener logger : mLoggers)
+                    {
+                        if (status != null)
+                        {
                             logger.onGnssStatusChanged(status);
                         }
                     }
@@ -151,79 +190,98 @@ public class GnssContainer {
             };
 
     private final OnNmeaMessageListener nmeaListener =
-            new OnNmeaMessageListener() {
+            new OnNmeaMessageListener()
+            {
                 @Override
-                public void onNmeaMessage(String s, long l) {
-                    if (mLogNmeas) {
-                        for (GnssListener logger : mLoggers) {
+                public void onNmeaMessage(String s, long l)
+                {
+                    if (mLogNmeas)
+                    {
+                        for (GnssListener logger : mLoggers)
+                        {
                             logger.onNmeaReceived(l, s);
                         }
                     }
                 }
             };
 
-    public GnssContainer(Context context, GnssListener... loggers) {
+    public GnssContainer(Context context, GnssListener... loggers)
+    {
         this.mLoggers = Arrays.asList(loggers);
         mLocationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
     }
 
-    public LocationManager getLocationManager() {
+    public LocationManager getLocationManager()
+    {
         return mLocationManager;
     }
 
-    public void setLogLocations(boolean value) {
+    public void setLogLocations(boolean value)
+    {
         mLogLocations = value;
     }
 
-    public boolean canLogLocations() {
+    public boolean canLogLocations()
+    {
         return mLogLocations;
     }
 
-    public void setLogNavigationMessages(boolean value) {
+    public void setLogNavigationMessages(boolean value)
+    {
         mLogNavigationMessages = value;
     }
 
-    public boolean canLogNavigationMessages() {
+    public boolean canLogNavigationMessages()
+    {
         return mLogNavigationMessages;
     }
 
-    public void setLogMeasurements(boolean value) {
+    public void setLogMeasurements(boolean value)
+    {
         mLogMeasurements = value;
     }
 
-    public boolean canLogMeasurements() {
+    public boolean canLogMeasurements()
+    {
         return mLogMeasurements;
     }
 
-    public void setLogStatuses(boolean value) {
+    public void setLogStatuses(boolean value)
+    {
         mLogStatuses = value;
     }
 
-    public boolean canLogStatuses() {
+    public boolean canLogStatuses()
+    {
         return mLogStatuses;
     }
 
-    public void setLogNmeas(boolean value) {
+    public void setLogNmeas(boolean value)
+    {
         mLogNmeas = value;
     }
 
-    public boolean canLogNmeas() {
+    public boolean canLogNmeas()
+    {
         return mLogNmeas;
     }
 
 
     // register
 
-    public void registerLocation() {
+    public void registerLocation()
+    {
         boolean isGpsProviderEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-        if (isGpsProviderEnabled) {
+        if (isGpsProviderEnabled)
+        {
             /*mLocationManager.requestLocationUpdates(
                     LocationManager.NETWORK_PROVIDER,
                     LOCATION_RATE_NETWORK_MS,
                     0.0f,
                     mLocationListener);*/
-            if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                Log.e("Permission Error","LOCATION ERROR");
+            if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+            {
+                Log.e("Permission Error", "LOCATION ERROR");
                 return;
             }
             mLocationManager.requestLocationUpdates(
@@ -235,47 +293,58 @@ public class GnssContainer {
         logRegistration("LocationUpdates", isGpsProviderEnabled);
     }
 
-    public void unregisterLocation() {
+    public void unregisterLocation()
+    {
         mLocationManager.removeUpdates(mLocationListener);
     }
 
-    public void registerMeasurements() {
-        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.e("Permission Error","GNSS MEASUREMENTS ERROR");
+    public void registerMeasurements()
+    {
+        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            Log.e("Permission Error", "GNSS MEASUREMENTS ERROR");
             return;
         }
-            boolean Status = mLocationManager.registerGnssMeasurementsCallback(gnssMeasurementsEventListener);
+        boolean Status = mLocationManager.registerGnssMeasurementsCallback(gnssMeasurementsEventListener);
     }
 
-    public void unregisterMeasurements() {
+    public void unregisterMeasurements()
+    {
         mLocationManager.unregisterGnssMeasurementsCallback(gnssMeasurementsEventListener);
     }
 
-    public void registerNavigation() {
+    public void registerNavigation()
+    {
 
         logRegistration(
                 "GpsNavigationMessage",
                 mLocationManager.registerGnssNavigationMessageCallback(gnssNavigationMessageListener));
     }
 
-    public void unregisterNavigation() {
+    public void unregisterNavigation()
+    {
         mLocationManager.unregisterGnssNavigationMessageCallback(gnssNavigationMessageListener);
     }
 
-    public void registerGnssStatus() {
-        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            Log.e("Permission Error","GNSS StTATUS ERROR");
+    public void registerGnssStatus()
+    {
+        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            Log.e("Permission Error", "GNSS StTATUS ERROR");
             return;
         }
         logRegistration("GnssStatus", mLocationManager.registerGnssStatusCallback(gnssStatusListener));
     }
 
-    public void unregisterGpsStatus() {
+    public void unregisterGpsStatus()
+    {
         mLocationManager.unregisterGnssStatusCallback(gnssStatusListener);
     }
 
-    public void registerNmea() {
-        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    public void registerNmea()
+    {
+        if (ActivityCompat.checkSelfPermission(MainActivity.getInstance(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
             // here to request the missing permissions, and then overriding
@@ -288,11 +357,13 @@ public class GnssContainer {
         logRegistration("Nmea", mLocationManager.addNmeaListener(nmeaListener));
     }
 
-    public void unregisterNmea() {
+    public void unregisterNmea()
+    {
         mLocationManager.removeNmeaListener(nmeaListener);
     }
 
-    public void registerAll() {
+    public void registerAll()
+    {
         registerLocation();
         registerMeasurements();
         registerNavigation();
@@ -300,7 +371,8 @@ public class GnssContainer {
         registerNmea();
     }
 
-    public void unregisterAll() {
+    public void unregisterAll()
+    {
         unregisterLocation();
         unregisterMeasurements();
         unregisterNavigation();
@@ -308,8 +380,10 @@ public class GnssContainer {
         unregisterNmea();
     }
 
-    private void logRegistration(String listener, boolean result) {
-        for (GnssListener logger : mLoggers) {
+    private void logRegistration(String listener, boolean result)
+    {
+        for (GnssListener logger : mLoggers)
+        {
             logger.onListenerRegistration(listener, result);
         }
     }

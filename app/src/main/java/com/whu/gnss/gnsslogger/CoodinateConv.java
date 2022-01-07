@@ -51,7 +51,8 @@ public class CoodinateConv {
 
         double t = Math.tan(Lat_rad);
         double η = e2 * Math.cos(Lat_rad);
-        double N = a / Math.sqrt(1 - e1 *e1* Math.sin(Lat_rad) * Math.sin(Lat_rad));//卯酉圈半径长度
+        double N = a / Math.sqrt(1 - e1 *e1* Math.sin(Lat_rad) * Math.sin(Lat_rad));    //卯酉圈半径长度
+
 //        double x=X+N/2*Math.sin(Lat_rad)*Math.cos(Lat_rad)*Math.pow(l,2)+N/24*Math.sin(Lat_rad)*Math.pow(Math.cos(Lat_rad),3)*(5-Math.pow(t,2)+Math.pow(η,2)*9+4*Math.pow(η,4))*Math.pow(l,4)+N/720*Math.sin(Lat_rad)*Math.pow(Math.cos(Lat_rad),5)*(61-58*Math.pow(t,2)+Math.pow(t,4)+270*Math.pow(η,2)-330*Math.pow(η,2)*Math.pow(t,2))*Math.pow(l,6);
 //
 //        double y = N * l * Math.cos(Lat_rad) + N / 6 * Math.pow(Math.cos(Lat_rad), 3) * (1 - Math.pow(t, 2) + Math.pow(η, 2)) * Math.pow(l, 3) + N / 120 * Math.pow(Math.cos(Lat_rad), 5) * (5 - 18 * Math.pow(t, 2) + Math.pow(t, 4) + 14 * Math.pow(η, 2) - 58 * Math.pow(η, 2) * Math.pow(t, 2)) * Math.pow(l, 5);

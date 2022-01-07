@@ -86,6 +86,7 @@ public class RinexSettingsActivity extends AppCompatActivity {
         textViewBtnAntennaHeight = findViewById(R.id.setting_btnAntennaHeight);
         textViewBtnRestore = findViewById(R.id.setting_btnRestore);
 
+        // MODE_WORLD_READABLE
         sharedPreferences = getSharedPreferences(Constants.RINEX_SETTING, 0);
 
         reloadSettingText();

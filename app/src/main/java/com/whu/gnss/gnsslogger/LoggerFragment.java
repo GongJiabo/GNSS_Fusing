@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
 
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.CheckedOutputStream;
@@ -293,7 +294,7 @@ public class LoggerFragment extends Fragment {
         startLog = (Button) view.findViewById(R.id.start_logs);
         startLog.setText("ClockSync...");
 
-        // for debug
+        // Gong: for debug
         startLog.setEnabled(false);
         //startLog.setEnabled(true);
 
@@ -328,13 +329,14 @@ public class LoggerFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         // can log rinex OBS
-                        if(SettingsFragment.EnableLogging == false && SettingsFragment.ENABLE_RINEXOBSLOG) {
+                        // if(SettingsFragment.EnableLogging == false && FileLogging == false && SettingsFragment.GNSSClockSync_FILE == true) {
+                        if(SettingsFragment.EnableLogging == false && FileLogging == false) {
                             // startLog.setEnabled(false);
                             // sendFile.setEnabled(true);
 
                             Toast.makeText(getContext(), "Starting log...", Toast.LENGTH_LONG).show();
 
-                            // start log
+                            // start file log
                             mFileLogger.startNewLog();
 
                             // 标记正在记录
@@ -350,7 +352,8 @@ public class LoggerFragment extends Fragment {
                             if(SettingsFragment.timer > 0){
                                 SettingsFragment.enableTimer = true;
                             }
-                        }else {
+                        }
+                        else{
                             //startLog.setEnabled(true);
                             //sendFile.setEnabled(false);
 
@@ -369,6 +372,8 @@ public class LoggerFragment extends Fragment {
                             // 标记已停止记录
                             FileLogging = false;
                             SettingsFragment.EnableLogging = false;
+                            SettingsFragment.GNSSClockSync_UI = false;
+                            SettingsFragment.GNSSClockSync_FILE = false;
 
                             EditTimer.setEnabled(true);
                             interval_spinner.setEnabled(true);
@@ -387,7 +392,7 @@ public class LoggerFragment extends Fragment {
         private static final int MAX_LENGTH = 12000;
         private static final int LOWER_THRESHOLD = (int) (MAX_LENGTH * 0.5);
 
-        public synchronized void logTextFragment(final String tag, final String text, final String[][] array) {
+        public synchronized void logTextFragment(final String[][] array) {
             Activity activity = getActivity();
             if (activity == null) {
                 return;
@@ -398,14 +403,14 @@ public class LoggerFragment extends Fragment {
                         public void run() {
                             if(FileLogging == false)
                             {
-                                // SettingsFragment.GNSSClockSync在UI线程中设置
-                                if (SettingsFragment.GNSSClockSync == true) {
-                                    startLog.setEnabled(true);
-                                    startLog.setText("Start Log");
-                                } else {
-                                    startLog.setEnabled(false);
-                                    startLog.setText("ClockSync...");
-                                }
+                                // SettingsFragment.GNSSClockSync在UI线程(UiLogger)中设置
+                                  if (SettingsFragment.GNSSClockSync_UI == true) {
+                                      startLog.setEnabled(true);
+                                      startLog.setText("Start Log");
+                                  } else {
+                                      startLog.setEnabled(false);
+                                      startLog.setText("ClockSync...");
+                                  }
                             }
                             for(int i = 0;i < MaxSatelliteIndex;i++){
                                 for(int j = 0;j < 5;j++){
