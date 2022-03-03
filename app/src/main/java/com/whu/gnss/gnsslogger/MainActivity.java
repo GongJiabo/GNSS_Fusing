@@ -56,8 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 动作栏的标志设置
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
-
+        //getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         requestPermissionAndSetupFragments(this);
         instance = this;
     }

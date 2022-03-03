@@ -18,7 +18,7 @@ import java.util.Objects;
  * butterflying10
  * 2020/5/14
  */
-public class GNSSEphemericsNtrip extends EphemerisSystem implements RTCM3ClientListener,Runnable{
+public class GNSSEphemericsNtrip extends EphemerisSystem implements RTCM3ClientListener ,Runnable{
 
     private static final String TAG="GNSSEphemericsNtrip";
 
@@ -165,14 +165,10 @@ public class GNSSEphemericsNtrip extends EphemerisSystem implements RTCM3ClientL
         for (int i = 0; i < mEphGnssList.size(); i++) {
             // Find ephemeris sets for given satellite
             if (mEphGnssList.get(i).getSatID() == satID && mEphGnssList.get(i).getSatType() == satType) {
-
-
-
-
                 // Compare current time and ephemeris reference time
                 dt = Math.abs(mEphGnssList.get(i).getRefTime().getMsec() - unixTime /*getGpsTime() - gpsTime*/) / 1000;
 
-                //System.out.println("G"+ephBeidouList.get(i).getSatID()+"   "+ephBeidouList.get(i).getRefTime().getMsec()+"   "+unixTime);
+                // System.out.println("G"+ephBeidouList.get(i).getSatID()+"   "+ephBeidouList.get(i).getRefTime().getMsec()+"   "+unixTime);
                 // If it's the first round, set the minimum time difference and
                 // select the first ephemeris set candidate; if the current ephemeris set
                 // is closer in time than the previous candidate, select new candidate

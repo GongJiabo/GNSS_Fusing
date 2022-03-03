@@ -200,6 +200,7 @@ public class DecodeEphData {
 
             ephGps.setL2Flag((int)getbitu(data, i, 1));
             i = i + 1;
+
             //拟合区间如果不等于0，就把它定为2个小时；如果等于0，就说明没有给出
             ephGps.setFitInt((getbitu(data, i, 1) != 0) ? 2 : 0);
             //System.out.println(ephGps.getFitInt());

@@ -103,10 +103,13 @@ final public class Constants {
     public static final String  DEF_NTRIP_PORT="2101";
 
     public static final String KEY_NTRIP_USERNAME="ntrip username";
-    public static final String  DEF_NTRIP_USERNAME="tfbai";
+    //public static final String  DEF_NTRIP_USERNAME="tfbai";
+    public static final String  DEF_NTRIP_USERNAME="tjliu";
 
     public static final String KEY_NTRIP_PASSWORD="ntrip password";
-    public static final String  DEF_NTRIP_PASSWARD="tfbai@2020";
+    //public static final String  DEF_NTRIP_PASSWARD="tfbai@2020";
+    public static final String  DEF_NTRIP_PASSWARD="tjliu";
+
 
 
 

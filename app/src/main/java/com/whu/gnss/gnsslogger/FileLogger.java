@@ -36,6 +36,8 @@ import com.whu.gnss.gnsslogger.adjust.SPP_Result;
 import com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares;
 import com.whu.gnss.gnsslogger.coordinates.Coordinates;
 import com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent;
+import com.whu.gnss.gnsslogger.adjust.SPP_Result;
+import com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares;
 
 
 import java.io.BufferedWriter;
@@ -810,6 +812,29 @@ public class FileLogger implements GnssListener
                 }
             }
         }
+
+        // Calculate Position
+        if(SettingsFragment.ENABLE_RESLOG)
+        {
+            startRecordSPPResult();
+
+            //从SPP Setting界面获取信息
+
+            String host = sharedPreferences_spp.getString(Constants.KEY_NTRIP_HOST, Constants.DEF_NTRIP_HOST);
+
+            int port = Integer.parseInt(sharedPreferences_spp.getString(Constants.KEY_NTRIP_PORT, Constants.DEF_NTRIP_PORT));
+
+            String username = sharedPreferences_spp.getString(Constants.KEY_NTRIP_USERNAME, Constants.DEF_NTRIP_USERNAME);
+
+            String password = sharedPreferences_spp.getString(Constants.KEY_NTRIP_PASSWORD, Constants.DEF_NTRIP_PASSWARD);
+
+            Log.i("Ntrip", username + "@" + password);
+
+            //ntrip连接, mGNSSEphemericsNtrip.run()
+            mGNSSEphemericsNtrip = new GNSSEphemericsNtrip(new RTCM3Client(host, port, "RTCM3EPH-MGEX", username, password, RTCMListener));
+            new Thread(mGNSSEphemericsNtrip, "GNSS").start();
+
+        }
     }
 
 
@@ -978,7 +1003,20 @@ public class FileLogger implements GnssListener
         }
         //Log.i("progress","dismiss");
         //mUiComponent.ShowProgressWindow(false);
+
+        // 关闭计算结果
+        stopRecordSPPResult();
+
+
     } // 各文件保存
+
+    // RTCM3 Listener
+    private RTCM3ClientListener RTCMListener=new RTCM3ClientListener() {
+        @Override
+        public void onDataReceived(byte[] data) {
+            mGNSSEphemericsNtrip.onDataReceived(data);
+        }
+    };
 
     @Override
     public void onProviderEnabled(String provider)
@@ -1096,8 +1134,29 @@ public class FileLogger implements GnssListener
                 // 写入原始log文件
                 writeRawGnssMeasurementToFile(clock, event);
 
-                // TODO: 计算卫星位置/平差
-                // ....
+                // 如果勾选了结果文件
+                if(SettingsFragment.ENABLE_RESLOG){
+                    // 计算卫星位置
+                    sumConstellation.calculateSatPosition(mGNSSEphemericsNtrip,pose);
+
+                    Log.d(TAG, "----------------------------------------------------------------");
+
+                    Log.d(TAG, "参与运算卫星数" + sumConstellation.getSPP_UsedSatellites().size());
+
+                    // 平差计算
+                    if(sumConstellation.getSPP_UsedSatellites().size()>=5)
+                    {
+
+                        Coordinates p = mWeightedLeastSquares.calculatePose(sumConstellation);
+
+                        mSPP_result.writeBody(p,sumConstellation.getTime());
+
+                        //这里也是避免计算得到的接收机位置出现错误
+                        //
+                        if(p!=null)
+                            pose=p;
+                    }
+                }
 
             } catch (IOException e)
             {
@@ -1130,11 +1189,13 @@ public class FileLogger implements GnssListener
                 {
                     return;
                 }
-                //TODO: 写入导航文件
+
                 //卫星号
                 int svid = navigationMessage.getSvid();
+
                 //原始数据
                 byte[] rawData = navigationMessage.getData();
+
                 //
                 int messageId = navigationMessage.getMessageId();
                 //
@@ -1532,4 +1593,20 @@ public class FileLogger implements GnssListener
         rinexNav.closeFile();
     }
 
+    private void startRecordSPPResult()
+    {
+        mSPP_result=new SPP_Result(mContext);
+        mSPP_result.writeHeader(pose);
+        mSPP_result.writeInfor(sharedPreferences_spp.getInt(Constants.KEY_SPP_MODEL, Constants.DEF_SPP_MODEL),
+                sharedPreferences_spp.getInt(Constants.KEY_GPS_SYSTEM,Constants.DEF_GPS_SYSTEM),
+                sharedPreferences_spp.getInt(Constants.KEY_GAL_SYSTEM ,Constants.DEF_GAL_SYSTEM),
+                sharedPreferences_spp.getInt(Constants.KEY_GLO_SYSTEM,Constants.DEF_GLO_SYSTEM),
+                sharedPreferences_spp.getInt(Constants.KEY_BDS_SYSTEM,Constants.DEF_BDS_SYSTEM),
+                sharedPreferences_spp.getInt(Constants.KEY_QZSS_SYSTEM,Constants.DEF_QZSS_SYSTEM));
+    }
+
+    private void stopRecordSPPResult()
+    {
+        mSPP_result.closeFile();
+    }
 }

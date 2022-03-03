@@ -7,6 +7,16 @@ https://github.com/butterflying10/gnssdatalogger
 
 
 
+现存BUG：
+
+1、接收广播星历只支持GPS
+
+2、定位功能中Ntrip协议功能不全？？无法使用
+
+3、添加的定位功能似乎存在bug，且只有SPP
+
+
+
 Gong added：
 
 1、修复了一些BUG

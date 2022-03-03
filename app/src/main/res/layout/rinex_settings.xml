@@ -69,7 +69,6 @@
             android:layout_width="wrap_content"
             android:layout_height="42dp"
             android:layout_marginTop="5dp"
-            android:checked="true"
             android:text="2.11"
             android:textSize="16sp" />
 
@@ -79,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="3.03"
+            android:checked="true"
             android:textSize="16sp" />
     </LinearLayout>
 

@@ -163,6 +163,7 @@ public class GpsNavigationConv {
 
 
 
+    // Only GPS
     public void onGpsNavMessageReported(int prn, int type, int subframe, byte[] rawData) {
 
         if (type == GnssNavigationMessage.TYPE_GPS_L1CA || type == GnssNavigationMessage.TYPE_GPS_L5CNAV) {

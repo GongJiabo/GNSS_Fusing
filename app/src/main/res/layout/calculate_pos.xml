@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/spptitle"
+            android:fontFamily="@font/thaisansneue_extrabold"
             android:paddingEnd="10dp"
             android:paddingStart="0dp"
             android:text="@string/spp_title"
@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/spptitle"
-            android:text="@string/setting"
             android:textColor="@color/colorDarkGray"
             android:textSize="58sp" />
     </LinearLayout>

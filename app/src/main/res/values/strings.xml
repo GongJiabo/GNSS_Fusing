@@ -53,7 +53,7 @@
     <string name="hyphen" translatable="false">-</string>
     <string name="file">文件</string>
     <string name="rinex" translatable="false">RINEX</string>
-    <string name="spp_title" translatable="false">POS</string>
+    <string name="spp_title" translatable="false">定位设置</string>
     <string name="setting">设置</string>
     <string name="open">打开</string>
     <string name="share">分享</string>

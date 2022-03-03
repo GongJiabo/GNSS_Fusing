@@ -98,36 +98,34 @@ public class RTCM3Client implements Runnable {
 
                                 mRTCM3ClientListener.onDataReceived(data);
 
+                                if (rtk_crc24q(data,len)!=getbitu(data,len*8,24))
+                                {
+                                    Log.d(TAG, "CRC  1 :"+rtk_crc24q(data,len)+":2:"+getbitu(data,len*8,24));
+                                }
 
-
-//                                if (rtk_crc24q(data,len)!=getbitu(data,len*8,24))
-//                                {
-//                                    Log.d(TAG, "CRC  1 :"+rtk_crc24q(data,len)+":2:"+getbitu(data,len*8,24));
-//                                }
-                                /*
                                 switch (messageNumber) {
-                                    case 1019:
+                                    case 1019:  // GPS
                                         DecodeEphData.decodeGpsEph(data);
                                         break;
-                                    case 1042:
+                                    case 1042:  // BDS
                                         DecodeEphData.decodeBeidouEph(data);
                                         break;
-                                    case 1045:
+                                    case 1045:  // Galileo F/NAV Satellite Ephemeris Data
                                         DecodeEphData.decodeGalileoEph(data);
                                         break;
-                                    case 1046:
+                                    case 1046:  // Galileo I/NAV Satellite Ephemeris Data
                                         DecodeEphData.decodeGalileo1046Eph(data);
                                         break;
-                                    case 1020:
+                                    case 1020:  // Glonass
                                         DecodeEphData.decodeGlonassEph(data);
                                         break;
-                                    case 1044:
+                                    case 1044:  // Qzss
                                         DecodeEphData.decodeQzssEph(data);
                                         break;
                                     default:
                                         break;
                                 }
-                                 */
+
                             } else {
                                 i++;
                             }

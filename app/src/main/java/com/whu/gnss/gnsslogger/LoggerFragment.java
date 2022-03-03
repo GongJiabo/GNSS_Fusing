@@ -36,6 +36,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.zip.CheckedOutputStream;
 
+
 //gnss data界面的activity
 /**  The UI fragment that hosts a logging view. */
 public class LoggerFragment extends Fragment {
@@ -59,6 +60,7 @@ public class LoggerFragment extends Fragment {
     private UiLogger mUiLogger;
     private Button startLog;
     private Spinner interval_spinner;
+
     // 是否正在记录文件
     private boolean FileLogging;
 
@@ -68,7 +70,7 @@ public class LoggerFragment extends Fragment {
 
     private TextView EditTimer;
 
-    //表用ID
+    // 表用ID
     int Rid[][]={{R.id.textView1_1,R.id.textView1_2,R.id.textView1_3,R.id.textView1_4,R.id.textView1_5},{R.id.textView2_1,R.id.textView2_2,R.id.textView2_3,R.id.textView2_4,R.id.textView2_5},
             {R.id.textView3_1,R.id.textView3_2,R.id.textView3_3,R.id.textView3_4,R.id.textView3_5},{R.id.textView4_1,R.id.textView4_2,R.id.textView4_3,R.id.textView4_4,R.id.textView4_5},
             {R.id.textView5_1,R.id.textView5_2,R.id.textView5_3,R.id.textView5_4,R.id.textView5_5},{R.id.textView6_1,R.id.textView6_2,R.id.textView6_3,R.id.textView6_4,R.id.textView6_5},
@@ -329,7 +331,6 @@ public class LoggerFragment extends Fragment {
                     @Override
                     public void onClick(View view) {
                         // can log rinex OBS
-                        // if(SettingsFragment.EnableLogging == false && FileLogging == false && SettingsFragment.GNSSClockSync_FILE == true) {
                         if(SettingsFragment.EnableLogging == false && FileLogging == false) {
                             // startLog.setEnabled(false);
                             // sendFile.setEnabled(true);
@@ -382,6 +383,7 @@ public class LoggerFragment extends Fragment {
                         }
                     }
                 });
+
     }
 
     /**
