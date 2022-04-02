@@ -1,0 +1,223 @@
+@startuml
+
+title __SATELLITES's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.BdsSatellite {
+            - C2I : double
+            - D2I : double
+            - L2I : double
+            - S2I : double
+            - prn : String
+            + getC2I()
+            + getD2I()
+            + getL2I()
+            + getPrn()
+            + getS2I()
+            + setC2I()
+            + setD2I()
+            + setL2I()
+            + setPrn()
+            + setS2I()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement {
+            - bdsSatelliteList : List<BdsSatellite>
+            - galileoSatelliteList : List<GalileoSatellite>
+            - glonassSatelliteList : List<GlonassSatellite>
+            - gpsSatelliteList : List<GpsSatellite>
+            - prnlist : List<String>
+            - qzssSatelliteList : List<QzssSatellite>
+            - satelliteNum : int
+            - satelliteNum2 : int
+            + EpochMeasurement()
+            + getBdsSatelliteList()
+            + getEpochTime()
+            + getGalileoSatelliteList()
+            + getGlonassSatelliteList()
+            + getGpsSatelliteList()
+            + getPrnlist()
+            + getQzssSatelliteList()
+            + getSatelliteNum()
+            + getSatelliteNum2()
+            + getSatellitePrnList()
+            - setBdsSatelliteList()
+            - setEpochTime()
+            - setGalileoSatelliteList()
+            - setGlonassSatelliteList()
+            - setGpsSatelliteList()
+            - setQzssSatelliteList()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GalileoSatellite {
+            - C1 : double
+            - C5 : double
+            - D1 : double
+            - D5 : double
+            - L1 : double
+            - L5 : double
+            - S1 : double
+            - S5 : double
+            - hasC1 : boolean
+            - isHasC5 : boolean
+            - prn : String
+            + getC1()
+            + getC5()
+            + getD1()
+            + getD5()
+            + getL1()
+            + getL5()
+            + getPrn()
+            + getS1()
+            + getS5()
+            + isHasC1()
+            + isHasC5()
+            + setC1()
+            + setC5()
+            + setD1()
+            + setD5()
+            + setL1()
+            + setL5()
+            + setPrn()
+            + setS1()
+            + setS5()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GlonassSatellite {
+            - C1C : double
+            - D1C : double
+            - L1C : double
+            - S1C : double
+            - prn : String
+            + getC1C()
+            + getD1C()
+            + getL1C()
+            + getPrn()
+            + getS1C()
+            + setC1C()
+            + setD1C()
+            + setL1C()
+            + setPrn()
+            + setS1C()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GpsSatellite {
+            - C1 : double
+            - C5 : double
+            - D1 : double
+            - D5 : double
+            - L1 : double
+            - L5 : double
+            - S1 : double
+            - S5 : double
+            - hasC1 : boolean
+            - isHasC5 : boolean
+            - prn : String
+            + getC1()
+            + getC5()
+            + getD1()
+            + getD5()
+            + getL1()
+            + getL5()
+            + getPrn()
+            + getS1()
+            + getS5()
+            + isHasC1()
+            + isHasC5()
+            + setC1()
+            + setC5()
+            + setD1()
+            + setD5()
+            + setL1()
+            + setL5()
+            + setPrn()
+            + setS1()
+            + setS5()
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.QzssSatellite {
+            - C1 : double
+            - C5 : double
+            - D1 : double
+            - D5 : double
+            - L1 : double
+            - L5 : double
+            - S1 : double
+            - S5 : double
+            - hasC1 : boolean
+            - isHasC5 : boolean
+            - prn : String
+            + getC1()
+            + getC5()
+            + getD1()
+            + getD5()
+            + getL1()
+            + getL5()
+            + getPrn()
+            + getS1()
+            + getS5()
+            + isHasC1()
+            + isHasC5()
+            + setC1()
+            + setC5()
+            + setD1()
+            + setD5()
+            + setL1()
+            + setL5()
+            + setPrn()
+            + setS1()
+            + setS5()
+        }
+      }
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement o-- com.whu.gnss.gnsslogger.constellations.GpsTime : epochTime
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

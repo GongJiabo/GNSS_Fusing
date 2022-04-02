@@ -123,9 +123,6 @@ public class GNSSEphemericsNtrip extends EphemerisSystem implements RTCM3ClientL
 //                }
                 mEphGnssList.add(eph);
                 hashtable.put(eph.getSatType() + eph.getSatID(), eph.getRefTime());
-
-
-
             }
 
         }

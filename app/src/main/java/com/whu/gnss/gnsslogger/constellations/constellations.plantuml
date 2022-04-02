@@ -1,0 +1,616 @@
+@startuml
+
+title __CONSTELLATIONS's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.BdsConstellation {
+          # observedSatellites : List<SatelliteParameters>
+          # tRxBDS : double
+          # tRxGPS : double
+          # visibleButNotUsed : int
+          # weekNumberNanos : double
+          {static} - B1_FREQUENCY : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          - SPPUsedSatellites : List<SatelliteParameters>
+          {static} - TAG : String
+          {static} - constellationId : int
+          - corrections : ArrayList<Correction>
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - unusedSatellites : List<SatelliteParameters>
+          + BdsConstellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + getWeekNumber()
+          + gettRxBDS()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      abstract class com.whu.gnss.gnsslogger.constellations.Constellation {
+          {static} + CONSTELLATION_GALILEO_GPS : int
+          {static} + CONSTELLATION_GALILEO_IonoFree : int
+          {static} + CONSTELLATION_GPS_IonoFree : int
+          {static} # RNP_NULL_MESSAGE : String
+          {static} - TAG : String
+          {static} - initialized : boolean
+          {abstract} + calculateSatPosition()
+          {abstract} + getConstellationId()
+          {abstract} + getName()
+          {abstract} + getRxPos()
+          {static} + getRxPosAsVector()
+          {abstract} + getSPPUsedSatellites()
+          {abstract} + getSatellite()
+          {abstract} + getSatelliteSignalStrength()
+          {abstract} + getSatellites()
+          {abstract} + getTime()
+          {abstract} + getUnusedSatellites()
+          {abstract} + getUsedConstellationSize()
+          {abstract} + getVisibleConstellationSize()
+          {abstract} + setRxPos()
+          {abstract} + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GalileoConstellation {
+          {static} # NAME : String
+          # observedSatellites : List<SatelliteParameters>
+          # tRxGalileoTOW : double
+          # unusedSatellites : List<SatelliteParameters>
+          # visibleButNotUsed : int
+          # weekNumber : double
+          {static} - E1a_FREQUENCY : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          - SPPUsedSatellites : List<SatelliteParameters>
+          {static} - TAG : String
+          {static} - constellationId : int
+          - corrections : ArrayList<Correction>
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - tRxGalileoE1_2nd : double
+          + GalileoConstellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + getWeekNumber()
+          + gettRxGalileoTOW()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation {
+          + observedSatellites : List<SatelliteParameters>
+          # unusedSatellites : List<SatelliteParameters>
+          {static} - E5a_FREQUENCY : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          {static} - TAG : String
+          {static} - constellationId : int
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - tRxGalileoTOW : double
+          - visibleButNotUsed : int
+          - weekNumber : double
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation {
+          # observedSatellites : List<SatelliteParameters>
+          # tRx : double
+          # tRxGlonass : double
+          # visibleButNotUsed : int
+          # weekNumberNanos : double
+          - FullBiasNanos : long
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          - SPPUsedSatellites : List<SatelliteParameters>
+          {static} - TAG : String
+          {static} - constellationId : int
+          - corrections : ArrayList<Correction>
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - unusedSatellites : List<SatelliteParameters>
+          + GlonassR1Constellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GnssConstellation {
+          # observedSatellites : List<SatelliteParameters>
+          {static} - B1_FREQUENCY : double
+          - BDS_SYSTEM : int
+          {static} - E1a_FREQUENCY : double
+          {static} - E5a_FREQUENCY : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - GAL_SYSTEM : int
+          - GLO_SYSTEM : int
+          - GPS_SYSTEM : int
+          {static} - L1_FREQUENCY : double
+          {static} - L5_FREQUENCY : double
+          {static} - NAME : String
+          - QZSS_SYSTEM : int
+          - SPP_UsedSatellites : List<SatelliteParameters>
+          - unusedSatellites : List<SatelliteParameters>
+          + GnssConstellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getEpochMeasurement()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSPP_UsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + setEpochMeasurement()
+          + setRxPos()
+          + updateMeasurements()
+          - addprn()
+          - convertToEpochMessurement()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsConstellation {
+          # observedSatellites : List<SatelliteParameters>
+          # tRxGPS : double
+          # visibleButNotUsed : int
+          # weekNumberNanos : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - L1_FREQUENCY : double
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          - SPPUsedSatellites : List<SatelliteParameters>
+          {static} - TAG : String
+          {static} - constellationId : int
+          - corrections : ArrayList<Correction>
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - unusedSatellites : List<SatelliteParameters>
+          + GpsConstellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + getWeekNumber()
+          + gettRxGPS()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsL5Constellation {
+          # observedSatellites : List<SatelliteParameters>
+          # unusedSatellites : List<SatelliteParameters>
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - L5_FREQUENCY : double
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          {static} - TAG : String
+          {static} - constellationId : int
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - tRxGPS : double
+          - visibleButNotUsed : int
+          - weekNumber : double
+          - weekNumberNanos : double
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + setObservedSatellites()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsTime {
+          - DOY : int
+          - GpsTimeString : String
+          - HourLabel : char
+          - day : int
+          - hour : int
+          - minute : int
+          - month : int
+          - nsec : double
+          - second : double
+          - weeknumber : int
+          - weeksec : double
+          - year : int
+          - yearSimplify : int
+          + GpsTime()
+          + GpsTime()
+          + getDOY()
+          + getDay()
+          + getGpsTimeString()
+          + getGpsTimeStringForFileDate()
+          + getHour()
+          + getHourLabel()
+          + getMinute()
+          + getMonth()
+          + getSecond()
+          + getWeeknumber()
+          + getWeeksec()
+          + getYear()
+          + getYearSimplify()
+          + setDay()
+          + setHour()
+          + setMinute()
+          + setMonth()
+          + setSecond()
+          + setYear()
+          - calculateGpsTime()
+          - getSumsec()
+          - setDOY()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.Pseudorange {
+          - measurementVariance : double
+          - pseudorange : double
+          - pseudorangeRate : double
+          + Pseudorange()
+          + getMeasurementVariance()
+          + getPseudorange()
+          + getPseudorangeRate()
+          + setMeasurementVariance()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.QzssConstellation {
+          # observedSatellites : List<SatelliteParameters>
+          # tRxGPS : double
+          # visibleButNotUsed : int
+          # weekNumberNanos : double
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - L1_FREQUENCY : double
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          - SPPUsedSatellites : List<SatelliteParameters>
+          {static} - TAG : String
+          {static} - constellationId : int
+          - corrections : ArrayList<Correction>
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - unusedSatellites : List<SatelliteParameters>
+          + QzssConstellation()
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + getWeekNumber()
+          + gettRxGPS()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.QzssL5Constellation {
+          # observedSatellites : List<SatelliteParameters>
+          # unusedSatellites : List<SatelliteParameters>
+          {static} - FREQUENCY_MATCH_RANGE : double
+          - FullBiasNanos : long
+          {static} - L5_FREQUENCY : double
+          {static} - MASK_CN0 : double
+          {static} - MASK_ELEVATION : double
+          {static} - MAXTOWUNCNS : int
+          {static} - NAME : String
+          {static} - TAG : String
+          {static} - constellationId : int
+          - fullBiasNanosInitialized : boolean
+          {static} - satType : char
+          - tRxGPS : double
+          - visibleButNotUsed : int
+          - weekNumber : double
+          - weekNumberNanos : double
+          {static} + approximateEqual()
+          + calculateSatPosition()
+          + getConstellationId()
+          + getName()
+          + getRxPos()
+          + getSPPUsedSatellites()
+          + getSatellite()
+          + getSatelliteSignalStrength()
+          + getSatellites()
+          + getTime()
+          + getUnusedSatellites()
+          + getUsedConstellationSize()
+          + getVisibleConstellationSize()
+          + setRxPos()
+          + updateMeasurements()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.SatelliteParameters {
+          - accumulatedCorrection : double
+          - carrierFrequency : double
+          - clockBias : double
+          - constellationType : int
+          - doppler : double
+          - phase : double
+          - satId : int
+          - signalStrength : double
+          - snr : double
+          - uniqueSatId : String
+          + SatelliteParameters()
+          + getAccumulatedCorrection()
+          + getCarrierFrequency()
+          + getClockBias()
+          + getConstellationType()
+          + getDoppler()
+          + getGpsTime()
+          + getPhase()
+          + getPseudorange()
+          + getPseudorangeObject()
+          + getRxTopo()
+          + getSatId()
+          + getSatellitePosition()
+          + getSatelliteVelocity()
+          + getSignalStrength()
+          + getSnr()
+          + getUniqueSatId()
+          + setAccumulatedCorrection()
+          + setCarrierFrequency()
+          + setClockBias()
+          + setConstellationType()
+          + setDoppler()
+          + setGpsTime()
+          + setPhase()
+          + setPseudorange()
+          + setRxTopo()
+          + setSatId()
+          + setSatellitePosition()
+          + setSatelliteVelocity()
+          + setSignalStrength()
+          + setSnr()
+          + setUniqueSatId()
+          # setCoordinates()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.Time {
+          ~ df : DateFormat
+          ~ logTime : DateFormat
+          ~ zone : TimeZone
+          - fraction : double
+          - gc : Calendar
+          - leapDates : Date[]
+          - msec : long
+          + Time()
+          + Time()
+          + Time()
+          + Time()
+          + Time()
+          + clone()
+          + formatTemplate()
+          + getDayOfYear()
+          + getFraction()
+          + getGpsHourInDay()
+          + getGpsTime()
+          + getGpsWeek()
+          + getGpsWeekDay()
+          + getGpsWeekSec()
+          + getHourOfDayLetter()
+          + getHourUTC()
+          + getLeapSeconds()
+          + getMonth()
+          + getMsec()
+          + getRoundedGpsTime()
+          + getYear()
+          + getYear2c()
+          {static} + gpsToUnixTime()
+          + setFraction()
+          + setMsec()
+          + toLogString()
+          + toString()
+          ~ initleapDates()
+          - dateStringToTime()
+          {static} - unixToGpsTime()
+      }
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.BdsConstellation : bdsConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GalileoConstellation : galileoConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation : galileoE5aConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation : glonassR1Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GpsConstellation : gpsConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GpsL5Constellation : gpsL5Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement : mEpochMeasurement
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.QzssConstellation : qzssConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.QzssL5Constellation : qzssL5Constellation
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GpsL5Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.QzssL5Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : coordinates
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.constellations.Pseudorange : pseudorange
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.constellations.GpsTime : gpsTime
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.corrections.TopocentricCoordinates : rxTopo
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.SatellitePosition : satellitePosition
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.SatellitePosition : satelliteVelocity
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

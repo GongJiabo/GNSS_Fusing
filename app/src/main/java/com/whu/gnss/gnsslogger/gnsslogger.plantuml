@@ -1,0 +1,1144 @@
+@startuml
+
+title __GNSSLOGGER's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.CalSettingsActivity {
+        {static} - TAG : String
+        - sharedPreferences : SharedPreferences
+        - textViewBtnGnssSystem : TextView
+        - textViewBtnNtripHost : TextView
+        - textViewBtnNtripPassWord : TextView
+        - textViewBtnNtripPort : TextView
+        - textViewBtnNtripUserName : TextView
+        - textViewBtnRestore : TextView
+        - textViewBtnSppModel : TextView
+        - textViewGnssSystem : TextView
+        - textViewNtripHost : TextView
+        - textViewNtripPassWord : TextView
+        - textViewNtripPort : TextView
+        - textViewNtripUserName : TextView
+        - textViewSppModel : TextView
+        # onCreate()
+        - reloadSettingText()
+        - restoreSettingText()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.ConstantSystem {
+        {static} + BEIDOU_SYSTEM : char
+        {static} + GALILEO_SYSTEM : char
+        {static} + GLONASS_SYSTEM : char
+        {static} + GPS_SYSTEM : char
+        {static} + MAXSATIDBDS : int
+        {static} + MAXSATIDGAL : int
+        {static} + MAXSATIDGLO : int
+        {static} + MAXSATIDGPS : int
+        {static} + MAXSATIDQZSS : int
+        {static} + MINSATIDBDS : int
+        {static} + MINSATIDGAL : int
+        {static} + MINSATIDGLO : int
+        {static} + MINSATIDGPS : int
+        {static} + MINSATIDQZSS : int
+        {static} + QZSS_SYSTEM : char
+        {static} + SBAS_SYSTEM : char
+        {static} + UNKNOWN : double
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Constants {
+        {static} + BDS_NO : int
+        {static} + BDS_YES : int
+        {static} + DEF_ANTENNA_ECCENTRICITY_EAST : String
+        {static} + DEF_ANTENNA_ECCENTRICITY_NORTH : String
+        {static} + DEF_ANTENNA_HEIGHT : String
+        {static} + DEF_ANTENNA_NUMBER : String
+        {static} + DEF_ANTENNA_TYPE : String
+        {static} + DEF_BDS_SYSTEM : int
+        {static} + DEF_GAL_SYSTEM : int
+        {static} + DEF_GLO_SYSTEM : int
+        {static} + DEF_GPS_SYSTEM : int
+        {static} + DEF_MARK_NAME : String
+        {static} + DEF_MARK_TYPE : String
+        {static} + DEF_NTRIP_HOST : String
+        {static} + DEF_NTRIP_PASSWARD : String
+        {static} + DEF_NTRIP_PORT : String
+        {static} + DEF_NTRIP_USERNAME : String
+        {static} + DEF_OBSERVER_AGENCY_NAME : String
+        {static} + DEF_OBSERVER_NAME : String
+        {static} + DEF_QZSS_SYSTEM : int
+        {static} + DEF_RECEIVER_NUMBER : String
+        {static} + DEF_RECEIVER_TYPE : String
+        {static} + DEF_RECEIVER_VERSION : String
+        {static} + DEF_RINEX_NAV : int
+        {static} + DEF_RINEX_VER : int
+        {static} + DEF_SPP_MODEL : int
+        {static} + GAL_NO : int
+        {static} + GAL_YES : int
+        {static} + GLO_NO : int
+        {static} + GLO_YES : int
+        {static} + GPS_NO : int
+        {static} + GPS_YES : int
+        {static} + KEY_ANTENNA_ECCENTRICITY_EAST : String
+        {static} + KEY_ANTENNA_ECCENTRICITY_NORTH : String
+        {static} + KEY_ANTENNA_HEIGHT : String
+        {static} + KEY_ANTENNA_NUMBER : String
+        {static} + KEY_ANTENNA_TYPE : String
+        {static} + KEY_BDS_SYSTEM : String
+        {static} + KEY_GAL_SYSTEM : String
+        {static} + KEY_GLO_SYSTEM : String
+        {static} + KEY_GPS_SYSTEM : String
+        {static} + KEY_MARK_NAME : String
+        {static} + KEY_MARK_TYPE : String
+        {static} + KEY_NAV : String
+        {static} + KEY_NTRIP_HOST : String
+        {static} + KEY_NTRIP_PASSWORD : String
+        {static} + KEY_NTRIP_PORT : String
+        {static} + KEY_NTRIP_USERNAME : String
+        {static} + KEY_OBSERVER_AGENCY_NAME : String
+        {static} + KEY_OBSERVER_NAME : String
+        {static} + KEY_QZSS_SYSTEM : String
+        {static} + KEY_RECEIVER_NUMBER : String
+        {static} + KEY_RECEIVER_TYPE : String
+        {static} + KEY_RECEIVER_VERSION : String
+        {static} + KEY_RINEX_VER : String
+        {static} + KEY_SPP_FILE : String
+        {static} + KEY_SPP_MODEL : String
+        {static} + Nav_No : int
+        {static} + Nav_Yes : int
+        {static} + QZSS_NO : int
+        {static} + QZSS_YES : int
+        {static} + RINEX_SETTING : String
+        {static} + SPP_FILE : int
+        {static} + SPP_FILE_NO : int
+        {static} + SPP_FILE_YES : int
+        {static} + SPP_MODEL_ALL : int
+        {static} + SPP_MODEL_DIFF : int
+        {static} + SPP_MODEL_SINGLE : int
+        {static} + SPP_SETTING : String
+        {static} + STATUS_SATELLITE_GREEN : int
+        {static} + STATUS_SATELLITE_YELLOW : int
+        {static} + VER_2_11 : int
+        {static} + VER_3_03 : int
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.CoodinateConv {
+        {static} - API : double
+        - Alt : double
+        - Lat : double
+        - Long : double
+        - PI : double
+        {static} + WGS84LLAtoXYZ()
+        {static} + enu2xyz()
+        {static} + xyz2llh()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FTPCliant {
+        - myContext : Context
+        - myFTPClient : FTPClient
+        - myProgressDialog : ProgressDialog
+        + FTPCliant()
+        # doInBackground()
+        # onPostExecute()
+        # onPreExecute()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FTPCliant.FTP {
+        + FTP()
+        - receiveData()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FileLogger {
+        {static} - COMMENT_START : String
+        - CURRENT_SMOOTHER_RATE : double[]
+        {static} - ERROR_WRITING_FILE : String
+        - LAST_DELTARANGE : double[]
+        - LAST_SMOOTHED_PSEUDORANGE : double[]
+        {static} - MAX_FILES_STORED : int
+        {static} - MINIMUM_USABLE_FILE_SIZE_BYTES : int
+        - RINEX_NAV_ION_OK : boolean
+        - SMOOTHER_RATE : double
+        {static} - TAG : String
+        - UsedInFixList : ArrayList<Integer>
+        {static} - VERSION_TAG : String
+        - altitudekml : ArrayList<Double>
+        - approximateX : double
+        - approximateY : double
+        - approximateZ : double
+        - constFullBiasNanos : double
+        - firstOBSforAcc : boolean
+        - gnsstimeclock_a : int
+        - gnsstimeclock_b : int
+        - gnsstimeclock_c : int
+        - gnsstimeclock_d : double
+        - gnsstimeclock_e : int
+        - gnsstimeclock_f : int
+        - gpstkml : ArrayList<String>
+        - initialize : boolean
+        - latitudekml : ArrayList<Double>
+        - localintervaltime : int
+        - longitudekml : ArrayList<Double>
+        - mContext : Context
+        - mFile : File
+        - mFileAccAzLock : Object
+        - mFileAccAzWriter : BufferedWriter
+        - mFileAccAzi : File
+        - mFileLock : Object
+        - mFileNav : File
+        - mFileNavLock : Object
+        - mFileNavWriter : BufferedWriter
+        - mFileNmea : File
+        - mFileNmeaLock : Object
+        - mFileNmeaWriter : BufferedWriter
+        - mFileRaw : File
+        - mFileRawLock : Object
+        - mFileRawWriter : BufferedWriter
+        - mFileSub : File
+        - mFileSubLock : Object
+        - mFileSubWriter : BufferedWriter
+        - mFileWriter : BufferedWriter
+        - mLocation : Location
+        - mLocationManager : LocationManager
+        - mNavFileWriter : FileWriter
+        - mObsFileWriter : FileWriter
+        - notenoughsat : boolean
+        - poseinitialized : boolean
+        - sharedPreferences : SharedPreferences
+        - sharedPreferences_spp : SharedPreferences
+        - utckml : ArrayList<String>
+        + FileLogger()
+        + endLog()
+        + getUiComponent()
+        + onGnssMeasurementsReceived()
+        + onGnssMeasurementsStatusChanged()
+        + onGnssNavigationMessageReceived()
+        + onGnssNavigationMessageStatusChanged()
+        + onGnssStatusChanged()
+        + onListenerRegistration()
+        + onLocationChanged()
+        + onLocationStatusChanged()
+        + onNmeaReceived()
+        + onProviderDisabled()
+        + onProviderEnabled()
+        + onRawSensorListener()
+        + onSensorListener()
+        + onTTFFReceived()
+        + setUiComponent()
+        + startNewLog()
+        - ReadUseInFixArray()
+        - logError()
+        - logException()
+        - startRecordRinex()
+        - startRecordRinexNav()
+        - startRecordSPPResult()
+        - stopRecordRinex()
+        - stopRecordRinexNav()
+        - stopRecordSPPResult()
+        - writeGnssMeasurementToFile()
+        - writeRawGnssMeasurementToFile()
+        - writeUseInFixArray()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FileLogger.FileToDeleteFilter {
+        - mRetainedFiles : List<File>
+        + FileToDeleteFilter()
+        + accept()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FileLogger.GPSWStoGPST {
+        + method()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FileLogger.ReturnValue {
+        + D : int
+        + M : int
+        + Y : int
+        + h : int
+        + m : int
+        + s : double
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GNSSConstants {
+        {static} + CIRCLE_RAD : double
+        {static} + DAYS_IN_WEEK : long
+        {static} + EARTH_ANGULAR_VELOCITY : double
+        {static} + EARTH_GRAVITATIONAL_CONSTANT : double
+        {static} + ELL_A_BDS : long
+        {static} + ELL_A_GAL : long
+        {static} + ELL_A_GLO : long
+        {static} + ELL_A_GPS : long
+        {static} + ELL_A_QZS : long
+        {static} + ELL_E_BDS : double
+        {static} + ELL_E_GAL : double
+        {static} + ELL_E_GLO : double
+        {static} + ELL_E_GPS : double
+        {static} + ELL_E_QZS : double
+        {static} + ELL_F_BDS : double
+        {static} + ELL_F_GAL : double
+        {static} + ELL_F_GLO : double
+        {static} + ELL_F_GPS : double
+        {static} + ELL_F_QZS : double
+        {static} + FC1 : double
+        {static} + FC2 : double
+        {static} + FC5b : double
+        {static} + FC6 : double
+        {static} + FE1 : double
+        {static} + FE5 : double
+        {static} + FE5a : double
+        {static} + FE5b : double
+        {static} + FE6 : double
+        {static} + FJ1 : double
+        {static} + FJ2 : double
+        {static} + FJ5 : double
+        {static} + FJ6 : double
+        {static} + FL1 : double
+        {static} + FL2 : double
+        {static} + FL5 : double
+        {static} + FR1_base : double
+        {static} + FR1_delta : double
+        {static} + FR2_base : double
+        {static} + FR2_delta : double
+        {static} + GM_BDS : double
+        {static} + GM_GAL : double
+        {static} + GM_GLO : double
+        {static} + GM_GPS : double
+        {static} + GM_QZS : double
+        {static} + GPS_APPROX_TRAVEL_TIME : double
+        {static} + HUNDREDSMILLI : double
+        {static} + J2_GLO : double
+        {static} + MILLISEC_IN_SEC : long
+        {static} + NUMBER_NANO_SECONDS_PER_DAY : long
+        {static} + NUMBER_NANO_SECONDS_PER_WEEK : long
+        {static} + NumberNanoSeconds100Milli : double
+        {static} + NumberNanoSeconds1Milli : double
+        {static} + OMEGAE_DOT_BDS : double
+        {static} + OMEGAE_DOT_GAL : double
+        {static} + OMEGAE_DOT_GLO : double
+        {static} + OMEGAE_DOT_GPS : double
+        {static} + OMEGAE_DOT_QZS : double
+        {static} + ONEMILLI : double
+        {static} + PI_ORBIT : double
+        {static} + RELATIVISTIC_ERROR_CONSTANT : double
+        {static} + SEC_IN_DAY : long
+        {static} + SEC_IN_HALF_WEEK : long
+        {static} + SEC_IN_HOUR : long
+        {static} + SNR_0 : float
+        {static} + SNR_1 : float
+        {static} + SNR_A : float
+        {static} + SNR_a : float
+        {static} + SPEED_OF_LIGHT : double
+        {static} + STANDARD_PRESSURE : double
+        {static} + STANDARD_TEMPERATURE : double
+        {static} + UNIX_GPS_DAYS_DIFF : long
+        {static} + UNIX_GST_DAYS_DIFF : long
+        {static} + WEEKSEC : long
+        {static} + WGS84_ECCENTRICITY : double
+        {static} + WGS84_FLATTENING : double
+        {static} + WGS84_SEMI_MAJOR_AXIS : double
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssContainer {
+        {static} + TAG : String
+        {static} - LOCATION_RATE_GPS_MS : long
+        {static} - LOCATION_RATE_NETWORK_MS : long
+        - gnssMeasurementsEventListener : Callback
+        - gnssNavigationMessageListener : Callback
+        - gnssStatusListener : Callback
+        - mLocationListener : LocationListener
+        - mLocationManager : LocationManager
+        - mLogLocations : boolean
+        - mLogMeasurements : boolean
+        - mLogNavigationMessages : boolean
+        - mLogNmeas : boolean
+        - mLogStatuses : boolean
+        - mLoggers : List<GnssListener>
+        - nmeaListener : OnNmeaMessageListener
+        + GnssContainer()
+        + canLogLocations()
+        + canLogMeasurements()
+        + canLogNavigationMessages()
+        + canLogNmeas()
+        + canLogStatuses()
+        + getLocationManager()
+        + getUISettingComponent()
+        + registerAll()
+        + registerGnssStatus()
+        + registerLocation()
+        + registerMeasurements()
+        + registerNavigation()
+        + registerNmea()
+        + setLogLocations()
+        + setLogMeasurements()
+        + setLogNavigationMessages()
+        + setLogNmeas()
+        + setLogStatuses()
+        + setUISettingComponent()
+        + unregisterAll()
+        + unregisterGpsStatus()
+        + unregisterLocation()
+        + unregisterMeasurements()
+        + unregisterNavigation()
+        + unregisterNmea()
+        - logRegistration()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    interface com.whu.gnss.gnsslogger.GnssListener {
+        {abstract} + onGnssMeasurementsReceived()
+        {abstract} + onGnssMeasurementsStatusChanged()
+        {abstract} + onGnssNavigationMessageReceived()
+        {abstract} + onGnssNavigationMessageStatusChanged()
+        {abstract} + onGnssStatusChanged()
+        {abstract} + onListenerRegistration()
+        {abstract} + onLocationChanged()
+        {abstract} + onLocationStatusChanged()
+        {abstract} + onNmeaReceived()
+        {abstract} + onProviderDisabled()
+        {abstract} + onProviderEnabled()
+        {abstract} + onTTFFReceived()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssNavigationConv {
+        {static} + MAX_NUMBER_OF_SATELLITES : int
+        {static} + SUBFRAME_1 : int
+        {static} + SUBFRAME_2 : int
+        {static} + SUBFRAME_3 : int
+        {static} + SUBFRAME_4 : int
+        {static} + SUBFRAME_5 : int
+        {static} - A0_INDEX : int
+        {static} - A1_INDEX : int
+        {static} - A2_INDEX : int
+        {static} - A3_INDEX : int
+        {static} - AF0_INDEX : int
+        {static} - AF0_LENGTH : int
+        {static} - AF1_INDEX : int
+        {static} - AF1_LENGTH : int
+        {static} - AF2_INDEX : int
+        {static} - AF2_LENGTH : int
+        {static} - A_B_LENGTH : int
+        {static} - A_INDEX24 : int
+        {static} - A_INDEX8 : int
+        {static} - B0_INDEX : int
+        {static} - B1_INDEX : int
+        {static} - B2_INDEX : int
+        {static} - B3_INDEX : int
+        {static} - BYTE_AS_BITS : int
+        {static} - CIC_INDEX : int
+        {static} - CIC_LENGTH : int
+        {static} - CIS_INDEX : int
+        {static} - CIS_LENGTH : int
+        {static} - CRC_INDEX : int
+        {static} - CRC_LENGTH : int
+        {static} - CRS_INDEX : int
+        {static} - CRS_LENGTH : int
+        {static} - CUC_INDEX : int
+        {static} - CUC_LENGTH : int
+        {static} - CUS_INDEX : int
+        {static} - CUS_LENGTH : int
+        {static} - DELTA_N_INDEX : int
+        {static} - DELTA_N_LENGTH : int
+        {static} - DELTA_TF_LS_INDEX : int
+        {static} - DELTA_T_LS_INDEX : int
+        {static} - DN_LS_INDEX : int
+        {static} - E_INDEX24 : int
+        {static} - E_INDEX8 : int
+        {static} - GPS_CYCLE_MS : long
+        {static} - GPS_CYCLE_WEEKS : int
+        {static} - GPS_EPOCH_AS_UNIX_EPOCH_MS : long
+        {static} - I0UTC_INDEX24 : int
+        {static} - I0UTC_INDEX8 : int
+        {static} - I0_INDEX24 : int
+        {static} - I0_INDEX8 : int
+        {static} - I1UTC_INDEX : int
+        {static} - IDOT_INDEX : int
+        {static} - IDOT_LENGTH : int
+        {static} - INTEGER_RANGE : long
+        {static} - IODC1_INDEX : int
+        {static} - IODC1_LENGTH : int
+        {static} - IODC2_INDEX : int
+        {static} - IODC2_LENGTH : int
+        {static} - IODE1_INDEX : int
+        {static} - IODE2_INDEX : int
+        {static} - IODE_LENGTH : int
+        {static} - IODE_TO_IODC_MASK : int
+        {static} - IONOSPHERIC_PARAMETERS_PAGE_18_SV_ID : byte
+        {static} - L1_CA_MESSAGE_LENGTH_BYTES : int
+        {static} - M0_INDEX24 : int
+        {static} - M0_INDEX8 : int
+        {static} - O0_INDEX24 : int
+        {static} - O0_INDEX8 : int
+        {static} - ODOT_INDEX : int
+        {static} - ODOT_LENGTH : int
+        {static} - O_INDEX24 : int
+        {static} - O_INDEX8 : int
+        {static} - POW_2_11 : double
+        {static} - POW_2_12 : double
+        {static} - POW_2_14 : double
+        {static} - POW_2_16 : double
+        {static} - POW_2_4 : double
+        {static} - POW_2_NEG_19 : double
+        {static} - POW_2_NEG_24 : double
+        {static} - POW_2_NEG_27 : double
+        {static} - POW_2_NEG_29 : double
+        {static} - POW_2_NEG_30 : double
+        {static} - POW_2_NEG_31 : double
+        {static} - POW_2_NEG_33 : double
+        {static} - POW_2_NEG_43 : double
+        {static} - POW_2_NEG_5 : double
+        {static} - POW_2_NEG_55 : double
+        {static} - SV_HEALTH_INDEX : int
+        {static} - SV_HEALTH_LENGTH : int
+        {static} - TGD_INDEX : int
+        {static} - TGD_LENGTH : int
+        {static} - TOC_INDEX : int
+        {static} - TOC_LENGTH : int
+        {static} - TOE_INDEX : int
+        {static} - TOE_LENGTH : int
+        {static} - TOT_LS_INDEX : int
+        {static} - URA_INDEX : int
+        {static} - URA_LENGTH : int
+        {static} - WEEK_INDEX : int
+        {static} - WEEK_LENGTH : int
+        {static} - WNF_LS_INDEX : int
+        {static} - WN_LS_INDEX : int
+        {static} - WORD_PADDING_BITS : int
+        {static} - WORD_SIZE_BITS : int
+        + onNavMessageReported()
+        ~ handleFourthSubframe()
+        {static} - buildSigned32BitsWordFrom8And24WordsWith8bitslsb()
+        {static} - buildUnsigned32BitsWordFrom8And24Words()
+        {static} - extractBits()
+        {static} - getNAVType()
+        {static} - getTwoComplement()
+        - handleFirstSubframe()
+        - handleSecondSubframe()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssNavigationDataBase {
+        + mContext : Context
+        + GnssNavigationDataBase()
+        + getIonosphericDataStr()
+        + getLeapSecondsDataStr()
+        + getTimeSystemDataStr()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter.Kal_pre {
+        + method()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter.Kal_upd {
+        + method()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter.ReturnValueKal_pre {
+        + P_p : RealMatrix
+        + x_p : RealMatrix
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter.ReturnValueKal_upd {
+        + P_f : RealMatrix
+        + x_f : RealMatrix
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger2Fragment {
+        {static} + deviceAzimuth : float
+        - MaxCanvusHeight : int
+        - MaxCanvusWidth : int
+        - NorthPos : float[]
+        - SkyPlotPos : float[][]
+        - SkyPlotSvid : String[]
+        - SkyplotBG : ImageView
+        - mLogView : TextView
+        - mScrollView : ScrollView
+        - mSensorLogView : TextView
+        - msatNumber : int
+        - skyplotbg : Bitmap
+        + onCreateView()
+        + onViewCreated()
+        + setFileLogger()
+        + setUILogger()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger2Fragment.TestView {
+        ~ activity : Activity
+        ~ paint : Paint
+        - isAttached : boolean
+        - mHolder : SurfaceHolder
+        - mLooper : Thread
+        - mTime : long
+        + TestView()
+        + draw()
+        + run()
+        + surfaceChanged()
+        + surfaceCreated()
+        + surfaceDestroyed()
+        - doDraw()
+        - initialize()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component {
+        {static} - LOWER_THRESHOLD : int
+        {static} - MAX_LENGTH : int
+        + log2SensorFragment()
+        + log2TextFragment()
+        + startActivity()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger3Fragment {
+        - mSensorLogView : TextView
+        - mSensorRawAccView : TextView
+        - mSensorRawGravityView : TextView
+        - mSensorRawGyroView : TextView
+        - mSensorRawMagView : TextView
+        - mSensorRawPressView : TextView
+        - mSensorRawRotView : TextView
+        + onAttach()
+        + onCreateView()
+        + onViewCreated()
+        + setFileLogger()
+        + setUILogger()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component {
+        {static} - LOWER_THRESHOLD : int
+        {static} - MAX_LENGTH : int
+        + log3SensorRawFragment()
+        + log3TextFragment()
+        + startActivity()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.LoggerFragment {
+        {static} + SHOW_L1_OBS : boolean
+        {static} + SHOW_L5_OBS : boolean
+        ~ MaxSatelliteIndex : int
+        ~ Rid : int[][]
+        ~ expandableLayoutNav : ExpandableRelativeLayout
+        ~ mTextView : TextView[][]
+        - EditTimer : TextView
+        - FileLogging : boolean
+        - IONCORR : TextView
+        - IONTitle : TextView
+        - MainView : View
+        - Progress_Popup : PopupWindow
+        - TimeCorr : TextView
+        - TimeTitle : TextView
+        - checkBoxL1 : CheckBox
+        - checkBoxL5 : CheckBox
+        - gnssNavigationDebugTitle : TextView
+        - interval_spinner : Spinner
+        - leapseconds : TextView
+        - leapsecondstitle : TextView
+        - mFileWriter : CheckedOutputStream
+        - mGNSSClockView : TextView
+        - mScrollView : ScrollView
+        - mTable : ViewGroup
+        - startLog : Button
+        + onCreateView()
+        + onViewCreated()
+        + setFileLogger()
+        + setUILogger()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent {
+        {static} - LOWER_THRESHOLD : int
+        {static} - MAX_LENGTH : int
+        + GNSSClockLog()
+        + NavigationIONText()
+        + RefreshTimer()
+        + ShowProgressWindow()
+        + logTextFragment()
+        + startActivity()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.MainActivity {
+        + GNSSRegister : boolean
+        {static} - FRAGMENT_INDEX_LOGGER : int
+        {static} - FRAGMENT_INDEX_LOGGER2 : int
+        {static} - FRAGMENT_INDEX_LOGGER3 : int
+        {static} - FRAGMENT_INDEX_SETTING : int
+        {static} - LOCATION_REQUEST_ID : int
+        {static} - NUMBER_OF_FRAGMENTS : int
+        {static} - REQUIRED_PERMISSIONS : String[]
+        {static} - instance : MainActivity
+        - mFragments : Fragment[]
+        {static} + getInstance()
+        + onRequestPermissionsResult()
+        # onCreate()
+        # onStart()
+        # onStop()
+        - hasPermissions()
+        - requestPermissionAndSetupFragments()
+        - setupFragments()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.MainActivity.ViewPagerAdapter {
+        ~ myDrawable : Drawable
+        ~ title : String
+        + ViewPagerAdapter()
+        + getCount()
+        + getItem()
+        + getPageTitle()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Mathutil {
+        {static} + fuzzyEquals()
+        {static} + isValidFloat()
+        {static} + mapToRange()
+        {static} + mod()
+        {static} + toMhz()
+        {static} ~ checkNonNegative()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.RinexSettingsActivity {
+        {static} - TAG : String
+        - radioBtnRINEX211 : RadioButton
+        - radioBtnRINEX303 : RadioButton
+        - sharedPreferences : SharedPreferences
+        - textViewAntennaEccentricityEast : TextView
+        - textViewAntennaEccentricityNorth : TextView
+        - textViewAntennaHeight : TextView
+        - textViewAntennaNumber : TextView
+        - textViewAntennaType : TextView
+        - textViewBtnAntennaEccentricityEast : TextView
+        - textViewBtnAntennaEccentricityNorth : TextView
+        - textViewBtnAntennaHeight : TextView
+        - textViewBtnAntennaNumber : TextView
+        - textViewBtnAntennaType : TextView
+        - textViewBtnMarkName : TextView
+        - textViewBtnMarkType : TextView
+        - textViewBtnObserverAgencyName : TextView
+        - textViewBtnObserverName : TextView
+        - textViewBtnReceiverNumber : TextView
+        - textViewBtnReceiverType : TextView
+        - textViewBtnReceiverVersion : TextView
+        - textViewBtnRestore : TextView
+        - textViewMarkName : TextView
+        - textViewMarkType : TextView
+        - textViewObserverAgencyName : TextView
+        - textViewObserverName : TextView
+        - textViewReceiverNumber : TextView
+        - textViewReceiverType : TextView
+        - textViewReceiverVersion : TextView
+        # onCreate()
+        - reloadSettingText()
+        - restoreSettingText()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SQLiteManager {
+        {static} + DB_NAME : String
+        {static} + DB_VERSION : int
+        {static} + TAG : String
+        + m_context : Context
+        {static} ~ CREATE_TABLE : String
+        {static} ~ DROP_TABLE : String
+        + SQLiteManager()
+        + createTable()
+        + existColumn()
+        + existTable()
+        + onCreate()
+        + onUpgrade()
+        + searchIndex()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SensorContainer {
+        ~ listener : SensorEventListener
+        - AccAzi : int
+        - Altitude : float
+        - AmbTemp : float
+        {static} - DEBUG : boolean
+        {static} - DIMENSION : int
+        - GravX : float
+        - GravY : float
+        - GravZ : float
+        - GyroDriftX : float
+        - GyroDriftY : float
+        - GyroDriftZ : float
+        - GyroUncalibratedX : float
+        - GyroUncalibratedY : float
+        - GyroUncalibratedZ : float
+        - GyroX : float
+        - GyroY : float
+        - GyroZ : float
+        - LAST_GYRONANOS : long
+        - LAST_STEP : float
+        {static} - MATRIX_SIZE : int
+        - MagUncalibratedX : float
+        - MagUncalibratedY : float
+        - MagUncalibratedZ : float
+        - MagX : float
+        - MagY : float
+        - MagZ : float
+        - NOW_STEP : float
+        - Pressure : float
+        - RawX : float
+        - RawY : float
+        - RawZ : float
+        - RotationS : float
+        - RotationX : float
+        - RotationY : float
+        - RotationZ : float
+        {static} - TAG : String
+        - alpha : double
+        - counter : int
+        - currentAccelerationXValues : float
+        - currentAccelerationYValues : float
+        - currentAccelerationZValues : float
+        - currentOrientationXValues : float
+        - currentOrientationYValues : float
+        - currentOrientationZValues : float
+        - mAccelerometerValues : float[]
+        - mAmbientTemperautre : float[]
+        - mAzimuthZ : double
+        - mContext : Context
+        - mGravityValues : float[]
+        - mGyroUncalibratedValues : float[]
+        - mGyroValues : float[]
+        - mMagneticUncalibratedValues : float[]
+        - mMagneticValues : float[]
+        - mManager : SensorManager
+        - mPitchAX : double
+        - mPitchGX : double
+        - mPitchX : double
+        - mPressureValues : float[]
+        - mRollAY : double
+        - mRollGY : double
+        - mRollY : double
+        - mRotationValues : float[]
+        - mx : double
+        - my : double
+        - mz : double
+        - passcounter : boolean
+        - sensorRaw : String[]
+        - x : double
+        - y : double
+        - z : double
+        + SensorContainer()
+        + getAzimuth()
+        + getPitch()
+        + getRoll()
+        + registerSensor()
+        + unregisterSensor()
+        - radianToDegrees()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SettingsFragment {
+        {static} + ENABLE_KMLLOG : boolean
+        {static} + ENABLE_NMEALOG : boolean
+        {static} + ENABLE_RAWDATALOG : boolean
+        {static} + ENABLE_RESLOG : boolean
+        {static} + ENABLE_RINEXNAVLOG : boolean
+        {static} + ENABLE_RINEXOBSLOG : boolean
+        {static} + ENABLE_SENSORSLOG : boolean
+        {static} + EnableLogging : boolean
+        {static} + FILE_NAME : String
+        {static} + FILE_PREFIX : String
+        {static} + FILE_PREFIXACCAZI : String
+        {static} + FILE_PREFIXNAV : String
+        {static} + FILE_PREFIXNMEA : String
+        {static} + FILE_PREFIXRAW : String
+        {static} + FILE_PREFIXSUB : String
+        {static} + FIRST_CHECK : boolean
+        {static} + FTP_SERVER_DIRECTORY : String
+        {static} + FileLoggingOK : boolean
+        {static} + GNSSClockSync_FILE : boolean
+        {static} + GNSSClockSync_UI : boolean
+        {static} + GNSSMeasurementReadyMode : int
+        {static} + PermissionOK : boolean
+        {static} + SAVE_LOCATION : String
+        {static} + SMOOTHER_RATE_RESET_FLAG_FILE : boolean
+        {static} + SMOOTHER_RATE_RESET_FLAG_UI : boolean
+        {static} + SendMode : boolean
+        {static} + TAG : String
+        {static} + enableTimer : boolean
+        {static} + interval : int
+        {static} + registerGNSS : boolean
+        {static} + timer : int
+        {static} + useDeviceSensor : boolean
+        {static} + usePseudorangeRate : boolean
+        {static} + usePseudorangeSmoother : boolean
+        - BtnResSettings : Button
+        - BtnRineXSettings : Button
+        - EditSaveLocation : TextView
+        - FTPDirectory : TextView
+        - mAccAvView : TextView
+        - mAccSpecView : TextView
+        - mGyroAvView : TextView
+        - mGyroSpecView : TextView
+        - mLocationIsOk : TextView
+        - mMagAvView : TextView
+        - mMagSpecView : TextView
+        - mPressAvView : TextView
+        - mPressSpecView : TextView
+        - mRawDataIsOk : TextView
+        + onCreateView()
+        + onViewCreated()
+        + setFileLogger()
+        + setGnssContainer()
+        + setGpsContainer()
+        + setSensorContainer()
+        + setUILogger()
+        - CheckGNSSMeasurementsReady()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent {
+        + SettingFTPDirectory()
+        + SettingFragmentSensorAvairable()
+        + SettingFragmentSensorSpec()
+        + SettingTextFragment()
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.UiLogger {
+        {static} + RINEXIONOK : boolean
+        ~ MaxSatelliteIndex : int
+        ~ TOLERANCE_MHZ : float
+        ~ array : String[][]
+        - CURRENT_SMOOTHER_RATE : double[]
+        - Declination : double
+        - GLONASSFREQ : int[]
+        {static} - GPS_L1_FREQ : double
+        {static} - GPS_L1_WAVELENGTH : double
+        {static} - GPS_L5_FREQ : double
+        {static} - GPS_L5_WAVELENGTH : double
+        - LAST_DELTARANGE : double[]
+        - LAST_SMOOTHED_PSEUDORANGE : double[]
+        - SMOOTHER_RATE : double
+        {static} - SPEED_OF_LIGHT : double
+        {static} - USED_COLOR : int
+        - gnssStatusReady : boolean
+        - initialize : boolean
+        - leapseconds : int
+        - mContext : Context
+        - trueAzimuth : double
+        + SensorAvairable()
+        + SensorSpec()
+        + UiLogger()
+        {static} + getCarrierFrequencyLabel()
+        + getUISettingComponent()
+        + getUiFragment2Component()
+        + getUiFragment3Component()
+        + getUiFragmentComponent()
+        + onGnssMeasurementsReceived()
+        + onGnssMeasurementsStatusChanged()
+        + onGnssNavigationMessageReceived()
+        + onGnssNavigationMessageStatusChanged()
+        + onGnssStatusChanged()
+        + onListenerRegistration()
+        + onLocationChanged()
+        + onLocationStatusChanged()
+        + onNmeaReceived()
+        + onProviderDisabled()
+        + onProviderEnabled()
+        + onSensorListener()
+        + onSensorRawListener()
+        + onTTFFReceived()
+        + setUISettingComponent()
+        + setUiFragment2Component()
+        + setUiFragment3Component()
+        + setUiFragmentComponent()
+        - BEIDOUWAVELENGTH()
+        - GLONASSG1WAVELENGTH()
+        - SublogText()
+        {static} - calcspent()
+        - getConstellationName()
+        - getGnssNavigationMessageStatus()
+        {static} - getNAVType()
+        - getStateName()
+        - gnssClockToString()
+        - gnssMeasurementsStatusToString()
+        - gnssMessageToString()
+        - gnssStatusToString()
+        - locationStatusToString()
+        - logEvent()
+        - logLocationEvent()
+        - logMeasurementEvent()
+        - logNavigationMessageEvent()
+        - logNmeaEvent()
+        - logStatusEvent()
+        - logText()
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.CalSettingsActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.FTPCliant +-down- com.whu.gnss.gnsslogger.FTPCliant.FTP
+  com.whu.gnss.gnsslogger.FTPCliant.FTP -up-|> android.content.ContextWrapper
+  com.whu.gnss.gnsslogger.FileLogger .up.|> com.whu.gnss.gnsslogger.GnssListener
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener : RTCMListener
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.nav.GpsNavigationConv : gpsNavigationConv
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.constellations.GpsTime : gpsTime
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip : mGNSSEphemericsNtrip
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.adjust.SPP_Result : mSPP_result
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiComponent
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares : mWeightedLeastSquares
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : pose
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.rinexFileLogger.Rinex : rinex
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.rinexFileLogger.RinexNav : rinexNav
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.constellations.GnssConstellation : sumConstellation
+  com.whu.gnss.gnsslogger.FileLogger +-down- com.whu.gnss.gnsslogger.FileLogger.FileToDeleteFilter
+  com.whu.gnss.gnsslogger.FileLogger +-down- com.whu.gnss.gnsslogger.FileLogger.GPSWStoGPST
+  com.whu.gnss.gnsslogger.FileLogger +-down- com.whu.gnss.gnsslogger.FileLogger.ReturnValue
+  com.whu.gnss.gnsslogger.FileLogger.FileToDeleteFilter .up.|> java.io.FileFilter
+  com.whu.gnss.gnsslogger.GnssContainer o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUISettingComponent
+  com.whu.gnss.gnsslogger.KalmanFilter +-down- com.whu.gnss.gnsslogger.KalmanFilter.Kal_pre
+  com.whu.gnss.gnsslogger.KalmanFilter +-down- com.whu.gnss.gnsslogger.KalmanFilter.Kal_upd
+  com.whu.gnss.gnsslogger.KalmanFilter +-down- com.whu.gnss.gnsslogger.KalmanFilter.ReturnValueKal_pre
+  com.whu.gnss.gnsslogger.KalmanFilter +-down- com.whu.gnss.gnsslogger.KalmanFilter.ReturnValueKal_upd
+  com.whu.gnss.gnsslogger.Logger2Fragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component : mUiComponent
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.Logger2Fragment +-down- com.whu.gnss.gnsslogger.Logger2Fragment.TestView
+  com.whu.gnss.gnsslogger.Logger2Fragment +-down- com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component
+  com.whu.gnss.gnsslogger.Logger2Fragment.TestView .up.|> android.view.SurfaceHolder.Callback
+  com.whu.gnss.gnsslogger.Logger2Fragment.TestView .up.|> java.lang.Runnable
+  com.whu.gnss.gnsslogger.Logger2Fragment.TestView -up-|> android.view.SurfaceView
+  com.whu.gnss.gnsslogger.Logger3Fragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component : mUiComponent
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.Logger3Fragment +-down- com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component
+  com.whu.gnss.gnsslogger.LoggerFragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiComponent
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.LoggerFragment +-down- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent
+  com.whu.gnss.gnsslogger.MainActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.GnssContainer : mGnssContainer
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.GnssNavigationDataBase : mGnssNavigationDataBase
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.SensorContainer : mSensorContainer
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.MainActivity +-down- com.whu.gnss.gnsslogger.MainActivity.ViewPagerAdapter
+  com.whu.gnss.gnsslogger.MainActivity.ViewPagerAdapter -up-|> android.support.v13.app.FragmentStatePagerAdapter
+  com.whu.gnss.gnsslogger.RinexSettingsActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.SQLiteManager -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.whu.gnss.gnsslogger.SensorContainer o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.SensorContainer o-- com.whu.gnss.gnsslogger.UiLogger : mLogger
+  com.whu.gnss.gnsslogger.SettingsFragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.GnssContainer : mGnssContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.GnssContainer : mGpsContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.SensorContainer : mSensorContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUiSettingComponent
+  com.whu.gnss.gnsslogger.SettingsFragment +-down- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent
+  com.whu.gnss.gnsslogger.UiLogger .up.|> com.whu.gnss.gnsslogger.GnssListener
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUISettingComponent
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component : mUiFragment2Component
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component : mUiFragment3Component
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiFragmentComponent
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Button;
 //传感器
 public class Logger3Fragment extends Fragment {
 
@@ -25,6 +26,8 @@ public class Logger3Fragment extends Fragment {
     private TextView mSensorRawGyroView;
     private TextView mSensorRawGravityView;
     //private TextView mSensorRawGyroUncalibratedView;
+
+    private Button mbtnShowPos;
 
     private final Logger3Fragment.UIFragment3Component mUiComponent = new Logger3Fragment.UIFragment3Component();
 
@@ -51,6 +54,7 @@ public class Logger3Fragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState){
         FrameLayout frameLayout = (FrameLayout) view.findViewById(R.id.fragment);
 
+        mbtnShowPos = (Button)view.findViewById(R.id.btnShowPos);
 
         mSensorLogView = (TextView) view.findViewById(R.id.sensorview);
 
@@ -60,6 +64,14 @@ public class Logger3Fragment extends Fragment {
         mSensorRawPressView = (TextView) view.findViewById(R.id.sensorPressView);
         mSensorRawRotView = (TextView) view.findViewById(R.id.sensorRotView);
         mSensorRawGravityView = (TextView) view.findViewById(R.id.sensorGravityView);
+
+
+        mbtnShowPos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getActivity(), GetLoctionMode.class));
+            }
+        });
     }
 
     public class UIFragment3Component {

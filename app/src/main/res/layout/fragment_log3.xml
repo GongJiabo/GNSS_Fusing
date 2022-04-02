@@ -261,4 +261,15 @@
         app:layout_constraintStart_toStartOf="@+id/view15"
         app:layout_constraintTop_toBottomOf="@+id/sensorGravityView" />
 
+    <Button
+        android:id="@+id/btnShowPos"
+        android:layout_width="314dp"
+        android:layout_height="49dp"
+        android:layout_marginTop="220dp"
+        android:text="显示当前位置"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view15" />
+
 </android.support.constraint.ConstraintLayout>

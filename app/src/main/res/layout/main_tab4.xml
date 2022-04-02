@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"/>
 
     <TextView
-        android:id="@+id/tab3_badge"
+        android:id="@+id/tab4_badge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/tab4_icon"

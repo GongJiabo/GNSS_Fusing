@@ -499,7 +499,7 @@ public class SensorContainer
                 // useDeviceSensor == true  -> 输出原始传感器观测值
                 if (SettingsFragment.useDeviceSensor == false)
                 {
-                    mFileLogger.onSensorListener("", (float) mAzimuthZ, (float) mPitchX, (float) mRollY, Altitude);
+                    mFileLogger.onSensorListener("", event.timestamp, (float) mAzimuthZ, (float) mPitchX, (float) mRollY, Altitude);
                 } else
                 {
                     mFileLogger.onRawSensorListener("", event.timestamp, mAccelerometerValues, mGyroValues, mGravityValues, mMagneticValues, mRotationValues, orientationValues, Pressure);

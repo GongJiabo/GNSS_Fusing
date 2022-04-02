@@ -7,6 +7,8 @@
     <color name="colorRitsDark">#a10000</color>
     <color name="colorTabBack">#e7e8e2</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorBlue">#4c90f9</color>
+    <color name="colorRed"> #FF0000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#8e8d8d</color>
     <color name="colorDarkGray">#454444</color>

@@ -15,7 +15,9 @@
     <string name="nmea_label">Nmea</string>
     <string name="help">HELP</string>
     <string name="exit">Exit</string>
-
+    <string name="gpsfollow">追随</string>
+    <string name="gpslocate">定位</string>
+    <string name="gpsrotate">旋转</string>
 
 
 

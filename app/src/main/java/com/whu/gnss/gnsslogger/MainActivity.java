@@ -202,6 +202,7 @@ public class MainActivity extends AppCompatActivity {
         logger3Fragment.setFileLogger(mFileLogger);
         mFragments[FRAGMENT_INDEX_LOGGER3] = logger3Fragment;
 
+
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         // The viewpager that will host the section contents.
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
@@ -234,6 +235,7 @@ public class MainActivity extends AppCompatActivity {
         TabLayout.Tab tab4 = tabLayout.getTabAt(3);
         View tab4View = inflater.inflate(R.layout.main_tab4, null);
         tab4.setCustomView(tab4View);
+
     }
 
     private boolean hasPermissions(Activity activity) {

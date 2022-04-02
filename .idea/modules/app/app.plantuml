@@ -1,0 +1,573 @@
+@startuml
+
+title __GNSS_FUSING.APP's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.BuildConfig {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.CalSettingsActivity {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.ConstantSystem {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Constants {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.CoodinateConv {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FTPCliant {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.FileLogger {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GNSSConstants {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssContainer {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    interface com.whu.gnss.gnsslogger.GnssListener {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssNavigationConv {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.GnssNavigationDataBase {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.KalmanFilter {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger2Fragment {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Logger3Fragment {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.LoggerFragment {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.MainActivity {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.Mathutil {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.RinexSettingsActivity {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SQLiteManager {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SensorContainer {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.SettingsFragment {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    class com.whu.gnss.gnsslogger.UiLogger {
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace adjust {
+      class com.whu.gnss.gnsslogger.adjust.SPP_Result {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace adjust {
+      class com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.BdsConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      abstract class com.whu.gnss.gnsslogger.constellations.Constellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GalileoConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GnssConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsL5Constellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.GpsTime {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.Pseudorange {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.QzssConstellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.QzssL5Constellation {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.SatelliteParameters {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      class com.whu.gnss.gnsslogger.constellations.Time {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.BdsSatellite {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GalileoSatellite {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GlonassSatellite {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.GpsSatellite {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace constellations {
+      namespace satellites {
+        class com.whu.gnss.gnsslogger.constellations.satellites.QzssSatellite {
+        }
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace coordinates {
+      class com.whu.gnss.gnsslogger.coordinates.Coordinates {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace coordinates {
+      class com.whu.gnss.gnsslogger.coordinates.SatellitePosition {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace corrections {
+      abstract class com.whu.gnss.gnsslogger.corrections.Correction {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace corrections {
+      class com.whu.gnss.gnsslogger.corrections.ShapiroCorrection {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace corrections {
+      class com.whu.gnss.gnsslogger.corrections.TopocentricCoordinates {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace corrections {
+      class com.whu.gnss.gnsslogger.corrections.TropoCorrection {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace nav {
+      class com.whu.gnss.gnsslogger.nav.GpsNavigationConv {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace nav {
+      class com.whu.gnss.gnsslogger.nav.SQLiteManager {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.DecodeEphData {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.EphGps {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      abstract class com.whu.gnss.gnsslogger.ntrip.EphemerisSystem {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.RTCM3Client {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      interface com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace rinexFileLogger {
+      class com.whu.gnss.gnsslogger.rinexFileLogger.Rinex {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace rinexFileLogger {
+      class com.whu.gnss.gnsslogger.rinexFileLogger.RinexHeader {
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace rinexFileLogger {
+      class com.whu.gnss.gnsslogger.rinexFileLogger.RinexNav {
+      }
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.CalSettingsActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.FileLogger .up.|> com.whu.gnss.gnsslogger.GnssListener
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener : RTCMListener
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.nav.GpsNavigationConv : gpsNavigationConv
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.constellations.GpsTime : gpsTime
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip : mGNSSEphemericsNtrip
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.adjust.SPP_Result : mSPP_result
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiComponent
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.adjust.WeightedLeastSquares : mWeightedLeastSquares
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : pose
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.rinexFileLogger.Rinex : rinex
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.rinexFileLogger.RinexNav : rinexNav
+  com.whu.gnss.gnsslogger.FileLogger o-- com.whu.gnss.gnsslogger.constellations.GnssConstellation : sumConstellation
+  com.whu.gnss.gnsslogger.GnssContainer o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUISettingComponent
+  com.whu.gnss.gnsslogger.Logger2Fragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component : mUiComponent
+  com.whu.gnss.gnsslogger.Logger2Fragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.Logger3Fragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component : mUiComponent
+  com.whu.gnss.gnsslogger.Logger3Fragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.LoggerFragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiComponent
+  com.whu.gnss.gnsslogger.LoggerFragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.MainActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.GnssContainer : mGnssContainer
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.GnssNavigationDataBase : mGnssNavigationDataBase
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.SensorContainer : mSensorContainer
+  com.whu.gnss.gnsslogger.MainActivity o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.RinexSettingsActivity -up-|> android.support.v7.app.AppCompatActivity
+  com.whu.gnss.gnsslogger.SQLiteManager -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.whu.gnss.gnsslogger.SensorContainer o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.SensorContainer o-- com.whu.gnss.gnsslogger.UiLogger : mLogger
+  com.whu.gnss.gnsslogger.SettingsFragment -up-|> android.app.Fragment
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.FileLogger : mFileLogger
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.GnssContainer : mGnssContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.GnssContainer : mGpsContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.SensorContainer : mSensorContainer
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.UiLogger : mUiLogger
+  com.whu.gnss.gnsslogger.SettingsFragment o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUiSettingComponent
+  com.whu.gnss.gnsslogger.UiLogger .up.|> com.whu.gnss.gnsslogger.GnssListener
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.SettingsFragment.UIFragmentSettingComponent : mUISettingComponent
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.Logger2Fragment.UIFragment2Component : mUiFragment2Component
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.Logger3Fragment.UIFragment3Component : mUiFragment3Component
+  com.whu.gnss.gnsslogger.UiLogger o-- com.whu.gnss.gnsslogger.LoggerFragment.UIFragmentComponent : mUiFragmentComponent
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.BdsConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GalileoConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.BdsConstellation : bdsConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GalileoConstellation : galileoConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GalileoE5aConstellation : galileoE5aConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GlonassR1Constellation : glonassR1Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GpsConstellation : gpsConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.GpsL5Constellation : gpsL5Constellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement : mEpochMeasurement
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.QzssConstellation : qzssConstellation
+  com.whu.gnss.gnsslogger.constellations.GnssConstellation o-- com.whu.gnss.gnsslogger.constellations.QzssL5Constellation : qzssL5Constellation
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.GpsConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.GpsL5Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : rxPos
+  com.whu.gnss.gnsslogger.constellations.QzssConstellation o-- com.whu.gnss.gnsslogger.constellations.Time : timeRefMsec
+  com.whu.gnss.gnsslogger.constellations.QzssL5Constellation -up-|> com.whu.gnss.gnsslogger.constellations.Constellation
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.Coordinates : coordinates
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.constellations.Pseudorange : pseudorange
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.constellations.GpsTime : gpsTime
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.corrections.TopocentricCoordinates : rxTopo
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.SatellitePosition : satellitePosition
+  com.whu.gnss.gnsslogger.constellations.SatelliteParameters o-- com.whu.gnss.gnsslogger.coordinates.SatellitePosition : satelliteVelocity
+  com.whu.gnss.gnsslogger.constellations.satellites.EpochMeasurement o-- com.whu.gnss.gnsslogger.constellations.GpsTime : epochTime
+  com.whu.gnss.gnsslogger.coordinates.Coordinates o-- com.whu.gnss.gnsslogger.constellations.Time : refTime
+  com.whu.gnss.gnsslogger.coordinates.SatellitePosition -up-|> com.whu.gnss.gnsslogger.coordinates.Coordinates
+  com.whu.gnss.gnsslogger.corrections.ShapiroCorrection -up-|> com.whu.gnss.gnsslogger.corrections.Correction
+  com.whu.gnss.gnsslogger.corrections.TropoCorrection -up-|> com.whu.gnss.gnsslogger.corrections.Correction
+  com.whu.gnss.gnsslogger.nav.GpsNavigationConv o-- com.whu.gnss.gnsslogger.nav.SQLiteManager : sqliteManager
+  com.whu.gnss.gnsslogger.nav.SQLiteManager -up-|> android.database.sqlite.SQLiteOpenHelper
+  com.whu.gnss.gnsslogger.ntrip.EphGps o-- com.whu.gnss.gnsslogger.constellations.Time : refTime
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip .up.|> com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip .up.|> java.lang.Runnable
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip -up-|> com.whu.gnss.gnsslogger.ntrip.EphemerisSystem
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip o-- com.whu.gnss.gnsslogger.ntrip.RTCM3Client : mRTCM3Client
+  com.whu.gnss.gnsslogger.ntrip.RTCM3Client .up.|> java.lang.Runnable
+  com.whu.gnss.gnsslogger.ntrip.RTCM3Client o-- com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener : mRTCM3ClientListener
+  com.whu.gnss.gnsslogger.rinexFileLogger.RinexHeader o-- com.whu.gnss.gnsslogger.constellations.GpsTime : gpsTime
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

@@ -544,12 +544,12 @@ public class FileLogger implements GnssListener
                 {
                     if (SettingsFragment.useDeviceSensor)
                     {
-                        currentFileAccAziWriter.write("TimeStamp, Year, Month, Day, Hour, Minute, Second, AccX, AccY, AccZ, " +
+                        currentFileAccAziWriter.write("TimeStamp, AccX, AccY, AccZ, " +
                                 "GyroX, GyroY, GyroZ, GravX, GravY, GravZ, MagX, MagY, MayZ, RotX, RotY, RotZ, RotS, PitchX, RollY, AzimuthZ, Pressure");
                         currentFileAccAziWriter.newLine();
                     } else
                     {
-                        currentFileAccAziWriter.write("Year, Month, Day, Hour, Minute, Second, Azimuth, Pitch, Roll, Altitude");
+                        currentFileAccAziWriter.write("TimeStamp, Azimuth, Pitch, Roll, Altitude");
                         currentFileAccAziWriter.newLine();
                     }
 
@@ -1209,7 +1209,7 @@ public class FileLogger implements GnssListener
     }
 
 
-    public void onRawSensorListener(String listener, float timeStamp, float rawAcc[], float rawGyro[], float rawGrav[], float rawMag[],
+    public void onRawSensorListener(String listener, long timeStamp, float rawAcc[], float rawGyro[], float rawGrav[], float rawMag[],
                                     float rawRot[], float rawOrient[], float rawPre)
     {
         synchronized (mFileAccAzLock)
@@ -1224,13 +1224,11 @@ public class FileLogger implements GnssListener
                     try
                     {
                         // Log.e("Write","Writing Sensors Data");
-                        Calendar myCal = Calendar.getInstance();
-                        DateFormat myFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss.SSS");
-                        String myTime = myFormat.format(myCal.getTime());
+
                         //csv文件内容 行人位置模型 altitude是气压传感器
                         String SensorStream =
-                                String.format("%f, %s, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
-                                        timeStamp, myTime,
+                                String.format("%l, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
+                                        timeStamp,
                                         rawAcc[0], rawAcc[1], rawAcc[2], rawGyro[0], rawGyro[1], rawGyro[2],
                                         rawGrav[0], rawGrav[1], rawGrav[2], rawMag[0], rawMag[1], rawMag[2],
                                         rawRot[0], rawRot[1], rawRot[2], rawRot[3],
@@ -1254,7 +1252,7 @@ public class FileLogger implements GnssListener
         }
     }
 
-    public void onSensorListener(String listener, float azimuth, float pitch, float roll, float altitude)
+    public void onSensorListener(String listener, float timestamp, float azimuth, float pitch, float roll, float altitude)
     {
         synchronized (mFileAccAzLock)
         {
@@ -1267,13 +1265,9 @@ public class FileLogger implements GnssListener
                 {
                     try
                     {
-                        Calendar myCal = Calendar.getInstance();
-                        DateFormat myFormat = new SimpleDateFormat("yyyy,MM,dd,HH,mm,ss.SSSSSS");
-                        String myTime = myFormat.format(myCal.getTime());
-                        //
                         String SensorStream =
-                                String.format("%s, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f\n",
-                                        myTime, azimuth, pitch, roll, altitude);
+                                String.format(" %f, %f, %f, %f, %f\n",
+                                        timestamp, azimuth, pitch, roll, altitude);
                         mFileAccAzWriter.write(SensorStream);
                     } catch (IOException e)
                     {

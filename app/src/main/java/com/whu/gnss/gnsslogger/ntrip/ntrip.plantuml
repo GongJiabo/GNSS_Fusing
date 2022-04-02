@@ -1,0 +1,294 @@
+@startuml
+
+title __NTRIP's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.DecodeEphData {
+          {static} - TAG : String
+          {static} + decodeBeidouEph()
+          {static} + decodeGalileo1046Eph()
+          {static} + decodeGalileoEph()
+          {static} + decodeGlonassEph()
+          {static} + decodeGnssEph()
+          {static} + decodeGpsEph()
+          {static} + decodeQzssEph()
+          {static} + getbitu()
+          {static} - adjustGpsWeek()
+          {static} - bdtWeek2GpsWeek()
+          {static} - bdtWeekSec2GpsWeekSec()
+          {static} - getbitg()
+          {static} - getbits()
+          {static} - satExist()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.EphGps {
+          {static} + UnhealthyEph : EphGps
+          - Bn : double
+          - En : double
+          - L2Code : int
+          - L2Flag : int
+          - M0 : double
+          {static} - STREAM_V : int
+          - X : double
+          - Xa : double
+          - Xv : double
+          - Y : double
+          - Ya : double
+          - Yv : double
+          - Z : double
+          - Za : double
+          - Zv : double
+          - af0 : double
+          - af1 : double
+          - af2 : double
+          - cic : double
+          - cis : double
+          - crc : double
+          - crs : double
+          - cuc : double
+          - cus : double
+          - deltaN : double
+          - e : double
+          - fitInt : long
+          - freq_num : int
+          - gammaN : double
+          - i0 : double
+          - iDot : double
+          - iodc : int
+          - iode : int
+          - omega0 : double
+          - omegaDot : double
+          - omg : double
+          - rootA : double
+          - satID : int
+          - satType : char
+          - svAccur : int
+          - svHealth : int
+          - tauN : double
+          - tb : double
+          - tgd : double
+          - tgdB1C : double
+          - tgdB2a : double
+          - tgdE5a_E1 : double
+          - tgdE5b_E1 : double
+          - tk : double
+          - toc : double
+          - toe : double
+          - tom : double
+          - tow : float
+          - week : int
+          + EphGps()
+          + getAf0()
+          + getAf1()
+          + getAf2()
+          + getBn()
+          + getCic()
+          + getCis()
+          + getCrc()
+          + getCrs()
+          + getCuc()
+          + getCus()
+          + getDeltaN()
+          + getE()
+          + getEn()
+          + getFitInt()
+          + getGammaN()
+          + getI0()
+          + getIodc()
+          + getIode()
+          + getL2Code()
+          + getL2Flag()
+          + getM0()
+          + getOmega0()
+          + getOmegaDot()
+          + getOmg()
+          + getRefTime()
+          + getRootA()
+          + getSatID()
+          + getSatType()
+          + getSvAccur()
+          + getSvHealth()
+          + getTauN()
+          + getTgd()
+          + getTgdB1C()
+          + getTgdB2a()
+          + getTgdE5a_E1()
+          + getTgdE5b_E1()
+          + getToc()
+          + getToe()
+          + getTom()
+          + getWeek()
+          + getX()
+          + getXa()
+          + getXv()
+          + getY()
+          + getYa()
+          + getYv()
+          + getZ()
+          + getZa()
+          + getZv()
+          + getfreq_num()
+          + getiDot()
+          + gettb()
+          + gettk()
+          + setAf0()
+          + setAf1()
+          + setAf2()
+          + setBn()
+          + setCic()
+          + setCis()
+          + setCrc()
+          + setCrs()
+          + setCuc()
+          + setCus()
+          + setDeltaN()
+          + setE()
+          + setEn()
+          + setFitInt()
+          + setGammaN()
+          + setI0()
+          + setIodc()
+          + setIode()
+          + setL2Code()
+          + setL2Flag()
+          + setM0()
+          + setOmega0()
+          + setOmegaDot()
+          + setOmg()
+          + setRefTime()
+          + setRootA()
+          + setSatID()
+          + setSatType()
+          + setSvAccur()
+          + setSvHealth()
+          + setTauN()
+          + setTgd()
+          + setTgdB1C()
+          + setTgdB2a()
+          + setTgdE5a_E1()
+          + setTgdE5b_E1()
+          + setToc()
+          + setToe()
+          + setTom()
+          + setWeek()
+          + setX()
+          + setXa()
+          + setXv()
+          + setY()
+          + setYa()
+          + setYv()
+          + setZ()
+          + setZa()
+          + setZv()
+          + setfreq_num()
+          + setiDot()
+          + settb()
+          + settk()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      abstract class com.whu.gnss.gnsslogger.ntrip.EphemerisSystem {
+          {static} - Tag : String
+          + computeSatPositionAndVelocities()
+          # checkGpsTime()
+          # computeClockCorrectedTransmissionTime()
+          # computeEarthRotationCorrection()
+          # computeEccentricAnomaly()
+          # computeSatelliteClockError()
+          - satellite_motion_diff_eq()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip {
+          {static} - TAG : String
+          - hashtable : Hashtable<Integer, Time>
+          - mEphBdsList : List<EphGps>
+          - mEphGalList : List<EphGps>
+          - mEphGloList : List<EphGps>
+          - mEphGnssList : List<EphGps>
+          - mEphGpsList : List<EphGps>
+          - mEphQzssList : List<EphGps>
+          + GNSSEphemericsNtrip()
+          + findEphGps()
+          + getEphBdsList()
+          + getEphGalList()
+          + getEphGloList()
+          + getEphGnssList()
+          + getEphGpsList()
+          + getEphQzssList()
+          + getSatPositionAndVelocities()
+          + onDataReceived()
+          + run()
+          + stopNtrip()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      class com.whu.gnss.gnsslogger.ntrip.RTCM3Client {
+          {static} + tbl_CRC24Q : int[]
+          {static} - CRC_LEN : int
+          {static} - MSG_PRE : int
+          {static} - PRE_LEN : int
+          {static} - TAG : String
+          - host : String
+          - inputstream : InputStream
+          - mountpoint : String
+          - outputstream : OutputStream
+          - password : String
+          - port : int
+          - socket : Socket
+          - username : String
+          + RTCM3Client()
+          {static} + getbitu()
+          {static} + rtk_crc24q()
+          + run()
+          + stop()
+          - ToBase64()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace ntrip {
+      interface com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener {
+          {abstract} + onDataReceived()
+      }
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.ntrip.EphGps o-- com.whu.gnss.gnsslogger.constellations.Time : refTime
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip .up.|> com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip .up.|> java.lang.Runnable
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip -up-|> com.whu.gnss.gnsslogger.ntrip.EphemerisSystem
+  com.whu.gnss.gnsslogger.ntrip.GNSSEphemericsNtrip o-- com.whu.gnss.gnsslogger.ntrip.RTCM3Client : mRTCM3Client
+  com.whu.gnss.gnsslogger.ntrip.RTCM3Client .up.|> java.lang.Runnable
+  com.whu.gnss.gnsslogger.ntrip.RTCM3Client o-- com.whu.gnss.gnsslogger.ntrip.RTCM3ClientListener : mRTCM3ClientListener
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

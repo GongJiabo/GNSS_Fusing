@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.whu.gnss.gnsslogger.mapview.MyWebView
+        android:id="@+id/map"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.whu.gnss.gnsslogger.mapview.MyWebView>
+
+    <TextView
+        android:id="@+id/location_errInfo_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|left"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@color/colorRed"
+        android:textColor="@color/colorDarkGray"
+        android:text="TextView"
+        android:visibility="gone"/>
+
+    <RadioGroup
+        android:id="@+id/gps_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+
+        <RadioButton
+            android:id="@+id/gps_locate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gpslocate"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+           />
+
+        <RadioButton
+            android:id="@+id/gps_follow_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gpsfollow"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+
+        <RadioButton
+            android:id="@+id/gps_rotate_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gpsrotate"
+            android:textSize="14sp"
+            android:textColor="@android:color/black" />
+    </RadioGroup>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:orientation="vertical"
+        android:layout_gravity="right"
+        >
+
+        <Button
+            android:id="@+id/basicmap"
+            android:layout_width="85dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:text="标准地图"/>
+        <Button
+            android:id="@+id/rsmap"
+            android:layout_width="85dp"
+            android:layout_height="36dp"
+            android:gravity="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="14sp"
+            android:text="卫星地图"/>
+        <Button
+            android:id="@+id/nightmap"
+            android:layout_width="85dp"
+            android:layout_height="36dp"
+            android:textColor="@color/colorBlack"
+            android:gravity="center"
+            android:textSize="14sp"
+            android:text="夜间模式"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|right"
+        android:orientation="vertical"
+        >
+    <TextView
+        android:id="@+id/txtLatitude"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Latitude: "
+        android:textSize="18sp"
+        android:textColor="@color/colorDarkGray" />
+        <TextView
+            android:id="@+id/txtLogtitude"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="Longitude: "
+            android:textSize="18sp"
+            android:textColor="@color/colorDarkGray" />
+    </LinearLayout>
+
+</FrameLayout>

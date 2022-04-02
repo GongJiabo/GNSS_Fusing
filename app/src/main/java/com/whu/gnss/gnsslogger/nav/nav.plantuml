@@ -1,0 +1,167 @@
+@startuml
+
+title __NAV's Class Diagram__\n
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace nav {
+      class com.whu.gnss.gnsslogger.nav.GpsNavigationConv {
+          {static} + MAX_NUMBER_OF_SATELLITES : int
+          {static} - A0_INDEX : int
+          {static} - A1_INDEX : int
+          {static} - A2_INDEX : int
+          {static} - A3_INDEX : int
+          {static} - AF0_INDEX : int
+          {static} - AF0_LENGTH : int
+          {static} - AF1_INDEX : int
+          {static} - AF1_LENGTH : int
+          {static} - AF2_INDEX : int
+          {static} - AF2_LENGTH : int
+          {static} - A_B_LENGTH : int
+          {static} - A_INDEX24 : int
+          {static} - A_INDEX8 : int
+          {static} - B0_INDEX : int
+          {static} - B1_INDEX : int
+          {static} - B2_INDEX : int
+          {static} - B3_INDEX : int
+          {static} - BYTE_AS_BITS : int
+          {static} - CIC_INDEX : int
+          {static} - CIC_LENGTH : int
+          {static} - CIS_INDEX : int
+          {static} - CIS_LENGTH : int
+          {static} - CRC_INDEX : int
+          {static} - CRC_LENGTH : int
+          {static} - CRS_INDEX : int
+          {static} - CRS_LENGTH : int
+          {static} - CUC_INDEX : int
+          {static} - CUC_LENGTH : int
+          {static} - CUS_INDEX : int
+          {static} - CUS_LENGTH : int
+          {static} - DELTA_N_INDEX : int
+          {static} - DELTA_N_LENGTH : int
+          {static} - DELTA_TF_LS_INDEX : int
+          {static} - DELTA_T_LS_INDEX : int
+          {static} - DN_LS_INDEX : int
+          {static} - E_INDEX24 : int
+          {static} - E_INDEX8 : int
+          {static} - GPS_CYCLE_MS : long
+          {static} - GPS_EPOCH_AS_UNIX_EPOCH_MS : long
+          {static} - I0UTC_INDEX24 : int
+          {static} - I0UTC_INDEX8 : int
+          {static} - I0_INDEX24 : int
+          {static} - I0_INDEX8 : int
+          {static} - I1UTC_INDEX : int
+          {static} - IDOT_INDEX : int
+          {static} - IDOT_LENGTH : int
+          {static} - INTEGER_RANGE : long
+          {static} - IODC1_INDEX : int
+          {static} - IODC1_LENGTH : int
+          {static} - IODC2_INDEX : int
+          {static} - IODC2_LENGTH : int
+          {static} - IODE1_INDEX : int
+          {static} - IODE2_INDEX : int
+          {static} - IODE_LENGTH : int
+          {static} - IONOSPHERIC_PARAMETERS_PAGE_18_SV_ID : byte
+          {static} - L1_CA_MESSAGE_LENGTH_BYTES : int
+          {static} - M0_INDEX24 : int
+          {static} - M0_INDEX8 : int
+          - NavDB : SQLiteDatabase
+          {static} - O0_INDEX24 : int
+          {static} - O0_INDEX8 : int
+          {static} - ODOT_INDEX : int
+          {static} - ODOT_LENGTH : int
+          {static} - O_INDEX24 : int
+          {static} - O_INDEX8 : int
+          {static} - POW_2_11 : double
+          {static} - POW_2_12 : double
+          {static} - POW_2_14 : double
+          {static} - POW_2_16 : double
+          {static} - POW_2_4 : double
+          {static} - POW_2_NEG_19 : double
+          {static} - POW_2_NEG_24 : double
+          {static} - POW_2_NEG_27 : double
+          {static} - POW_2_NEG_29 : double
+          {static} - POW_2_NEG_30 : double
+          {static} - POW_2_NEG_31 : double
+          {static} - POW_2_NEG_33 : double
+          {static} - POW_2_NEG_43 : double
+          {static} - POW_2_NEG_5 : double
+          {static} - POW_2_NEG_55 : double
+          {static} - SV_HEALTH_INDEX : int
+          {static} - SV_HEALTH_LENGTH : int
+          {static} - TGD_INDEX : int
+          {static} - TGD_LENGTH : int
+          {static} - TOC_INDEX : int
+          {static} - TOC_LENGTH : int
+          {static} - TOE_INDEX : int
+          {static} - TOE_LENGTH : int
+          {static} - TOT_LS_INDEX : int
+          {static} - TYPE_BDS_D1 : int
+          {static} - TYPE_BDS_D2 : int
+          {static} - TYPE_GAL_F : int
+          {static} - TYPE_GAL_I : int
+          {static} - TYPE_GLO_L1CA : int
+          {static} - TYPE_GPS_CNAV2 : int
+          {static} - TYPE_GPS_L1CA : int
+          {static} - TYPE_GPS_L2CNAV : int
+          {static} - TYPE_GPS_L5CA : int
+          {static} - URA_INDEX : int
+          {static} - URA_LENGTH : int
+          {static} - WEEK_INDEX : int
+          {static} - WEEK_LENGTH : int
+          {static} - WNF_LS_INDEX : int
+          {static} - WN_LS_INDEX : int
+          {static} - WORD_PADDING_BITS : int
+          {static} - WORD_SIZE_BITS : int
+          - context : Context
+          - mtocScaled : double[]
+          + GpsNavigationConv()
+          + getNavgationMessageToRinex2Body()
+          + getNavgationMessageToRinex3Body()
+          + getNavigationMessageToRinex2Header()
+          + getNavigationMessageToRinex3Header()
+          + handleFirstSubframe()
+          + handleSecondSubframe()
+          + handleThirdSubframe()
+          + onGpsNavMessageReported()
+          {static} - buildSigned32BitsWordFrom8And24WordsWith8bitslsb()
+          {static} - buildUnsigned32BitsWordFrom8And24Words()
+          {static} - extractBits()
+          {static} - getNAVType()
+          {static} - getTwoComplement()
+          - handleFourthSubframe()
+      }
+    }
+  }
+  
+
+  namespace com.whu.gnss.gnsslogger {
+    namespace nav {
+      class com.whu.gnss.gnsslogger.nav.SQLiteManager {
+          {static} + CREATE_EPHGPSBOOK : String
+          {static} + DB_NAME : String
+          {static} + DB_VERSION : int
+          {static} + TAG : String
+          + SQLiteManager()
+          + createTable()
+          + existColumn()
+          + existTable()
+          + onCreate()
+          + onUpgrade()
+          + searchIndex()
+      }
+    }
+  }
+  
+
+  com.whu.gnss.gnsslogger.nav.GpsNavigationConv o-- com.whu.gnss.gnsslogger.nav.SQLiteManager : sqliteManager
+  com.whu.gnss.gnsslogger.nav.SQLiteManager -up-|> android.database.sqlite.SQLiteOpenHelper
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

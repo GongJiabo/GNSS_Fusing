@@ -37,6 +37,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    implementation files("libs/Android_Lite3DMap_SDK_V1.2.0_20210412.jar")
+    implementation files("libs/AMap_Location_V5.3.1_20210331.jar")
     implementation 'com.android.support:appcompat-v7:24.2.1'
     testImplementation 'junit:junit:4.12'
     implementation 'com.android.support:design:24.2.1'
