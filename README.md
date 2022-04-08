@@ -1,4 +1,4 @@
-# GNSS_FUSING
+# GNSS_FUSION
 在Github开源项目上进行二次开发：
 
 https://github.com/superhang/GNSSLogger
