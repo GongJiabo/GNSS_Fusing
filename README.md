@@ -11,7 +11,7 @@ https://github.com/butterflying10/gnssdatalogger
 
 1、接收广播星历只支持GPS
 
-2、定位功能中Ntrip协议功能不全？？无法使用
+2、定位功能中Ntrip协议功能不全，无法使用
 
 3、添加的定位功能似乎存在bug，且只有SPP
 
@@ -38,13 +38,15 @@ Gong added：
 
 To Do：
 
-1、SQL数据库入库功能完善
+1、~~SQL数据库入库功能完善~~
 
-2、加入高德地图API
+2、~~加入高德地图API~~
 
 **3、算法融合**：
 
-- 首要任务为加入定位算法功能
+- PDR/GNSS组合算法
+- 伪距差分定位
+- PPP等
 
 4、LOG文件生成
 
