@@ -1,11 +1,22 @@
 # GNSS_FUSING
-在Github开源项目上进行二次开发：
+### 在Github开源项目上进行二次开发：
 
 https://github.com/superhang/GNSSLogger
 
 https://github.com/butterflying10/gnssdatalogger
 
 
+
+### 安卓端GNSS/PDR定位数据集与Matlab代码：
+
+链接：https://pan.baidu.com/s/1FGgyDvH54JCuoxWgZTMz0A?pwd=qffp 
+提取码：qffp 
+
+![code](.\pic\code.png)
+
+-------------------
+
+### 安卓软件GNSS_Fusion
 
 现存BUG：
 
@@ -15,7 +26,7 @@ https://github.com/butterflying10/gnssdatalogger
 
 3、添加的定位功能似乎存在bug，且只有SPP
 
-
+---------------------------------
 
 Gong added：
 
@@ -52,5 +63,10 @@ To Do：
 
 5、稳定性测试
 
+------------------
 
+App View:
 
+![data_status](.\pic\data_status.jpg)
+
+![pos_settings_all](.\pic\pos_settings_all.jpg)
