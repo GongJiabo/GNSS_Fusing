@@ -14,8 +14,14 @@ https://github.com/butterflying10/gnssdatalogger
 
 ### 安卓端GNSS/PDR定位数据集与Matlab代码：
 
-链接：https://pan.baidu.com/s/1FGgyDvH54JCuoxWgZTMz0A?pwd=qffp 
-提取码：qffp 
+- 百度网盘：
+
+  链接：https://pan.baidu.com/s/1FGgyDvH54JCuoxWgZTMz0A?pwd=qffp 
+  提取码：qffp 
+
+- 谷歌云盘
+
+  https://drive.google.com/file/d/1sXPFz_nLJd4b2BXa7a-RNrhfOOy81CFP/view?usp=sharing
 
 ![code](./pic/code.png)
 
