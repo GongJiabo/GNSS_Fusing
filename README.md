@@ -17,7 +17,7 @@ https://github.com/butterflying10/gnssdatalogger
 链接：https://pan.baidu.com/s/1FGgyDvH54JCuoxWgZTMz0A?pwd=qffp 
 提取码：qffp 
 
-![code](.\pic\code.png)
+![code](./pic/code.png)
 
 -------------------
 
@@ -72,6 +72,6 @@ To Do：
 
 App View:
 
-![data_status](.\pic\data_status.jpg)
+![data_status](./pic/data_status.jpg)
 
-![pos_settings_all](.\pic\pos_settings_all.jpg)
+![pos_settings_all](./pic/pos_settings_all.jpg)
